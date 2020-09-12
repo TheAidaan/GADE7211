@@ -39,7 +39,16 @@ public class DialogueManager : MonoBehaviour        // the monobehaviour
     {
         if (Input.GetKeyDown(KeyCode.D))        // make a button (next)
         {
-            test.text = _currentDialogue.Next().NPCText;
+            Dialogue next = _currentDialogue.Next();
+
+            if (next != null)
+            {
+                test.text = next.NPCText;
+            }else
+            {
+                //stop talking. 
+            }
+            
         }
 
         if (Input.GetKeyDown(KeyCode.A))        // make a button (previous)

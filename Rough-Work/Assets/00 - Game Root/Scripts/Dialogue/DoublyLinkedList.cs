@@ -12,7 +12,7 @@ public class DoublyLinkedList  // can add, clear, return data both ways
 {
     Node _head; // the start of the list
 
-    Node _temp; //random point
+    Node _temp; // random point
     
     Node _pointer; // the working point 
 
@@ -41,7 +41,7 @@ public class DoublyLinkedList  // can add, clear, return data both ways
 
         _pointer = _head; //point to _head when adding(for now(maybe))
     }
-    public void Clear()
+    public void Clear()//kills 'em all
     {
         _temp = _head;
         while (_temp != null)// cant clear whats already clear
@@ -56,8 +56,8 @@ public class DoublyLinkedList  // can add, clear, return data both ways
 
         _pointer = null;
 
-    } //kills them all
-    public Dialogue Next()
+    } 
+    public Dialogue Next()//moves along
     {
         if (_pointer != null) // is there evens a list
         {
@@ -76,8 +76,8 @@ public class DoublyLinkedList  // can add, clear, return data both ways
         {
             return null;//it's pointing to the end or the list is clear
         }   
-    } //moves along
-    public Dialogue Previous()
+    } 
+    public Dialogue Previous()//comes back
     {
         if (_pointer != null) // is there evens a llist
         {
@@ -102,5 +102,5 @@ public class DoublyLinkedList  // can add, clear, return data both ways
         {
             return null;//the list is clear
         }
-    }//comes back
+    }
 }
