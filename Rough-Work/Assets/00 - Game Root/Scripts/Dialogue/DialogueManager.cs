@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEditor.PackageManager;
 
 [Serializable]
 public class Dialogue //json 
@@ -20,12 +21,14 @@ public class DialogueNodes//json
 
 public class DialogueManager : MonoBehaviour        // the monobehaviour 
 {
+    
     static DialogueManager instance; //single...
 
     TextMeshProUGUI _npcNametxt, _npcDialoguetxt, _playerNametxt, _playerDialoguetxt;
     GameObject _dialogueBox;
 
-    bool _activeDialogue;
+    static bool _activeDialogue;
+    public static bool activeDialogue { get { return _activeDialogue; } }
 
     DoublyLinkedList _currentDialogue = new DoublyLinkedList();
 
@@ -43,7 +46,9 @@ public class DialogueManager : MonoBehaviour        // the monobehaviour
         _playerNametxt = _dialogueBox.transform.GetChild(2).GetComponent<TextMeshProUGUI>();
         _playerDialoguetxt = _dialogueBox.transform.GetChild(3).GetComponent<TextMeshProUGUI>();
 
-        ReadFile("Test");
+        _dialogueBox.SetActive(false);
+
+        //ReadFile("Test");
     }
 
     private void Update()
@@ -88,22 +93,22 @@ public class DialogueManager : MonoBehaviour        // the monobehaviour
         _currentDialogue.AddNode(node);
     }
 
-    public void StartDialogue()
+    public void StartDialogue(string NPCName)
     {
         _activeDialogue = true;
 
         _dialogueBox.SetActive(true);
-        _npcNametxt.text = "PC";
-        _playerNametxt.text = "Aidan";
+        _npcNametxt.text = "PC"; 
+        _playerNametxt.text = "Sqaure";
 
-        Dialogue(_currentDialogue.Previous()); //starts at the beginning
+        Dialogue(_currentDialogue.Next()); //starts at the beginning
     }
 
-    public static void ReadFile(string path) //anyone can call this = anyone can speak
+    public static void LoadFile(Character NPC) //anyone can call this = anyone can speak
     {
         DialogueNodes JsonNodes = new DialogueNodes();
 
-        TextAsset asset = Resources.Load<TextAsset>(path); // get the text asset with the path
+        TextAsset asset = Resources.Load<TextAsset>("DialogueFiles/"+ NPC.File); // get the text asset with the NPC file name 
         if (asset != null) //was there a text asset?
         {
             JsonNodes = JsonUtility.FromJson<DialogueNodes>(asset.text); // put it into a generic list
@@ -113,7 +118,7 @@ public class DialogueManager : MonoBehaviour        // the monobehaviour
                 instance.AddToCurrentDialogue(node); // puts it into linked list
             }
 
-            instance.StartDialogue();
+            instance.StartDialogue(NPC.Name); // send the NPC name 
         }
         else
         {

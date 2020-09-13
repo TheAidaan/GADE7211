@@ -1,0 +1,19 @@
+{
+  "dialogue": [
+    {
+      "NPCText": "I'm a circle!",
+      "Response": "ew"
+
+    },
+    {
+      "NPCText": "acca",
+      "Response": "..."
+
+    },
+    {
+      "NPCText": "...",
+      "Response": "..."
+
+    }
+  ]
+}
