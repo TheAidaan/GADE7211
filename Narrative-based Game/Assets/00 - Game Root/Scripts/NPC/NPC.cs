@@ -7,10 +7,13 @@ public class Character // all characters need a name and a path directing to the
     public string Name;
     public string File;
 
-    public Character(string name, string file)
+    public float TextDelay;
+
+    public Character(string name, string file, float textDelay)
     {
         Name = name;
         File = file;
+        TextDelay = textDelay;
     }
 }
 
@@ -20,9 +23,9 @@ public abstract class NPC : MonoBehaviour
 {
     Character _me; // declare a new character
 
-    public void AssignAttributes(string name, string file)
+    public void AssignAttributes(string name, string file, float textDelay)
     {
-        _me = new Character(name, file); //initialising a new character with the inputed values
+        _me = new Character(name, file, textDelay); //initialising a new character with the inputed values
     }
 
    public Character GetCharacterAttributes() // name and specified dialoguePath is made public 

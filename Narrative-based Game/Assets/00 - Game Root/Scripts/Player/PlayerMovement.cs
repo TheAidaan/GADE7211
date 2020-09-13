@@ -17,7 +17,7 @@ public class PlayerMovement : MonoBehaviour
     {   
         if (_movementDir != Vector2.zero) // don't face one way as a standard
         {
-                transform.right = _movementDir.normalized; // always face the direction the charater is moving 
+            transform.right = _movementDir.normalized; // always face the direction the charater is moving 
         }
 
         _rb.velocity = _movementDir.normalized * _moveSpeed; // move in the direction the player wants at a set speed
@@ -36,11 +36,13 @@ public class PlayerMovement : MonoBehaviour
             if (Input.GetKey(KeyCode.A))
             {
                 _movementDir.x -= 1f;
+                
 
             }
             if (Input.GetKey(KeyCode.S))
             {
                 _movementDir.y -= 1f;
+
 
             }
             if (Input.GetKey(KeyCode.D))

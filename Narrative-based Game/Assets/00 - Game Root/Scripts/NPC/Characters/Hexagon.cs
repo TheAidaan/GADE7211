@@ -7,7 +7,7 @@ public class Hexagon : NPC
     
     void Start()
     {
-        AssignAttributes("Hexagon", "Hexagon01");
+        AssignAttributes("Hexagon", "Hexagon01", 0.1f);
     }
 
 }

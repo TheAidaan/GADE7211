@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -20,9 +21,10 @@ public class DialogueNodes//json
 
 public class DialogueManager : MonoBehaviour        // the monobehaviour 
 {
-    
+   
     static DialogueManager instance; //single...
-
+    DoublyLinkedList _currentDialogue = new DoublyLinkedList();
+    
     GameObject _dialogueBox;
     TextMeshProUGUI _npcNametxt, _npcDialoguetxt, _playerNametxt, _playerDialoguetxt;
 
@@ -31,7 +33,11 @@ public class DialogueManager : MonoBehaviour        // the monobehaviour
     static bool _activeDialogue;
     public static bool activeDialogue { get { return _activeDialogue; } }
 
-    DoublyLinkedList _currentDialogue = new DoublyLinkedList();
+    bool _typing, _stoptyping;
+    float _textDelay = 0.12f;
+    bool _npcSpoken;
+
+    Character _currentNPC;
 
     private void Awake()
     {
@@ -54,7 +60,8 @@ public class DialogueManager : MonoBehaviour        // the monobehaviour
 
     private void Update()
     {
-        Dialogue Current; // make an empty dialogue variable that stores the NPC - player sentence exchanges
+        Dialogue current; // an empty dialogue variable that stores the NPC - player sentence exchanges
+
 
         if (_activeDialogue)         
         {
@@ -62,33 +69,88 @@ public class DialogueManager : MonoBehaviour        // the monobehaviour
 
             if (Input.GetKeyDown(KeyCode.D)) // player can't move player character anymore so D only moves the dialogue foward
             {
-                Current = _currentDialogue.Next(); // store the next exchange in a varaible 
-
-                if (Current != null) // is it at the end of the list?)
+                if (_typing)
                 {
-                    Dialogue(Current); //say this, if not at the end
+                    _stoptyping = true;
                 }
                 else
                 {
-                    _currentDialogue.Clear(); // is at the end, clear the list
-                    _dialogueBox.SetActive(false); // turn off the dialogueBox for now
-                    _activeDialogue = false; //no more dialogue available atm
-                }
+                    current = _currentDialogue.Next(); // store the next exchange in a varaible 
+
+                    if (current != null) // is it at the end of the list?)
+                    {
+                        StartCoroutine( Dialogue(current) ); //say this, if not at the end
+                    }
+                    else
+                    {
+                        EndDialogue();
+                    }
+                }       
             }
 
             if (Input.GetKeyDown(KeyCode.A))    // player can't move player character anymore so A only moves the dialogue backwards
             {
-                Dialogue(_currentDialogue.Previous()); // say the previous sentence, if it's at the begnning, it will always and only say the head 
-            }
+                if (_typing)
+                {
+                    _stoptyping = true;
+                }
+                else
+                {
+                    // _current = _currentDialogue.Previous();
+                    StartCoroutine( Dialogue( _currentDialogue.Previous() ) ); // say the previous sentence, if it's at the begnning, it will always and only say the head 
+                }
+            }                
         }
 
        
     }
-
-    void Dialogue(Dialogue current) //speak with what you currently have
+    IEnumerator Dialogue(Dialogue current) /*               MAKE SIMPLIER               */
     {
-        _npcDialoguetxt.text = current.NPCText;
-        _playerDialoguetxt.text = current.Response;
+        _typing = true; // lets everybody know its typing
+
+        for (int i = 0; i < current.NPCText.Length + 1; i++) // loops throygh each character of the string
+        {
+            _npcDialoguetxt.text = current.NPCText.Substring(0, i); // adds a character to the end of the display text
+            yield return new WaitForSeconds(_currentNPC.TextDelay); // waits a while
+
+            if (_stoptyping) // can be broken, if player is getting annoyed
+            {
+                _stoptyping = false; // stopped typing
+                _typing = false; // stopped typing
+                _npcDialoguetxt.text = current.NPCText; // show the full text that was stopped
+
+                break;
+            }
+        }
+
+        _typing = true; // if the typing was broken earlier then it will restart
+
+        for (int i = 0; i < current.Response.Length + 1; i++) // adds a character to the end of the display text
+        {
+            _playerDialoguetxt.text = current.Response.Substring(0, i); // waits a while
+            yield return new WaitForSeconds(_textDelay); // can be broken, if player is getting annoyed
+
+            if (_stoptyping) // can be broken, if player is getting annoyed
+            {
+                _stoptyping = false; // stopped typing
+                _typing = false; // stopped typing
+                _playerDialoguetxt.text = current.Response; // show the full text that was stopped
+
+                break;
+            }
+        }
+
+        _typing = false; // not typing
+    }
+
+    void EndDialogue()
+    {
+        _npcNametxt.text = _npcDialoguetxt.text = _playerNametxt.text =_playerDialoguetxt.text = string.Empty; // clear all text UIs
+        
+        _currentNPC = null; //clear the current NPC, because you're not speaking with anybody anymore
+        _currentDialogue.Clear(); // is at the end, clear the list
+        _dialogueBox.SetActive(false); // turn off the dialogueBox for now
+        _activeDialogue = false; //no more dialogue available atm
 
     }
 
@@ -99,14 +161,18 @@ public class DialogueManager : MonoBehaviour        // the monobehaviour
         _currentDialogue.AddNode(node);
     }
 
-    public void StartDialogue(string NPCName)
+    public void StartDialogue(Character NPC)
     {
+        _currentNPC = NPC;
+
         _dialogueBox.SetActive(true);
-        _npcNametxt.text = NPCName; 
+        _npcNametxt.text = _currentNPC.Name; 
         _playerNametxt.text = "Square";
 
-        Dialogue(_currentDialogue.Next()); //starts at the beginning
         _activeDialogue = true;
+
+        StartCoroutine( Dialogue(_currentDialogue.Next() ) );//sets current dialogue text to the first node
+
     }
 
     public void ChangeDialogueOptionText(string message)
@@ -139,7 +205,7 @@ public class DialogueManager : MonoBehaviour        // the monobehaviour
                 instance.AddToCurrentDialogue(node); // puts it into linked list
             }
 
-            instance.StartDialogue(NPC.Name); // send the NPC name 
+            instance.StartDialogue(NPC); // send the NPC name 
         }
         else
         {

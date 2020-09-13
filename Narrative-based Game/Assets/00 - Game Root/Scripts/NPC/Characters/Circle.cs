@@ -7,7 +7,7 @@ public class Circle : NPC
     // Start is called before the first frame update
     void Start()
     {
-        AssignAttributes("Circle", "CICRLE01");
+        AssignAttributes("Circle", "CICRLE01", 0.12f);
     }
 
   
