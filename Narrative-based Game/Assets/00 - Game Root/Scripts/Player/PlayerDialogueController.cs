@@ -2,21 +2,24 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class PlayerDialogueController : MonoBehaviour
 {
     Character _npc; // the npc that the character is currently face. Player can choose whether or not to speak to them
-  
+
     void Update()
     {
         if (FacingChattyNPC() && (!DialogueManager.activeDialogue))
-        { 
-            //_facingCharacter = _facing.GetCharacterAttributes();// offer the player a way the ability to talk to the NPC
-            Debug.Log("Talk to: " + _npc.Name);
-
+        {
+            DialogueManager.GiveDialogueOption(_npc.Name);
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 DialogueManager.LoadFile(_npc); // start the conversion by giving the NPC into to the dialogue manager
             }
+        }
+        else
+        {
+            DialogueManager.GiveDialogueOption(string.Empty); // if not infront of NPC or there is currently dialogue running, then send an empty string
         }
 
     }

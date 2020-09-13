@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using UnityEditor.PackageManager;
 
 [Serializable]
 public class Dialogue //json 
@@ -24,8 +23,10 @@ public class DialogueManager : MonoBehaviour        // the monobehaviour
     
     static DialogueManager instance; //single...
 
-    TextMeshProUGUI _npcNametxt, _npcDialoguetxt, _playerNametxt, _playerDialoguetxt;
     GameObject _dialogueBox;
+    TextMeshProUGUI _npcNametxt, _npcDialoguetxt, _playerNametxt, _playerDialoguetxt;
+
+    TextMeshProUGUI _dialogueOptiontxt;
 
     static bool _activeDialogue;
     public static bool activeDialogue { get { return _activeDialogue; } }
@@ -46,39 +47,43 @@ public class DialogueManager : MonoBehaviour        // the monobehaviour
         _playerNametxt = _dialogueBox.transform.GetChild(2).GetComponent<TextMeshProUGUI>();
         _playerDialoguetxt = _dialogueBox.transform.GetChild(3).GetComponent<TextMeshProUGUI>();
 
-        _dialogueBox.SetActive(false);
+        _dialogueOptiontxt = GetComponentInChildren<TextMeshProUGUI>();
 
-        //ReadFile("Test");
+        _dialogueBox.SetActive(false);
     }
 
     private void Update()
     {
         Dialogue Current; // make an empty dialogue variable that stores the NPC - player sentence exchanges
 
-        if ((_activeDialogue) && (Input.GetKeyDown(KeyCode.D)))        // player can't move player character anymore so D only moves the dialogue foward
+        if (_activeDialogue)         
         {
-            Current = _currentDialogue.Next(); // store the next exchange in a varaible 
+            _dialogueOptiontxt.gameObject.SetActive(false); //player should see that they are able to choose to talk to the npc they are currently talking to
 
-            if (Current != null) // is it at the end of the list?)
+            if (Input.GetKeyDown(KeyCode.D)) // player can't move player character anymore so D only moves the dialogue foward
             {
-                Dialogue(Current); //say this, if not at the end
+                Current = _currentDialogue.Next(); // store the next exchange in a varaible 
+
+                if (Current != null) // is it at the end of the list?)
+                {
+                    Dialogue(Current); //say this, if not at the end
+                }
+                else
+                {
+                    _currentDialogue.Clear(); // is at the end, clear the list
+                    _dialogueBox.SetActive(false); // turn off the dialogueBox for now
+                    _activeDialogue = false; //no more dialogue available atm
+
+                }
             }
-            else
+
+            if (Input.GetKeyDown(KeyCode.A))    // player can't move player character anymore so A only moves the dialogue backwards
             {
-                _currentDialogue.Clear(); // is at the end, clear the list
-                _dialogueBox.SetActive(false); // turn off the dialogueBox for now
-                _activeDialogue = false; //no more dialogue available atm
-
+                Dialogue(_currentDialogue.Previous()); // say the previous sentence, if it's at the begnning, it will always and only say the head 
             }
-
         }
 
-        if ((_activeDialogue)&&(Input.GetKeyDown(KeyCode.A)))        // player can't move player character anymore so A only moves the dialogue backwards
-        {
-            Dialogue(_currentDialogue.Previous()); // say the previous sentence, if it's at the begnning, it will always and only say the head 
-
-         
-        }
+       
     }
 
     void Dialogue(Dialogue current) //speak with what you currently have
@@ -87,6 +92,8 @@ public class DialogueManager : MonoBehaviour        // the monobehaviour
         _playerDialoguetxt.text = current.Response;
 
     }
+
+    /*              PUBLIC STATICS RECEIVERS             */
 
     public void AddToCurrentDialogue(Dialogue node)
     {
@@ -98,11 +105,27 @@ public class DialogueManager : MonoBehaviour        // the monobehaviour
         _activeDialogue = true;
 
         _dialogueBox.SetActive(true);
-        _npcNametxt.text = "PC"; 
+        _npcNametxt.text = NPCName; 
         _playerNametxt.text = "Sqaure";
 
         Dialogue(_currentDialogue.Next()); //starts at the beginning
     }
+
+    public void ChangeDialogueOptionText(string message)
+    {
+        if (message == string.Empty)
+        {
+            _dialogueOptiontxt.gameObject.SetActive(false); // turn off the text if the string is empty 
+        }
+        else // activate the text and display the message
+        {
+            _dialogueOptiontxt.gameObject.SetActive(true);
+            _dialogueOptiontxt.text = message;
+
+        }
+    }
+
+    /*              PUBLIC STATICS              */
 
     public static void LoadFile(Character NPC) //anyone can call this = anyone can speak
     {
@@ -125,4 +148,16 @@ public class DialogueManager : MonoBehaviour        // the monobehaviour
             Debug.Log("No json file.");
         }
     }
+
+    public static void GiveDialogueOption(string name) // get the NPC name that the player might talk to 
+    {
+        if (name != string.Empty)
+        {
+            instance.ChangeDialogueOptionText("Press [SPACE] to talk to " + name); // format the message if the string has a name
+        }else
+        {
+            instance.ChangeDialogueOptionText(string.Empty); // dont format the name and send an empty string if there's no npc name given
+        }
+    }
+       
 }
