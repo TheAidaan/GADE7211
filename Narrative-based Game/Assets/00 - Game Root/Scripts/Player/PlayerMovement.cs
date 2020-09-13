@@ -14,38 +14,39 @@ public class PlayerMovement : MonoBehaviour
     }
 
     private void FixedUpdate()
-    {
-        if (!DialogueManager.activeDialogue) // while nobody is speaking 
+    {   
+        if (_movementDir != Vector2.zero) // don't face one way as a standard
         {
-            if (_movementDir != Vector2.zero) // don't face one way as a standard
-            {
                 transform.right = _movementDir.normalized; // always face the direction the charater is moving 
-            }
-
-            _rb.velocity = _movementDir.normalized * _moveSpeed; // move in the direction the player wants at a set speed
         }
+
+        _rb.velocity = _movementDir.normalized * _moveSpeed; // move in the direction the player wants at a set speed
     }
+
     void Update()
     {
         _movementDir = Vector2.zero; //zero out so that if player isnt pushing a button the stop.
-        
-        if (Input.GetKey(KeyCode.W)) 
-        {
-            _movementDir.y += 1f;
-        }
-        if (Input.GetKey(KeyCode.A))
-        {
-            _movementDir.x -= 1f;
 
-        }
-        if (Input.GetKey(KeyCode.S))
+        if (!DialogueManager.activeDialogue) // while nobody is speaking 
         {
-            _movementDir.y -= 1f;
+            if (Input.GetKey(KeyCode.W))
+            {
+                _movementDir.y += 1f;
+            }
+            if (Input.GetKey(KeyCode.A))
+            {
+                _movementDir.x -= 1f;
 
-        }
-        if (Input.GetKey(KeyCode.D))
-        {
-            _movementDir.x += 1f;
+            }
+            if (Input.GetKey(KeyCode.S))
+            {
+                _movementDir.y -= 1f;
+
+            }
+            if (Input.GetKey(KeyCode.D))
+            {
+                _movementDir.x += 1f;
+            }
         }
     }
 }

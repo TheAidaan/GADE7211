@@ -1,4 +1,9 @@
-﻿class Node //for doubly
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using System.Diagnostics;
+
+class Node //for doubly
 {
     public Dialogue data; // found in DialogueManager.cs
     public Node previous;
@@ -46,14 +51,14 @@ public class DoublyLinkedList  // can add, clear, return data both ways
         _temp = _head;
         while (_temp != null)// cant clear whats already clear
         {
-            _pointer = _temp.next;
+            _pointer = _temp.next; // point to the next node
 
-            _temp.previous = _temp.next = null;
-            _temp.data = null;
+            _temp.previous = _temp.next = null; // delete delete nodes
+            _temp.data = null; //delete data
 
             _temp = _pointer;
         }
-
+        _head = null; // makes it offical 
         _pointer = null;
 
     } 
@@ -62,13 +67,13 @@ public class DoublyLinkedList  // can add, clear, return data both ways
         if (_pointer != null) // is there evens a list
         {
             _temp = _pointer;
-            if(_pointer.next != null) //if the list is not at the end
+            if(_temp.data != null)  // if i have data to send then there could be data following this...
             {
-                _pointer = _pointer.next;  // we're moving here
+                _pointer = _pointer.next;  // ... so point to the next node
                 
             }else
             {
-                return null; // at the end 
+                return null; //if the pointer gave a null value then the list is done and the node sent was the last node in the value  
             }
            
             return _temp.data; //here's what you asked for           

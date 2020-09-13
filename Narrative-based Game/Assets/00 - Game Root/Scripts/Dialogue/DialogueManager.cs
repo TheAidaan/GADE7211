@@ -73,7 +73,6 @@ public class DialogueManager : MonoBehaviour        // the monobehaviour
                     _currentDialogue.Clear(); // is at the end, clear the list
                     _dialogueBox.SetActive(false); // turn off the dialogueBox for now
                     _activeDialogue = false; //no more dialogue available atm
-
                 }
             }
 
@@ -102,13 +101,12 @@ public class DialogueManager : MonoBehaviour        // the monobehaviour
 
     public void StartDialogue(string NPCName)
     {
-        _activeDialogue = true;
-
         _dialogueBox.SetActive(true);
         _npcNametxt.text = NPCName; 
-        _playerNametxt.text = "Sqaure";
+        _playerNametxt.text = "Square";
 
         Dialogue(_currentDialogue.Next()); //starts at the beginning
+        _activeDialogue = true;
     }
 
     public void ChangeDialogueOptionText(string message)
