@@ -25,8 +25,9 @@ public class DialogueManager : MonoBehaviour        // the monobehaviour
     static DialogueManager instance; //single...
     DoublyLinkedList _currentDialogue = new DoublyLinkedList();
     
-    GameObject _dialogueBox;
+    
     TextMeshProUGUI _npcNametxt, _npcDialoguetxt, _playerNametxt, _playerDialoguetxt;
+    Image _npcDisplayImg, _playerDisplayImg;
 
     TextMeshProUGUI _dialogueOptiontxt;
 
@@ -35,9 +36,10 @@ public class DialogueManager : MonoBehaviour        // the monobehaviour
 
     bool _typing, _stoptyping;
     float _textDelay = 0.12f;
-    bool _npcSpoken;
 
     Character _currentNPC;
+
+    DialogueBox _dialogueBox;
 
     private void Awake()
     {
@@ -46,18 +48,22 @@ public class DialogueManager : MonoBehaviour        // the monobehaviour
 
     void Start()
     {
-        _dialogueBox = GetComponentInChildren<Image>().gameObject;
+        GameObject dialogueBox = GetComponentInChildren<Image>().gameObject;
 
-        _npcNametxt = _dialogueBox.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
-        _npcDialoguetxt = _dialogueBox.transform.GetChild(1).GetComponent<TextMeshProUGUI>();
-        _playerNametxt = _dialogueBox.transform.GetChild(2).GetComponent<TextMeshProUGUI>();
-        _playerDialoguetxt = _dialogueBox.transform.GetChild(3).GetComponent<TextMeshProUGUI>();
+        _npcNametxt = dialogueBox.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
+        _npcDisplayImg = _npcNametxt.GetComponentInChildren<Image>();
+        _npcDialoguetxt = dialogueBox.transform.GetChild(1).GetComponent<TextMeshProUGUI>();
+
+        _playerNametxt = dialogueBox.transform.GetChild(2).GetComponent<TextMeshProUGUI>();
+        _playerDisplayImg = _playerNametxt.GetComponentInChildren<Image>();
+        _playerDialoguetxt = dialogueBox.transform.GetChild(3).GetComponent<TextMeshProUGUI>();
 
         _dialogueOptiontxt = GetComponentInChildren<TextMeshProUGUI>();
+        _dialogueBox = GetComponentInChildren<DialogueBox>();
 
-        _dialogueBox.SetActive(false);
-
-        ClearDialogue();
+        
+        
+        ClearDialogue();    
     }
 
     private void Update()
@@ -151,7 +157,7 @@ public class DialogueManager : MonoBehaviour        // the monobehaviour
         
         _currentNPC = null; //clear the current NPC, because you're not speaking with anybody anymore
         _currentDialogue.Clear(); // is at the end, clear the list
-        _dialogueBox.SetActive(false); // turn off the dialogueBox for now
+        _dialogueBox.HideDialogueBox(); // turn off the dialogueBox for now
         _activeDialogue = false; //no more dialogue available atm
 
     }
@@ -167,8 +173,30 @@ public class DialogueManager : MonoBehaviour        // the monobehaviour
     {
         _currentNPC = NPC;
 
-        _dialogueBox.SetActive(true);
+        _dialogueBox.ShowDialogueBox();
         _npcNametxt.text = _currentNPC.Name; 
+
+        Sprite npcIcon = Resources.Load<Sprite>("DialogueIcons/" + NPC.Name); // get specific asset
+
+        if (npcIcon != null) // is there even an asset
+        {
+            _npcDisplayImg.sprite = npcIcon; // if yes the show it
+        }
+        else
+        {
+            Debug.Log("No NPC icon"); // this is why it's not working
+        }
+
+        Sprite playerIcon = Resources.Load<Sprite>("DialogueIcons/Player");
+
+        if (npcIcon != null)
+        {
+            _playerDisplayImg.sprite = playerIcon;
+        }
+        else
+        {
+            Debug.Log("No Player icon");
+        }
         _playerNametxt.text = "Circle";
 
         _activeDialogue = true;
