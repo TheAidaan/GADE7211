@@ -56,6 +56,8 @@ public class DialogueManager : MonoBehaviour        // the monobehaviour
         _dialogueOptiontxt = GetComponentInChildren<TextMeshProUGUI>();
 
         _dialogueBox.SetActive(false);
+
+        ClearDialogue();
     }
 
     private void Update()
@@ -79,11 +81,11 @@ public class DialogueManager : MonoBehaviour        // the monobehaviour
 
                     if (current != null) // is it at the end of the list?)
                     {
-                        StartCoroutine( Dialogue(current) ); //say this, if not at the end
+                        StartCoroutine(RunDialogue(current) ); //say this, if not at the end
                     }
                     else
                     {
-                        EndDialogue();
+                        ClearDialogue();
                     }
                 }       
             }
@@ -97,14 +99,14 @@ public class DialogueManager : MonoBehaviour        // the monobehaviour
                 else
                 {
                     // _current = _currentDialogue.Previous();
-                    StartCoroutine( Dialogue( _currentDialogue.Previous() ) ); // say the previous sentence, if it's at the begnning, it will always and only say the head 
+                    StartCoroutine(RunDialogue( _currentDialogue.Previous() ) ); // say the previous sentence, if it's at the begnning, it will always and only say the head 
                 }
             }                
         }
 
        
     }
-    IEnumerator Dialogue(Dialogue current) /*               MAKE SIMPLIER               */
+    IEnumerator RunDialogue(Dialogue current) /*               MAKE SIMPLIER               */
     {
         _typing = true; // lets everybody know its typing
 
@@ -143,7 +145,7 @@ public class DialogueManager : MonoBehaviour        // the monobehaviour
         _typing = false; // not typing
     }
 
-    void EndDialogue()
+    void ClearDialogue()
     {
         _npcNametxt.text = _npcDialoguetxt.text = _playerNametxt.text =_playerDialoguetxt.text = string.Empty; // clear all text UIs
         
@@ -161,17 +163,17 @@ public class DialogueManager : MonoBehaviour        // the monobehaviour
         _currentDialogue.AddNode(node);
     }
 
-    public void StartDialogue(Character NPC)
+    public void ActivateDialogue(Character NPC)
     {
         _currentNPC = NPC;
 
         _dialogueBox.SetActive(true);
         _npcNametxt.text = _currentNPC.Name; 
-        _playerNametxt.text = "Square";
+        _playerNametxt.text = "Circle";
 
         _activeDialogue = true;
 
-        StartCoroutine( Dialogue(_currentDialogue.Next() ) );//sets current dialogue text to the first node
+        StartCoroutine(RunDialogue(_currentDialogue.Next() ) );//sets current dialogue text to the first node
 
     }
 
@@ -205,7 +207,7 @@ public class DialogueManager : MonoBehaviour        // the monobehaviour
                 instance.AddToCurrentDialogue(node); // puts it into linked list
             }
 
-            instance.StartDialogue(NPC); // send the NPC name 
+            instance.ActivateDialogue(NPC); // send the NPC name 
         }
         else
         {

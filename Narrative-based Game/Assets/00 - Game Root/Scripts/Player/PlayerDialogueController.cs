@@ -26,11 +26,11 @@ public class PlayerDialogueController : MonoBehaviour
 
     public bool FacingChattyNPC()
     {
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, transform.right, 2f, LayerMask.GetMask("Chatty")); // constantly ray cast for a NPC to talk to 
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, transform.right, 15f, LayerMask.GetMask("Chatty")); // constantly ray cast for a NPC to talk to 
 
         if (hit)
         {
-            _npc = hit.collider.gameObject.GetComponent<NPC>().GetCharacterAttributes(); //take the specific NPC.cs from the raycast hit
+            _npc = hit.collider.gameObject.GetComponentInParent<NPC>().GetCharacterAttributes(); //take the specific NPC.cs from the raycast hit
 
             if (_npc.Name != null)//is there an NPC.cs attached?
             {

@@ -4,20 +4,26 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    float _moveSpeed = 3;
+    float _moveSpeed = 9;
     Rigidbody2D _rb;
+    PlayerAnimations _animator;
 
     Vector2 _movementDir;
     void Start()
     {
         _rb = GetComponent<Rigidbody2D>();
+        _animator = GetComponent<PlayerAnimations>();
     }
 
     private void FixedUpdate()
     {   
         if (_movementDir != Vector2.zero) // don't face one way as a standard
         {
-            transform.right = _movementDir.normalized; // always face the direction the charater is moving 
+            _animator.WalkingAnimation(true); //Activate the walking animation
+
+        }else
+        {
+            _animator.WalkingAnimation(false); //end the walking animaation
         }
 
         _rb.velocity = _movementDir.normalized * _moveSpeed; // move in the direction the player wants at a set speed
@@ -35,18 +41,23 @@ public class PlayerMovement : MonoBehaviour
             }
             if (Input.GetKey(KeyCode.A))
             {
+                transform.right = new Vector2(-1, 0);// face to the left 
+             
                 _movementDir.x -= 1f;
                 
 
             }
             if (Input.GetKey(KeyCode.S))
             {
+                
                 _movementDir.y -= 1f;
 
 
             }
             if (Input.GetKey(KeyCode.D))
             {
+                transform.right = new Vector2(0, 0); // face to the right
+            
                 _movementDir.x += 1f;
             }
         }

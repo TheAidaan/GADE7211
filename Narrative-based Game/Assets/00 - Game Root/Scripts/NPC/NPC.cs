@@ -21,8 +21,13 @@ public class Character // all characters need a name and a path directing to the
 
 public abstract class NPC : MonoBehaviour
 {
+    Animator _anim;
     Character _me; // declare a new character
 
+    void Awake()
+    {
+        _anim = GetComponentInChildren<Animator>();
+    }
     public void AssignAttributes(string name, string file, float textDelay)
     {
         _me = new Character(name, file, textDelay); //initialising a new character with the inputed values
