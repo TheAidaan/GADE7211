@@ -1,0 +1,24 @@
+{
+  "dialogue": [
+    {
+      "NPCText": "I am a hexagon, my points are sharp and strong",
+      "Response": "i'm a cir...",
+      "WaitForInput": "false",
+      "ItemRequired" : "Sword"
+    },
+    {
+      "NPCText": "I AM A HEXAGON! I WILL NOT GET ALONG",
+      "Response": "...",
+      "WaitForInput": "false",
+      "ItemRequired": ""
+
+    },
+    {
+      "NPCText": "I AM A HEXAGON! WE SING THIS SONG",
+      "Response": "I'm leaving",
+      "WaitForInput": "false",
+      "ItemRequired": ""
+
+    }
+  ]
+}

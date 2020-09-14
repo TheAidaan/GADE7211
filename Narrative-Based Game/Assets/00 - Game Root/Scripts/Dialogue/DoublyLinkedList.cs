@@ -46,6 +46,7 @@ public class DoublyLinkedList  // can add, clear, return data both ways
 
         _pointer = _head; //point to _head when adding(for now(maybe))
     }
+
     public void Clear()//kills 'em all
     {
         _temp = _head;
