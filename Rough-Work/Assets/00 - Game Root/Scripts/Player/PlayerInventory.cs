@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class PlayerInventory : MonoBehaviour
@@ -21,7 +19,7 @@ public class PlayerInventory : MonoBehaviour
             _itemSlotsUI[i] = transform.GetChild(i).gameObject; // gather all item slots
         }
 
-        _inventory.Add(InventoryItems.Circle);
+        _inventory.Add(ItemLibrary.Circle);
 
         DisplayItems();
     }
@@ -40,7 +38,9 @@ public class PlayerInventory : MonoBehaviour
             {
                 if (displayItems[i] != null) // only show the stored items in the array, fuck the nulls
                 {
+                    
                     itemSlot.SetItem(displayItems[i].data); // show the item on screen
+                    _itemSlotsUI[x].SetActive(true); // make sure it's active
                     x++; //only if item is added, can the next itemslot be used
                 }
                 
@@ -54,7 +54,7 @@ public class PlayerInventory : MonoBehaviour
         HideUnusedSlots(x);
     }
 
-    void HideUnusedSlots(int index)
+    void HideUnusedSlots(int index) // class will hide all the unused Slots
     {
         if (index< _itemSlotsUI.Length)// if all slots are filled then there are not unused slots to hide
         {
@@ -77,7 +77,8 @@ public class PlayerInventory : MonoBehaviour
         if (added)
         {
             instance.DisplayItems();
-        }else
+        }
+        else
         {
             Debug.Log("Item not added");
         }
