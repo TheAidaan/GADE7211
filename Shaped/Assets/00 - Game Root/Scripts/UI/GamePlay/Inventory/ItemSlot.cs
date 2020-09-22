@@ -9,7 +9,7 @@ public class ItemSlot : MonoBehaviour
     Image _icon;
     void Start()
     {
-        _icon = transform.GetChild(0).GetComponent<Image>();
+        _icon = transform.GetChild(0).GetComponent<Image>(); // GetComponentInchildren was being problematic 
     }
 
     public void SetItem(InventoryItem item) //get the item from the parent
@@ -33,6 +33,11 @@ public class ItemSlot : MonoBehaviour
     }
 
     private void OnMouseOver()
+    {
+        Debug.Log(_name);
+    }
+
+    private void OnMouseEnter()
     {
         Debug.Log(_name);
     }
