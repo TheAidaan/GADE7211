@@ -3,9 +3,10 @@ using UnityEngine.UI;
 
 public class PlayerInventory : MonoBehaviour
 {
+    const int NUMBER_OF_ITEM_SLOTS = 4;
     HashTable _inventory = new HashTable(); //the player inventory
 
-    GameObject[] _itemSlotsUI = new GameObject[6];//to hold all six itemSlots
+    GameObject[] _itemSlotsUI = new GameObject[NUMBER_OF_ITEM_SLOTS];//to hold all itemSlots
 
     static PlayerInventory instance;//single...
     private void Awake()
@@ -14,12 +15,10 @@ public class PlayerInventory : MonoBehaviour
     }
     void Start()
     { 
-        for (int i = 0; i < 6; i++)
+        for (int i = 0; i < NUMBER_OF_ITEM_SLOTS; i++)
         {
             _itemSlotsUI[i] = transform.GetChild(i).gameObject; // gather all item slots
         }
-
-        _inventory.Add(ItemLibrary.Circle);
 
         DisplayItems();
     }
@@ -56,14 +55,14 @@ public class PlayerInventory : MonoBehaviour
 
     void HideUnusedSlots(int index) // class will hide all the unused Slots
     {
-        if (index< _itemSlotsUI.Length)// if all slots are filled then there are not unused slots to hide
-        {
-            while (index < _itemSlotsUI.Length)
-            {
-                _itemSlotsUI[index].SetActive(false);
-                index++;
-            }
-        }
+        //if (index < _itemSlotsUI.Length)// if all slots are filled then there are not unused slots to hide
+        //{
+        //    while (index < _itemSlotsUI.Length)
+        //    {
+        //        _itemSlotsUI[index].SetActive(false);
+        //        index++;
+        //    }
+        //}
         
 
     }
@@ -83,4 +82,5 @@ public class PlayerInventory : MonoBehaviour
             Debug.Log("Item not added");
         }
     }
+
 }

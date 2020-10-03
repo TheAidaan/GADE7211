@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class ItemSlot : MonoBehaviour
@@ -10,6 +8,11 @@ public class ItemSlot : MonoBehaviour
     void Start()
     {
         _icon = transform.GetChild(0).GetComponent<Image>(); // GetComponentInchildren was being problematic 
+        
+        if (_icon == null)
+        {
+            Debug.Log(gameObject.name + " does not have a child image");
+        }
     }
 
     public void SetItem(InventoryItem item) //get the item from the parent
@@ -20,25 +23,43 @@ public class ItemSlot : MonoBehaviour
 
     public void SetImage(string file)
     {
-        Sprite sprite = Resources.Load<Sprite>("InventoryIcons/" + file); // get the sprite with the file name 
+        SlideIn();
 
+       Sprite sprite = Resources.Load<Sprite>("InventoryIcons/" + file); // get the sprite with the file name 
+       
         if (sprite != null)
         {
-            _icon.sprite = sprite; // great, found it, done.
+            if (_icon != null)
+            {
+                _icon.sprite = sprite; // great, found it, add it after checking if icon is still there
+            }else
+            {
+                Debug.Log(gameObject.name + " does not have a child image");
+            }
+            
         }
         else
         {
             Debug.Log("No sprite found"); // this is why it's not working
         }
     }
-
-    private void OnMouseOver()
+    #region Mouse Reactions
+    public void MouseHover()
     {
         Debug.Log(_name);
     }
 
-    private void OnMouseEnter()
+    public void MouseClick()
     {
         Debug.Log(_name);
     }
+    #endregion
+
+    #region Display Animations
+    void SlideIn()
+    {
+        LeanTween.moveLocalX(gameObject, 350, .2f).setEaseInOutBounce();
+       
+    }
+    #endregion
 }

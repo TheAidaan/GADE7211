@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GameUI : MonoBehaviour
 {
-    GameObject[] _uiParts = new GameObject[2]; // to store the different Canvases //
+    GameObject[] _uiParts = new GameObject[3]; // to store the different Canvases //
    
 
     bool _showPauseOverlay;
@@ -12,10 +12,11 @@ public class GameUI : MonoBehaviour
     private void Start()
     {
         _showPauseOverlay = false;
-
-        for (int i = 0; i < 2; i++)
+        int x=0;
+        for (int i = 1; i < 3; i++)
         {
-            _uiParts[i] = transform.GetChild(i).gameObject; // add children into GameObject[] array
+            _uiParts[x] = transform.GetChild(i).gameObject; // add children into GameObject[] array
+            x++;
         }
         SetUI();
 
