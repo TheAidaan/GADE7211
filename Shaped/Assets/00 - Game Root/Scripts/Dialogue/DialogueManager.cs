@@ -120,7 +120,7 @@ public class DialogueManager : MonoBehaviour        // the monobehaviour
         for (int i = 0; i < current.NPCText.Length + 1; i++) // loops throygh each character of the string
         {
             _npcDialoguetxt.text = current.NPCText.Substring(0, i); // adds a character to the end of the display text
-            yield return new WaitForSeconds(_currentNPC.TextDelay); // waits a while
+            yield return new WaitForSeconds(_currentNPC.textDelay); // waits a while
 
             if (_stoptyping) // can be broken, if player is getting annoyed
             {
@@ -174,9 +174,9 @@ public class DialogueManager : MonoBehaviour        // the monobehaviour
         _currentNPC = NPC;
 
         _dialogueBox.ShowDialogueBox();
-        _npcNametxt.text = _currentNPC.Name; 
+        _npcNametxt.text = _currentNPC.name; 
 
-        Sprite npcIcon = Resources.Load<Sprite>("DialogueIcons/" + NPC.Name); // get specific asset
+        Sprite npcIcon = Resources.Load<Sprite>("DialogueIcons/" + NPC.name); // get specific asset
 
         if (npcIcon != null) // is there even an asset
         {
@@ -225,7 +225,7 @@ public class DialogueManager : MonoBehaviour        // the monobehaviour
     {
         DialogueNodes JsonNodes = new DialogueNodes();
 
-        TextAsset asset = Resources.Load<TextAsset>("DialogueFiles/"+ NPC.File); // get the text asset with the NPC file name 
+        TextAsset asset = Resources.Load<TextAsset>("DialogueFiles/"+ NPC.file); // get the text asset with the NPC file name 
         if (asset != null) //was there a text asset?
         {
             JsonNodes = JsonUtility.FromJson<DialogueNodes>(asset.text); // put it into a generic list

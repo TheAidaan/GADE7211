@@ -4,26 +4,28 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    static bool _facingRight;
+    public static bool FacingRight { get { return _facingRight; } }
     float _moveSpeed = 9;
-    Rigidbody2D _rb;
+    Rigidbody _rb;
     PlayerAnimations _animator;
 
-    Vector2 _movementDir;
+    Vector3 _movementDir;
     void Start()
     {
-        _rb = GetComponent<Rigidbody2D>();
+        _rb = GetComponent<Rigidbody>();
         _animator = GetComponent<PlayerAnimations>();
     }
 
     private void FixedUpdate()
     {   
-        if (_movementDir != Vector2.zero) // don't face one way as a standard
+        if (_movementDir != Vector3.zero) // don't face one way as a standard
         {
-            _animator.WalkingAnimation(true); //Activate the walking animation
+            _animator.ActivateWalkingAnimation(true); //Activate the walking animation
 
         }else
         {
-            _animator.WalkingAnimation(false); //end the walking animaation
+            _animator.ActivateWalkingAnimation(false); //end the walking animaation
         }
 
         _rb.velocity = _movementDir.normalized * _moveSpeed; // move in the direction the player wants at a set speed
@@ -37,27 +39,26 @@ public class PlayerMovement : MonoBehaviour
         {
             if (Input.GetKey(KeyCode.W))
             {
-                _movementDir.y += 1f;
+                _movementDir.z += 1f;
             }
             if (Input.GetKey(KeyCode.A))
             {
-                transform.right = new Vector2(-1, 0);// face to the left 
-             
+                transform.localScale = new Vector3(-1, 1, 1); // face to the left
+                _facingRight = false;
+
                 _movementDir.x -= 1f;
                 
 
             }
             if (Input.GetKey(KeyCode.S))
-            {
-                
-                _movementDir.y -= 1f;
-
-
+            {             
+                _movementDir.z -= 1f;
             }
             if (Input.GetKey(KeyCode.D))
             {
-                transform.right = new Vector2(0, 0); // face to the right
-            
+                transform.localScale = new Vector3(1, 1, 1); // face to the right
+                _facingRight = true;
+
                 _movementDir.x += 1f;
             }
         }

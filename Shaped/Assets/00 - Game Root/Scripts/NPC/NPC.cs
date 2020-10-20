@@ -1,19 +1,18 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Character // all characters need a name and a path directing to their current dialogue json
 {
-    public string Name;
-    public string File;
+    public string name { get; }
+    public string file { get; }
 
-    public float TextDelay;
+    public float textDelay { get; }
 
-    public Character(string name, string file, float textDelay)
+    public Character(string Name, string File, float TextDelay)
     {
-        Name = name;
-        File = file;
-        TextDelay = textDelay;
+        name = Name;
+        file = File;
+        textDelay = TextDelay;
+
     }
 }
 
@@ -21,7 +20,6 @@ public class Character // all characters need a name and a path directing to the
 
 public abstract class NPC : MonoBehaviour
 {
-    public Rigidbody2D rb;
     public Vector3 movementDir;
 
     Animator _anim;
@@ -29,15 +27,6 @@ public abstract class NPC : MonoBehaviour
 
     void Awake()
     {
-        if (GetComponent<Rigidbody2D>() != null) // if there's no rigidbody on the npc
-        {
-            rb = GetComponent<Rigidbody2D>();
-        }
-        else
-        {
-            Debug.Log(gameObject.name + " does not have a Rigidbody2D"); // this why it ain't working
-        }
-
         if (GetComponentInChildren<Animator>() != null) // if there's not animator on the npc
         {
             _anim = GetComponentInChildren<Animator>();
@@ -48,9 +37,9 @@ public abstract class NPC : MonoBehaviour
         }
 
     }
-    public void AssignAttributes(string name, string file, float textDelay)
+    public void AssignAttributes(string Name, string File, float TextDelay)
     {
-        _me = new Character(name, file, textDelay); //initialising a new character with the inputed values
+        _me = new Character(Name, File, TextDelay); //initialising a new character with the inputed values
     }
 
     public Character GetCharacterAttributes() // name and specified dialoguePath is made public 
@@ -62,6 +51,4 @@ public abstract class NPC : MonoBehaviour
     {
         _anim.SetBool("isWalking", isWalking);
     }
-
-
 }

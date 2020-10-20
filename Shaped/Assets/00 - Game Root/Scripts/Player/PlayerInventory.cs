@@ -4,7 +4,7 @@ using UnityEngine.UI;
 public class PlayerInventory : MonoBehaviour
 {
     const int NUMBER_OF_ITEM_SLOTS = 4;
-    HashTable _inventory = new HashTable(); //the player inventory
+    HashTable<InventoryItem> _inventory = new HashTable<InventoryItem>(); //the player inventory
 
     GameObject[] _itemSlotsUI = new GameObject[NUMBER_OF_ITEM_SLOTS];//to hold all itemSlots
 
@@ -25,7 +25,7 @@ public class PlayerInventory : MonoBehaviour
 
     void DisplayItems()
     {
-        HashData[] displayItems = _inventory.Display(); // length should always be the amount of items in the hashtable
+        HashData<InventoryItem>[] displayItems = _inventory.Display(); // length should always be the amount of items in the hashtable
 
         int x = 0; // to present the items from top to bottom
 
@@ -71,7 +71,7 @@ public class PlayerInventory : MonoBehaviour
 
     public static void Add(InventoryItem item) // anything can add an item to the inventory
     {
-        bool added =  instance._inventory.Add(item); // the add, might be successful, might not 
+        bool added =  instance._inventory.Add(item.key, item); // the add, might be successful, might not 
 
         if (added)
         {

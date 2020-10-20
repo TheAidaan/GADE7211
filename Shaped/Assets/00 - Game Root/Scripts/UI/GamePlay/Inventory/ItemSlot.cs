@@ -44,9 +44,13 @@ public class ItemSlot : MonoBehaviour
         }
     }
     #region Mouse Reactions
-    public void MouseHover()
+    public void MouseHoverEnter()
     {
-        Debug.Log(_name);
+        MouseHoverText.ShowHoverText_Static(_name);
+    }
+    public void MouseHoverExit()
+    {
+        MouseHoverText.HideHoverText_Static();
     }
 
     public void MouseClick()

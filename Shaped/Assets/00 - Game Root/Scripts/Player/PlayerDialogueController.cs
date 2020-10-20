@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 
 public class PlayerDialogueController : MonoBehaviour
@@ -11,7 +9,7 @@ public class PlayerDialogueController : MonoBehaviour
     {
         if (FacingChattyNPC() && (!DialogueManager.activeDialogue))
         {
-            DialogueManager.GiveDialogueOption(_npc.Name);
+            DialogueManager.GiveDialogueOption(_npc.name);
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 DialogueManager.LoadFile(_npc); // start the conversion by giving the NPC into to the dialogue manager
@@ -26,13 +24,23 @@ public class PlayerDialogueController : MonoBehaviour
 
     public bool FacingChattyNPC()
     {
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, transform.right, 15f, LayerMask.GetMask("Chatty")); // constantly ray cast for a NPC to talk to 
+        RaycastHit hit;
 
-        if (hit)
+        Vector3 rayDirection;
+        if (PlayerMovement.FacingRight)
+        {
+            rayDirection = transform.right;
+        }
+        else
+        {
+            rayDirection = transform.right*-1;
+        }
+
+        if (Physics.Raycast(transform.position, rayDirection, out hit, 15f, LayerMask.GetMask("Chatty")))// constantly ray cast for a NPC to talk to 
         {
             _npc = hit.collider.gameObject.GetComponentInParent<NPC>().GetCharacterAttributes(); //take the specific NPC.cs from the raycast hit
 
-            if (_npc.Name != null)//is there an NPC.cs attached?
+            if (_npc.name != null)//is there an NPC.cs attached?
             {
                 return true;// offer the player a way the ability to talk to the NPC
             }

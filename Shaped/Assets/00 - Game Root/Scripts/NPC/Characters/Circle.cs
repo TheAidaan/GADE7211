@@ -1,14 +1,13 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Circle : NPC
 {
-    // Start is called before the first frame update
+   
     void Start()
     {
         AssignAttributes("Circle", "CICRLE01", 0.12f);
-    }
 
-  
+        int speed = Random.Range(8, 11);
+        GetComponentInParent<NPCcontroller>().AssignSpeed(speed);
+    }
 }
