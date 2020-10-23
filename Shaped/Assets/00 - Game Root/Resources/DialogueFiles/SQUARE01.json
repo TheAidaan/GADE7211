@@ -7,7 +7,8 @@
     },
     {
       "NPCText": "Yeah, I do that sometimes",
-      "Response": "..."
+      "Response": "...",
+      "Interupt": true
 
     },
     {
@@ -27,7 +28,8 @@
     },
     {
       "NPCText": "Yes",
-      "Response": "okay grea..."
+      "Response": "okay grea...",
+      "Interupt": true
     },
     {
       "NPCText": "For a neon",

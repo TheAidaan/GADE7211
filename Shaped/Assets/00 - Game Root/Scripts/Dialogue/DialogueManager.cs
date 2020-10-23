@@ -10,6 +10,7 @@ public class Dialogue //json
 {
     public string NPCText;
     public string Response;
+    public bool Interupt;
 }
 [Serializable]
 public class DialogueNodes//json
@@ -37,7 +38,7 @@ public class DialogueManager : MonoBehaviour        // the monobehaviour
     public static bool activeDialogue { get { return _activeDialogue; } }
 
     bool _typing, _stoptyping;
-    float _textDelay = 0.12f;
+    const float PLAYER_TEXT_DELAY = 0.05f;
 
     Character _currentNPC;
 
@@ -70,51 +71,31 @@ public class DialogueManager : MonoBehaviour        // the monobehaviour
 
     private void Update()
     {
-        Dialogue current; // an empty dialogue variable that stores the NPC - player sentence exchanges
-
-
         if (_activeDialogue)         
         {
-            _dialogueOptiontxt.gameObject.SetActive(false); //player should see that they are able to choose to talk to the npc they are currently talking to
-
-            if (Input.GetKeyDown(KeyCode.D)) // player can't move player character anymore so D only moves the dialogue foward
+            if (Input.GetKeyDown(KeyCode.Q))    // player can't move player character anymore so A only moves the dialogue backwards
             {
                 if (_typing)
                 {
                     _stoptyping = true;
                 }
-                else
-                {
-                    _playerDialoguetxt.text = String.Empty;
-                    current = _currentDialogue.Next(); // store the next exchange in a varaible 
+            }
 
-                    if (current != null) // is it at the end of the list?)
-                    {
-                        StartCoroutine(RunDialogue(current) ); //say this, if not at the end
-                    }
-                    else
-                    {
-                        ClearDialogue();
-                        _dialogueBox.HideDialogueBox(); // turn off the dialogueBox for now
-                    }
+                _dialogueOptiontxt.gameObject.SetActive(false); //player should see that they are able to choose to talk to the npc they are currently talking to
+
+            if (Input.GetKeyDown(KeyCode.D)) // player can't move player character anymore so D only moves the dialogue foward
+            {
+                if (!_typing)
+                {
+                     NextExchange();
                 }       
             }
 
             if (Input.GetKeyDown(KeyCode.A))    // player can't move player character anymore so A only moves the dialogue backwards
             {
-                if (_typing)
+                if (!_typing)
                 {
-                    _stoptyping = true;
-                }
-                else
-                {
-                   
-                    current = _currentDialogue.Previous();
-                    if (current != null)
-                    {
-                        _playerDialoguetxt.text = String.Empty;
-                        StartCoroutine(RunDialogue(current)); // say the previous sentence, if it's at the begnning, it will always and only say the head
-                    }
+                    PreviousExchange();
                 }
             }                
         }
@@ -147,7 +128,7 @@ public class DialogueManager : MonoBehaviour        // the monobehaviour
             for (int i = 0; i < current.Response.Length + 1; i++) // adds a character to the end of the display text
             {
                 _playerDialoguetxt.text = current.Response.Substring(0, i); // waits a while
-                yield return new WaitForSeconds(_textDelay); // can be broken, if player is getting annoyed
+                yield return new WaitForSeconds(PLAYER_TEXT_DELAY); // can be broken, if player is getting annoyed
 
                 if (_stoptyping) // can be broken, if player is getting annoyed
                 {
@@ -160,8 +141,41 @@ public class DialogueManager : MonoBehaviour        // the monobehaviour
             }
 
             _typing = false; // not typing
+            if (current.Interupt)
+            {
+                NextExchange();
+            }
         }
        
+    }
+
+    void PreviousExchange()
+    {
+        Dialogue current; // an empty dialogue variable that stores the NPC - player sentence exchanges
+
+        current = _currentDialogue.Previous();
+        if (current != null)
+        {
+            _playerDialoguetxt.text = String.Empty;
+            StartCoroutine(RunDialogue(current)); // say the previous sentence, if it's at the begnning, it will always and only say the head
+        }
+    }
+    void NextExchange()
+    {
+        Dialogue current; // an empty dialogue variable that stores the NPC - player sentence exchanges
+
+        _playerDialoguetxt.text = String.Empty;
+        current = _currentDialogue.Next(); // store the next exchange in a varaible 
+
+        if (current != null) // is it at the end of the list?)
+        {
+            StartCoroutine(RunDialogue(current)); //say this, if not at the end
+        }
+        else
+        {
+            ClearDialogue();
+            _dialogueBox.HideDialogueBox(); // turn off the dialogueBox for now
+        }
     }
 
     void ClearDialogue()
