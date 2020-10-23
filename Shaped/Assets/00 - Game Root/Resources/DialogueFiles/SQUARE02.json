@@ -1,5 +1,4 @@
-{
-  "itemKeyRequired": -1, // meaning there is nothing required
+{ "itemKeyRequired" :  -1,
   "dialogue": [
     {
       "NPCText": "Did you find a neon for me?",

@@ -2,13 +2,34 @@
 
 public class Character // all characters need a name and a path directing to their current dialogue json
 {
+    public int numberOfDialogueFiles { get; }
     public string name { get; }
-    public string file;
+
+    public int dialogueID = 1;
+    public string file { 
+        get 
+        {
+            if (dialogueID > numberOfDialogueFiles)
+            {
+                dialogueID--;
+            }
+
+            if (dialogueID<10)
+            {
+                return name + "0" + dialogueID;
+            }
+            else
+            {
+                return name + dialogueID;
+            }
+        } 
+    }
     public int iconID { get; }
     public float textDelay { get; }
 
-    public Character(string Name, float TextDelay,int IconID)
+    public Character(string Name, int NumberOfDialogueFiles, float TextDelay,int IconID)
     {
+        numberOfDialogueFiles = NumberOfDialogueFiles;
         name = Name;
         textDelay = TextDelay;
         iconID = IconID;
@@ -20,8 +41,6 @@ public class Character // all characters need a name and a path directing to the
 
 public abstract class NPC : MonoBehaviour
 {
-    public int numberOfDialogueFiles;
-    int _dialogueID = 0;
     public Vector3 movementDir;
 
     Animator _anim;
@@ -39,10 +58,9 @@ public abstract class NPC : MonoBehaviour
         }
 
     }
-    public void AssignAttributes(string Name, float TextDelay, int IconID)
+    public void AssignAttributes(string Name, int NumberOfDialogueFiles, float TextDelay, int IconID)
     {
-        _me = new Character(Name, TextDelay, IconID); //initialising a new character with the inputed values
-        NextDialogueFile();
+        _me = new Character(Name, NumberOfDialogueFiles, TextDelay, IconID); //initialising a new character with the inputed values
     }
 
     public Character GetCharacterAttributes() // name and specified dialoguePath is made public 
@@ -53,22 +71,5 @@ public abstract class NPC : MonoBehaviour
     public void AnimateWalking(bool isWalking)
     {
         _anim.SetBool("isWalking", isWalking);
-    }
-
-    public void NextDialogueFile() // called to change the dialogue file
-    {
-        if(_dialogueID< numberOfDialogueFiles) //is there room to go forward?
-        {
-            _dialogueID++;
-        }
-        
-        if (_dialogueID < 10)
-        {
-            _me.file = _me.name +"0" +_dialogueID; //i just like it like this
-        }
-        else
-        {
-            _me.file = _me.name + _dialogueID;
-        }
     }
 }

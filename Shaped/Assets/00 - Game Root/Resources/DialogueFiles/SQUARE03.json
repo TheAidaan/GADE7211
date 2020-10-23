@@ -1,0 +1,26 @@
+{ "itemKeyRequired" :  1,
+  "dialogue": [
+    {
+      "NPCText": "You have the neon for me!",
+      "Response": "yeah, can I ...",
+      "Interupt": true
+
+
+    },
+    {
+      "NPCText": "I Love it so much",
+      "Response": "can I ...",
+      "Interupt": true
+    },
+    {
+      "NPCText": "And pink, it suits my curves so well",
+      "Response": "can I ...",
+      "Interupt": true
+    },
+    {
+      "NPCText": "I'm going to look so good later",
+      "Response": "can I please leave now",
+      "Interupt": false
+    }
+  ]
+}

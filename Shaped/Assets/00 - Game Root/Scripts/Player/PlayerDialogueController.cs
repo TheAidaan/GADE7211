@@ -6,12 +6,6 @@ public class PlayerDialogueController : MonoBehaviour
     Character _npc; // the npc that the character is currently face. Player can choose whether or not to speak to them
     NPC _npcScript;
    
-    private void Instance_ProceedToNextDialogueFile()
-    {
-        _npcScript.NextDialogueFile();
-        DialogueManager.instance.ProceedToNextDialogueFile -= Instance_ProceedToNextDialogueFile;
-    }
-
     void Update()
     {
         if (FacingChattyNPC() && (!DialogueManager.activeDialogue))
@@ -20,7 +14,6 @@ public class PlayerDialogueController : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 DialogueManager.LoadFile(_npc); // start the conversion by giving the NPC into to the dialogue manager
-                DialogueManager.instance.ProceedToNextDialogueFile += _npcScript.GetComponent<NPC>().NextDialogueFile;
             }
         }
         else

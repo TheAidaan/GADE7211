@@ -15,6 +15,7 @@ public class Dialogue //json
 [Serializable]
 public class DialogueNodes//json
 {
+    public int itemKeyRequired;
     public List<Dialogue> dialogue = new List<Dialogue>();
 }
 
@@ -26,9 +27,7 @@ public class DialogueManager : MonoBehaviour        // the monobehaviour
     public static DialogueManager instance; //single...
     DoublyLinkedList _currentDialogue = new DoublyLinkedList();
 
-    public event Action ProceedToNextDialogueFile;
-    
-    
+
     TextMeshProUGUI _npcNametxt, _npcDialoguetxt, _playerNametxt, _playerDialoguetxt;
     Image _npcDisplayImg, _playerDisplayImg;
 
@@ -181,14 +180,17 @@ public class DialogueManager : MonoBehaviour        // the monobehaviour
     void ClearDialogue()
     {
         _npcNametxt.text = _npcDialoguetxt.text = _playerNametxt.text =_playerDialoguetxt.text = string.Empty; // clear all text UIs
-        
+
+        if (_currentNPC != null)
+        {
+            _currentNPC.dialogueID++;
+            Debug.Log(_currentNPC.dialogueID);
+        }
+
         _currentNPC = null; //clear the current NPC, because you're not speaking with anybody anymore
         _currentDialogue.Clear(); // is at the end, clear the list
         _activeDialogue = false; //no more dialogue available atm
         GameManager.EnablePlayerMovement();
-
-        ProceedToNextDialogueFile?.Invoke();
-
     }
 
     /*              PUBLIC STATICS RECEIVERS             */
@@ -259,6 +261,19 @@ public class DialogueManager : MonoBehaviour        // the monobehaviour
         if (asset != null) //was there a text asset?
         {
             JsonNodes = JsonUtility.FromJson<DialogueNodes>(asset.text); // put it into a generic list
+
+            if (JsonNodes.itemKeyRequired != -1) 
+            {
+                HashData<InventoryItem> item = PlayerInventory.inventory.Search(JsonNodes.itemKeyRequired);
+
+                if (item == null)
+                {
+                    NPC.dialogueID--;
+                    LoadFile(NPC);
+                    return;
+                }
+            }
+           
 
             foreach (Dialogue node in JsonNodes.dialogue)
             {

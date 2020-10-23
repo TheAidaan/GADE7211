@@ -15,8 +15,8 @@
 
 public class ItemLibrary //all the inventory items
 {
-    public static InventoryItem Lines = new InventoryItem(4, "Lines", 5);   //"lines" == the in-game currency 
-    public static InventoryItem Neon = new InventoryItem(4, "Neon", 6);   //"Neon" == the in-game flowers 
+    public static InventoryItem Lines = new InventoryItem(0, "Lines", 5);   //"lines" == the in-game currency 
+    public static InventoryItem Neon = new InventoryItem(1, "Neon", 6);   //"Neon" == the in-game flowers 
 
     //public static InventoryItem Triangle = new InventoryItem(2,"Triangle", "Triangle");
 }
