@@ -55,15 +55,16 @@ public class PlayerInventory : MonoBehaviour
 
     void HideUnusedSlots(int index) // class will hide all the unused Slots
     {
-        //if (index < _itemSlotsUI.Length)// if all slots are filled then there are not unused slots to hide
-        //{
-        //    while (index < _itemSlotsUI.Length)
-        //    {
-        //        _itemSlotsUI[index].SetActive(false);
-        //        index++;
-        //    }
-        //}
-        
+        if (index < _itemSlotsUI.Length)// if all slots are filled then there are not unused slots to hide
+        {
+            while (index < _itemSlotsUI.Length)
+            {
+                ItemSlot itemSlot = _itemSlotsUI[index].GetComponent<ItemSlot>();
+                itemSlot.DestroyItem();
+                index++;
+            }
+        }
+
 
     }
 
@@ -74,6 +75,20 @@ public class PlayerInventory : MonoBehaviour
         bool added =  inventory.Add(item.key, item); // the add, might be successful, might not 
 
         if (added)
+        {
+            instance.DisplayItems();
+        }
+        else
+        {
+            Debug.Log("Item not added");
+        }
+    }
+
+    public static void Delete(InventoryItem item) // anything can add an item to the inventory
+    {
+        bool deleted = inventory.Delete(item.key); // the add, might be successful, might not 
+
+        if (deleted)
         {
             instance.DisplayItems();
         }

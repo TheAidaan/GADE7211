@@ -5,16 +5,26 @@ public class ItemSlot : MonoBehaviour
 {
     string _name;
     Image _icon;
-    void Start()
+    Sprite empty;
+    void Awake()
     {
+
         _icon = transform.GetChild(0).GetComponent<Image>(); // GetComponentInchildren was being problematic 
-        
+
+        empty = _icon.sprite;
+
+
         if (_icon == null)
         {
             Debug.Log(gameObject.name + " does not have a child image");
         }
     }
+    public void DestroyItem()
+    {
+        _name = string.Empty;
+        SlideOut();
 
+    }
     public void SetItem(InventoryItem item) //get the item from the parent
     {
         _name = item.name; // take the name from the item
@@ -62,6 +72,12 @@ public class ItemSlot : MonoBehaviour
     {
         LeanTween.moveLocalX(gameObject, 350, .2f).setEaseInOutBounce();
        
+    }
+    public void SlideOut()
+    {
+        LeanTween.moveLocalX(gameObject, 500, .2f).setEaseInOutBounce();
+        _icon.sprite = empty;
+
     }
     #endregion
 }

@@ -184,7 +184,6 @@ public class DialogueManager : MonoBehaviour        // the monobehaviour
         if (_currentNPC != null)
         {
             _currentNPC.dialogueID++;
-            Debug.Log(_currentNPC.dialogueID);
         }
 
         _currentNPC = null; //clear the current NPC, because you're not speaking with anybody anymore
@@ -271,6 +270,9 @@ public class DialogueManager : MonoBehaviour        // the monobehaviour
                     NPC.dialogueID--;
                     LoadFile(NPC);
                     return;
+                }else
+                {
+                    PlayerInventory.Delete(item.data);
                 }
             }
            

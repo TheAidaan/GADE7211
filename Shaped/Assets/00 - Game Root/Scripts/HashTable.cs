@@ -40,7 +40,7 @@ public class HashTable<T>
         return false;
     }
 
-    public void Delete(int key)
+    public bool Delete(int key)
     {
 
         for (int i = 0; i < ARRAY_SIZE; i++) // to find an empty spot
@@ -50,8 +50,10 @@ public class HashTable<T>
             if ((_hashtable[index] != null) && (_hashtable[index].key == key)) // found it 
             {
                 _hashtable[index] = null; // mark as deleted 
+                return true;
             }
         }
+        return false;
     }
 
     public HashData<T> Search(int key)
