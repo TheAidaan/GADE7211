@@ -4,6 +4,13 @@
 public class PlayerDialogueController : MonoBehaviour
 {
     Character _npc; // the npc that the character is currently face. Player can choose whether or not to speak to them
+    NPC _npcScript;
+   
+    private void Instance_ProceedToNextDialogueFile()
+    {
+        _npcScript.NextDialogueFile();
+        DialogueManager.instance.ProceedToNextDialogueFile -= Instance_ProceedToNextDialogueFile;
+    }
 
     void Update()
     {
@@ -13,6 +20,7 @@ public class PlayerDialogueController : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 DialogueManager.LoadFile(_npc); // start the conversion by giving the NPC into to the dialogue manager
+                DialogueManager.instance.ProceedToNextDialogueFile += _npcScript.GetComponent<NPC>().NextDialogueFile;
             }
         }
         else
@@ -27,18 +35,19 @@ public class PlayerDialogueController : MonoBehaviour
         RaycastHit hit;
 
         Vector3 rayDirection;
-        if (PlayerMovement.FacingRight)
+        if (PlayerMovement.FacingLeft)
         {
-            rayDirection = transform.right;
+            rayDirection = transform.right*-1;
         }
         else
         {
-            rayDirection = transform.right*-1;
+            rayDirection = transform.right;
         }
 
         if (Physics.Raycast(transform.position, rayDirection, out hit, 15f, LayerMask.GetMask("Chatty")))// constantly ray cast for a NPC to talk to 
         {
-            _npc = hit.collider.gameObject.GetComponentInParent<NPC>().GetCharacterAttributes(); //take the specific NPC.cs from the raycast hit
+            _npcScript = hit.collider.gameObject.GetComponentInParent<NPC>();
+            _npc = _npcScript.GetCharacterAttributes(); //take the specific NPC.cs from the raycast hit
 
             if (_npc.name != null)//is there an NPC.cs attached?
             {

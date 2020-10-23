@@ -59,6 +59,11 @@ public class GameUI : MonoBehaviour
         */
         _uiParts[1].SetActive(_showPauseOverlay);
         _uiParts[3].SetActive(_showInputTextOverlay);
+
+        if (_showInputTextOverlay)
+        {
+            _uiParts[3].GetComponent<TextCommandReader>().ActivateInputField();
+        }
     }
     public void Pause()
     {
@@ -83,12 +88,16 @@ public class GameUI : MonoBehaviour
     {
         _showInputTextOverlay = false;
         SetUI();
+        GameManager.EnablePlayerMovement();
+
     }
 
     public void ShowInputTextOverlay()
     {
         _showInputTextOverlay = true;
-        SetUI();
+        SetUI(); 
+        
+        GameManager.DisablePlayerMovement();
     }
 
 }

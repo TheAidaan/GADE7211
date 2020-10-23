@@ -1,9 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using TMPro;
+﻿using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.UIElements;
 
 #region TextCommand struct
 public struct TextCommand // structor for all Inventory items
@@ -70,8 +66,14 @@ public class TextCommandReader : MonoBehaviour
         {
             ReadInput();
         }
-        
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            _input.text = string.Empty;
+        }
+
     }
+
     void ReadInput()
     {
         string inputText = _input.text.ToLower(); // get the input from the player and lower all the letters
@@ -98,6 +100,10 @@ public class TextCommandReader : MonoBehaviour
         }
     }
 
-    
-
+    public void ActivateInputField()
+    {
+        _input.text = string.Empty;
+        _input.ActivateInputField();
+    }
+   
 }

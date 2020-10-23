@@ -9,7 +9,7 @@ EditorBuildSettings:
     path: Assets/00 - Game Root/Scenes/StartScreen.unity
     guid: e49071fe41e7a0541a0b588087b72fc0
   - enabled: 0
-    path: Assets/00 - Game Root/Scenes/Test.unity
+    path: Assets/00 - Game Root/Test/Test.unity
     guid: ebccf744dffc1b846989fd8aaac7965a
   - enabled: 1
     path: Assets/00 - Game Root/Scenes/GamePlay.unity

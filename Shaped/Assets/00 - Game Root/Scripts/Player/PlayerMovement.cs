@@ -1,12 +1,12 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    static bool _facingRight;
-    public static bool FacingRight { get { return _facingRight; } }
-    float _moveSpeed = 9;
+    const float MOVE_SPEED = 12;
+
+    static bool _facingLeft;
+    public static bool FacingLeft { get { return _facingLeft; } }
+    
     Rigidbody _rb;
     PlayerAnimations _animator;
 
@@ -28,14 +28,14 @@ public class PlayerMovement : MonoBehaviour
             _animator.ActivateWalkingAnimation(false); //end the walking animaation
         }
 
-        _rb.velocity = _movementDir.normalized * _moveSpeed; // move in the direction the player wants at a set speed
+        _rb.velocity = _movementDir.normalized * MOVE_SPEED; // move in the direction the player wants at a set speed
     }
 
     void Update()
     {
         _movementDir = Vector2.zero; //zero out so that if player isnt pushing a button the stop.
 
-        if (!DialogueManager.activeDialogue) // while nobody is speaking 
+        if (GameManager.CanMove) // while nobody is speaking 
         {
             if (Input.GetKey(KeyCode.W))
             {
@@ -43,8 +43,8 @@ public class PlayerMovement : MonoBehaviour
             }
             if (Input.GetKey(KeyCode.A))
             {
-                transform.localScale = new Vector3(-1, 1, 1); // face to the left
-                _facingRight = false;
+                transform.localScale = new Vector3(1, 1, 1); // face to the left
+                _facingLeft = true;
 
                 _movementDir.x -= 1f;
                 
@@ -56,8 +56,8 @@ public class PlayerMovement : MonoBehaviour
             }
             if (Input.GetKey(KeyCode.D))
             {
-                transform.localScale = new Vector3(1, 1, 1); // face to the right
-                _facingRight = true;
+                transform.localScale = new Vector3(-1, 1, 1); // face to the right
+                _facingLeft = false;
 
                 _movementDir.x += 1f;
             }

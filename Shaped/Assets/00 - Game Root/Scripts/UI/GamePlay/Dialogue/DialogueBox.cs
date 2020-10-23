@@ -9,6 +9,6 @@ public class DialogueBox : MonoBehaviour
     }
     public void HideDialogueBox()
     {
-        LeanTween.moveY(gameObject, -120, .15f).setEaseInOutBounce();  
+        LeanTween.moveY(gameObject, -360, .15f).setEaseInOutBounce();  
     }
 }

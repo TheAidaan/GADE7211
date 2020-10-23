@@ -3,7 +3,7 @@ using UnityEngine.AI;
 
 public class NPCcontroller : MonoBehaviour
 {   
-    GameObject _target; // the current target for the navemesh to go to
+    public GameObject _target; // the current target for the navemesh to go to
 
     NavMeshAgent _agent; // the navmesh 
     Transform _sprite;// the 2D sprite
@@ -17,13 +17,11 @@ public class NPCcontroller : MonoBehaviour
 
         _agent = GetComponentInChildren<NavMeshAgent>();
 
-        _target = GameObject.FindGameObjectWithTag("Target"); //REMOVE
+        //_target = GameObject.FindGameObjectWithTag("Target"); //REMOVE
 
-        if (_target != null)
-        {
-            _agent.SetDestination(_target.transform.position);//REMOVE
-        }
+       
     }
+   
     void FixedUpdate()
     {
         #region Setting the 3D mesh TARGET

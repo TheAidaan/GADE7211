@@ -1,0 +1,41 @@
+{
+  "dialogue": [
+    {
+      "NPCText": "We're stuck in my box",
+      "Response": "Stuck?"
+
+    },
+    {
+      "NPCText": "Yeah, I do that sometimes",
+      "Response": "..."
+
+    },
+    {
+      "NPCText": "...",
+      "Response": "I don't want to be stuck in your box"
+
+    },
+    {
+      "NPCText": "Then make a plan.",
+      "Response": "Can you get us out?"
+
+    },
+    {
+      "NPCText": "...",
+      "Response": "..."
+
+    },
+    {
+      "NPCText": "Yes",
+      "Response": "okay grea..."
+    },
+    {
+      "NPCText": "For a neon",
+      "Response": "..."
+    },
+    {
+      "NPCText": "Get me a neon and you will be freed",
+      "Response": "sure"
+    }
+  ]
+}

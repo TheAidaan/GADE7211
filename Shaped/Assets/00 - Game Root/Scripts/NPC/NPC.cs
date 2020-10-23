@@ -3,15 +3,15 @@
 public class Character // all characters need a name and a path directing to their current dialogue json
 {
     public string name { get; }
-    public string file { get; }
-
+    public string file;
+    public int iconID { get; }
     public float textDelay { get; }
 
-    public Character(string Name, string File, float TextDelay)
+    public Character(string Name, float TextDelay,int IconID)
     {
         name = Name;
-        file = File;
         textDelay = TextDelay;
+        iconID = IconID;
 
     }
 }
@@ -20,6 +20,8 @@ public class Character // all characters need a name and a path directing to the
 
 public abstract class NPC : MonoBehaviour
 {
+    public int numberOfDialogueFiles;
+    int _dialogueID = 0;
     public Vector3 movementDir;
 
     Animator _anim;
@@ -37,9 +39,10 @@ public abstract class NPC : MonoBehaviour
         }
 
     }
-    public void AssignAttributes(string Name, string File, float TextDelay)
+    public void AssignAttributes(string Name, float TextDelay, int IconID)
     {
-        _me = new Character(Name, File, TextDelay); //initialising a new character with the inputed values
+        _me = new Character(Name, TextDelay, IconID); //initialising a new character with the inputed values
+        NextDialogueFile();
     }
 
     public Character GetCharacterAttributes() // name and specified dialoguePath is made public 
@@ -50,5 +53,22 @@ public abstract class NPC : MonoBehaviour
     public void AnimateWalking(bool isWalking)
     {
         _anim.SetBool("isWalking", isWalking);
+    }
+
+    public void NextDialogueFile() // called to change the dialogue file
+    {
+        if(_dialogueID< numberOfDialogueFiles) //is there room to go forward?
+        {
+            _dialogueID++;
+        }
+        
+        if (_dialogueID < 10)
+        {
+            _me.file = _me.name +"0" +_dialogueID; //i just like it like this
+        }
+        else
+        {
+            _me.file = _me.name + _dialogueID;
+        }
     }
 }

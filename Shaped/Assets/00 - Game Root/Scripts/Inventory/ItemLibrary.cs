@@ -1,20 +1,22 @@
 ﻿public struct InventoryItem // structor for all Inventory items
 {
-    public InventoryItem(int Key,  string Name, string File)
+    public InventoryItem(int Key,  string Name, int IconID)
     {
         key = Key; //for hash
 
         name = Name;
-        file = File;
+        iconID = IconID;
     }
     public int key { get; } // the key relating to the hash index
     public string name { get; } // the name of the item
-    public string file { get; } // the path for the display icon
+    public int iconID { get; } // where on the sprite array is the icon?
+
 }
 
 public class ItemLibrary //all the inventory items
 {
-    public static InventoryItem Circle = new InventoryItem(4,"Circle", "Circle");
-    public static InventoryItem Hexagon = new InventoryItem(11,"Hexagon", "Hexagon");
-    public static InventoryItem Triangle = new InventoryItem(2,"Triangle", "Triangle");
+    public static InventoryItem Lines = new InventoryItem(4, "Lines", 5);   //"lines" == the in-game currency 
+    public static InventoryItem Neon = new InventoryItem(4, "Neon", 6);   //"Neon" == the in-game flowers 
+
+    //public static InventoryItem Triangle = new InventoryItem(2,"Triangle", "Triangle");
 }

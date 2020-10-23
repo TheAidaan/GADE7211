@@ -6,8 +6,8 @@ public class Item : MonoBehaviour
 
     enum Items
     {
-        circle,
-        hexagon,
+        Lines,
+        Neon,
         triangle
     }
     [SerializeField] Items item;
@@ -23,15 +23,13 @@ public class Item : MonoBehaviour
         switch (item)
         {
             default:
-            case Items.circle:
-                _item = ItemLibrary.Circle;
+            case Items.Lines:
+                _item = ItemLibrary.Lines;
                 break;
-            case Items.hexagon:
-                _item = ItemLibrary.Hexagon;
+            case Items.Neon:
+                _item = ItemLibrary.Neon;
                 break;
-            case Items.triangle:
-                _item = ItemLibrary.Triangle;
-                break;
+            
         }
     }
 

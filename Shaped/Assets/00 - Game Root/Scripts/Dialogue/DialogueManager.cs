@@ -22,8 +22,10 @@ public class DialogueNodes//json
 public class DialogueManager : MonoBehaviour        // the monobehaviour 
 {
    
-    static DialogueManager instance; //single...
+    public static DialogueManager instance; //single...
     DoublyLinkedList _currentDialogue = new DoublyLinkedList();
+
+    public event Action ProceedToNextDialogueFile;
     
     
     TextMeshProUGUI _npcNametxt, _npcDialoguetxt, _playerNametxt, _playerDialoguetxt;
@@ -83,6 +85,7 @@ public class DialogueManager : MonoBehaviour        // the monobehaviour
                 }
                 else
                 {
+                    _playerDialoguetxt.text = String.Empty;
                     current = _currentDialogue.Next(); // store the next exchange in a varaible 
 
                     if (current != null) // is it at the end of the list?)
@@ -105,8 +108,13 @@ public class DialogueManager : MonoBehaviour        // the monobehaviour
                 }
                 else
                 {
-                    // _current = _currentDialogue.Previous();
-                    StartCoroutine(RunDialogue( _currentDialogue.Previous() ) ); // say the previous sentence, if it's at the begnning, it will always and only say the head 
+                   
+                    current = _currentDialogue.Previous();
+                    if (current != null)
+                    {
+                        _playerDialoguetxt.text = String.Empty;
+                        StartCoroutine(RunDialogue(current)); // say the previous sentence, if it's at the begnning, it will always and only say the head
+                    }
                 }
             }                
         }
@@ -117,39 +125,43 @@ public class DialogueManager : MonoBehaviour        // the monobehaviour
     {
         _typing = true; // lets everybody know its typing
 
-        for (int i = 0; i < current.NPCText.Length + 1; i++) // loops throygh each character of the string
+        if(current != null)
         {
-            _npcDialoguetxt.text = current.NPCText.Substring(0, i); // adds a character to the end of the display text
-            yield return new WaitForSeconds(_currentNPC.textDelay); // waits a while
-
-            if (_stoptyping) // can be broken, if player is getting annoyed
+            for (int i = 0; i < current.NPCText.Length + 1; i++) // loops throygh each character of the string
             {
-                _stoptyping = false; // stopped typing
-                _typing = false; // stopped typing
-                _npcDialoguetxt.text = current.NPCText; // show the full text that was stopped
+                _npcDialoguetxt.text = current.NPCText.Substring(0, i); // adds a character to the end of the display text
+                yield return new WaitForSeconds(_currentNPC.textDelay); // waits a while
 
-                break;
+                if (_stoptyping) // can be broken, if player is getting annoyed
+                {
+                    _stoptyping = false; // stopped typing
+                    _typing = false; // stopped typing
+                    _npcDialoguetxt.text = current.NPCText; // show the full text that was stopped
+
+                    break;
+                }
             }
-        }
 
-        _typing = true; // if the typing was broken earlier then it will restart
+            _typing = true; // if the typing was broken earlier then it will restart
 
-        for (int i = 0; i < current.Response.Length + 1; i++) // adds a character to the end of the display text
-        {
-            _playerDialoguetxt.text = current.Response.Substring(0, i); // waits a while
-            yield return new WaitForSeconds(_textDelay); // can be broken, if player is getting annoyed
-
-            if (_stoptyping) // can be broken, if player is getting annoyed
+            for (int i = 0; i < current.Response.Length + 1; i++) // adds a character to the end of the display text
             {
-                _stoptyping = false; // stopped typing
-                _typing = false; // stopped typing
-                _playerDialoguetxt.text = current.Response; // show the full text that was stopped
+                _playerDialoguetxt.text = current.Response.Substring(0, i); // waits a while
+                yield return new WaitForSeconds(_textDelay); // can be broken, if player is getting annoyed
 
-                break;
+                if (_stoptyping) // can be broken, if player is getting annoyed
+                {
+                    _stoptyping = false; // stopped typing
+                    _typing = false; // stopped typing
+                    _playerDialoguetxt.text = current.Response; // show the full text that was stopped
+
+                    break;
+                }
             }
-        }
 
-        _typing = false; // not typing
+            _typing = false; // not typing
+        }
+       
     }
 
     void ClearDialogue()
@@ -159,6 +171,9 @@ public class DialogueManager : MonoBehaviour        // the monobehaviour
         _currentNPC = null; //clear the current NPC, because you're not speaking with anybody anymore
         _currentDialogue.Clear(); // is at the end, clear the list
         _activeDialogue = false; //no more dialogue available atm
+        GameManager.EnablePlayerMovement();
+
+        ProceedToNextDialogueFile?.Invoke();
 
     }
 
@@ -174,9 +189,9 @@ public class DialogueManager : MonoBehaviour        // the monobehaviour
         _currentNPC = NPC;
 
         _dialogueBox.ShowDialogueBox();
-        _npcNametxt.text = _currentNPC.name; 
+        _npcNametxt.text = _currentNPC.name;
 
-        Sprite npcIcon = Resources.Load<Sprite>("DialogueIcons/" + NPC.name); // get specific asset
+        Sprite npcIcon = GameManager.sprites[NPC.iconID];
 
         if (npcIcon != null) // is there even an asset
         {
@@ -187,7 +202,7 @@ public class DialogueManager : MonoBehaviour        // the monobehaviour
             Debug.Log("No NPC icon"); // this is why it's not working
         }
 
-        Sprite playerIcon = Resources.Load<Sprite>("DialogueIcons/Player");
+        Sprite playerIcon = GameManager.sprites[0];
 
         if (npcIcon != null)
         {
@@ -200,8 +215,9 @@ public class DialogueManager : MonoBehaviour        // the monobehaviour
         _playerNametxt.text = "Circle";
 
         _activeDialogue = true;
+        GameManager.DisablePlayerMovement();
 
-        StartCoroutine(RunDialogue(_currentDialogue.Next() ) );//sets current dialogue text to the first node
+        StartCoroutine(RunDialogue ( _currentDialogue.Start() ) );//sets current dialogue text to the first node
 
     }
 
