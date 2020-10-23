@@ -17,6 +17,7 @@ public class DialogueNodes//json
 {
     public int itemKeyRequired;
     public List<Dialogue> dialogue = new List<Dialogue>();
+   public int missionID;
 }
 
 /*-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-*/
@@ -272,6 +273,7 @@ public class DialogueManager : MonoBehaviour        // the monobehaviour
                     return;
                 }else
                 {
+                    GameManager.MissionCompleted(JsonNodes.missionID);
                     PlayerInventory.Delete(item.data);
                 }
             }

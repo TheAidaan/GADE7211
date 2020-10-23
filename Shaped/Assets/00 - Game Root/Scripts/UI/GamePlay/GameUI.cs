@@ -4,9 +4,11 @@ public class GameUI : MonoBehaviour
 {
     const int NUMBER_OF_UI_PARTS = 4;
     GameObject[] _uiParts = new GameObject[NUMBER_OF_UI_PARTS]; // to store the different Canvases //
-   
 
-    bool _showPauseOverlay,_showInputTextOverlay;
+    public static bool ExpectingText {get { return _showInputTextOverlay; }}
+    public static bool GamePaused { get { return _showPauseOverlay; } }
+
+    static bool _showPauseOverlay,_showInputTextOverlay;
 
     private void Start()
     {

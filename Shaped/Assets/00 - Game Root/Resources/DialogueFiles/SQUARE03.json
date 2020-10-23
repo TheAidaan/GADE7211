@@ -1,4 +1,5 @@
-{ "itemKeyRequired" :  1,
+{
+  "itemKeyRequired": 1,
   "dialogue": [
     {
       "NPCText": "You have the neon for me!",
@@ -19,8 +20,26 @@
     },
     {
       "NPCText": "I'm going to look so good later",
-      "Response": "can I please leave now",
-      "Interupt": false
+      "Response": "can I please leave now"
+
+    },
+    {
+      "NPCText": "oh... so you won't ask why I want it",
+      "Response": "No. Can I please leave now"
+
+    },
+    {
+      "NPCText": "rude...",
+      "Response": "..."
+    },
+    {
+      "NPCText": "The box is gone",
+      "Response": "Thanks"
+    },
+    {
+      "NPCText": "...",
+      "Response": ""
     }
-  ]
+  ],
+  "missionID": 1
 }

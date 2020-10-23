@@ -1,0 +1,21 @@
+{
+  "itemKeyRequired": -1,
+  "dialogue": [
+    {
+      "NPCText": "not you want to know, but I'm going out later",
+      "Response": "wher...",
+      "Interupt": true
+
+
+    },
+    {
+      "NPCText": "where am I going? I'm not sure, my pair is taking me out for a surprise",
+      "Response": "you know...",
+      "Interupt": true
+    },
+    {
+      "NPCText": "No i don't know, thats the point of the surprise",
+      "Response": "you know it's rude to keep interupting people"
+    }
+  ]
+}
