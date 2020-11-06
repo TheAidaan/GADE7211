@@ -9,6 +9,8 @@ public class MouseHoverText : MonoBehaviour
 
     TextMeshProUGUI _text;
     RectTransform _backgroundRect, _parentRect;
+
+    Canvas _parentCanvas;
     private void Awake()
     {
         instance = this;//...ton
@@ -19,27 +21,24 @@ public class MouseHoverText : MonoBehaviour
         _backgroundRect = GetComponent<RectTransform>();
         _text = GetComponentInChildren<TextMeshProUGUI>();
         _parentRect = transform.parent.GetComponent<RectTransform>();
-        //HideHoverText();
+        _parentCanvas = GetComponentInParent<Canvas>();
+
+        HideHoverText();
     }
 
     void Update()
     {
-        #region Makes text follow mouse
-        Vector2 localPoint;
-        RectTransformUtility.ScreenPointToLocalPointInRectangle
-            (_parentRect, Input.mousePosition, Camera.main, out localPoint); //take in the mouse position, in realtion to the parent canvas and feed it to a variable 
-        transform.localPosition = localPoint; // move the positon to the variable 
-        #endregion
+        #region Makes text follow mouse and stay on screen
+        Vector3 newPos = Input.mousePosition; //take in the mouse position, in realtion to the parent canvas and feed it to a variable 
 
-        #region Makes text stay on screen
-        Vector2 newAnchoredPosition = _backgroundRect.anchoredPosition;
-        if ((newAnchoredPosition.x + _backgroundRect.rect.width) > _parentRect.rect.width) // check if the text is breaching the screen limits
+        float rightEdgeToScreenEdgeDistance = Screen.width - (newPos.x + _backgroundRect.rect.width * _parentCanvas.scaleFactor / 2) - 25;
+        if (rightEdgeToScreenEdgeDistance < 0)
         {
-            newAnchoredPosition.x = _parentRect.rect.width - _backgroundRect.rect.width; // creat new anchored position
-            _backgroundRect.anchoredPosition = newAnchoredPosition;//set neww anchored position
+            newPos.x += rightEdgeToScreenEdgeDistance;
         }
-        #endregion
 
+        transform.position = newPos; // move the positon to the variable 
+        #endregion
 
     }
 

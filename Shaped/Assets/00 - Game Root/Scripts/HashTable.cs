@@ -16,6 +16,7 @@ public class HashTable<T>
 
     HashData<T>[] _hashtable = new HashData<T>[ARRAY_SIZE];//... x
 
+
     public bool Add(int key,T inventoryItem) //KEY then DATA
     {
         if (_itemsInArray == ARRAY_SIZE)

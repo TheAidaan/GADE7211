@@ -1,0 +1,22 @@
+fileFormatVersion: 2
+guid: aeb41f4ec8982404fb3aad50c919e452
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - Butterskull
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: d2235c69ef02b664094714eae17c7d13, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

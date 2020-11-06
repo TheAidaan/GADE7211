@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: a3baf603e0826fc4aa61e4bb16300a3c
+guid: f0c24f705190ef447b1e20c7100e651e
 TrueTypeFontImporter:
   externalObjects: {}
   serializedVersion: 4
@@ -9,7 +9,7 @@ TrueTypeFontImporter:
   characterPadding: 1
   includeFontData: 1
   fontNames:
-  - Awesome Party
+  - Stepped Demo
   fallbackFontReferences: []
   customCharacters: 
   fontRenderingMode: 0
