@@ -7,8 +7,15 @@ public class GameManager : MonoBehaviour
     static Sprite[] _spriteSheet;
     public static Sprite[] sprites { get { return _spriteSheet; } } //indexes 1-5: NPC icons. idexes 5+: item icons
     
-    static bool _playerCanMove = true;
-    public static bool CanMove { get { return _playerCanMove; } }
+    public static bool CanMove 
+    { 
+        get 
+        {
+            if (DialogueManager.activeDialogue || GameUI.GamePaused || GameUI.ExpectingText)
+                return false;
+            return true;    
+        } 
+    }
 
     [SerializeField] GameObject _box;
 
@@ -24,21 +31,6 @@ public class GameManager : MonoBehaviour
     }
 
     /*              PUBLIC STATICS              */
-
-    public static void EnablePlayerMovement()
-    {
-        _playerCanMove = true;
-
-        if ( (DialogueManager.activeDialogue)||(GameUI.GamePaused)||(GameUI.ExpectingText))
-        {
-            _playerCanMove = false;
-        }
-    }
-
-    public static void DisablePlayerMovement()
-    {
-        _playerCanMove = false;
-    }
 
     public static void MissionCompleted(int missionID)
     {

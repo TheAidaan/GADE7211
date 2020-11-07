@@ -1,7 +1,7 @@
 {
   "BranchedNarrative": false,
-  "itemKeyRequired": -1,
-  "dialogue": [
+  "ItemKeyRequired": -1,
+  "Dialogue": [
     {
       "NPCText": "I am a hexagon, my points are sharp and strong",
       "Response": "i'm a cir...",
@@ -20,5 +20,5 @@
 
     }
   ],
-  "missionID": -1
+  "MissionID": -1
 }

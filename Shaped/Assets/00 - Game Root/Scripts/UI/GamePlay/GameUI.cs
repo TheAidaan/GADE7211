@@ -90,7 +90,6 @@ public class GameUI : MonoBehaviour
     {
         _showInputTextOverlay = false;
         SetUI();
-        GameManager.EnablePlayerMovement();
 
     }
 
@@ -99,7 +98,6 @@ public class GameUI : MonoBehaviour
         _showInputTextOverlay = true;
         SetUI(); 
         
-        GameManager.DisablePlayerMovement();
     }
 
 }

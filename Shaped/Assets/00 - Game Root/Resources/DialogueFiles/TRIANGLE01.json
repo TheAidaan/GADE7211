@@ -1,7 +1,7 @@
 {
   "BranchedNarrative": false,
-  "itemKeyRequired": -1,
-  "dialogue": [
+  "ItemKeyRequired": -1,
+  "Dialogue": [
     {
       "NPCText": "I'm a Triangle!",
       "Response": "ew"

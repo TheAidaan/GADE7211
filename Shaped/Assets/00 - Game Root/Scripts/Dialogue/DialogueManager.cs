@@ -37,7 +37,6 @@ public class DialogueManager : MonoBehaviour
 
     void Start()
     {
-        _activeDialogue = false;
         GameObject dialogueBox = GetComponentInChildren<Image>().gameObject; 
 
         _npcNametxt = dialogueBox.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
@@ -61,68 +60,117 @@ public class DialogueManager : MonoBehaviour
 
             _dialogueOptiontxt.gameObject.SetActive(false); //player should see that they are able to choose to talk to the npc they are currently talking to
 
-            //if (Input.GetKeyDown(KeyCode.E)) // move the conversation forward
-            //{
-            //    if (!_typing)
-            //    {
-            //        NextExchange();
-            //    }
-            //}
+            if (Input.GetKeyDown(KeyCode.E) && !_branchedNarrative) // move the conversation forward
+                    NextExchange(); 
+        }
+    }
+
+    void NextExchange()
+    {
+        _currentDialogueNode = _dialogueList.Next();
+        if (_currentDialogueNode != null)
+        {
+            StartCoroutine(RunDialogue(_currentDialogueNode.NPCText));
+            return;
         }
 
-        if (Input.GetKeyDown(KeyCode.Space))
-            LoadFile(Test);
-
-        if (Input.GetKeyDown(KeyCode.A)) { }
-        //LoadFile("Test 1");
+        EndDialogue();
     }
 
 
-    IEnumerator RunDialogue()
+    IEnumerator RunDialogue(string NPCText)            
     {
         _typing = true; // lets everybody know its typing
 
-        for (int i = 0;i < _currentDialogueVertex.Data.NPCText.Length + 1; i++)
+        for (int i = 0;i < NPCText.Length + 1; i++)
         {
-            _npcDialoguetxt.text = _currentDialogueVertex.Data.NPCText.Substring(0,i); //add a character to the end of the text
+            _npcDialoguetxt.text = NPCText.Substring(0,i); //add a character to the end of the text
             yield return new WaitForSeconds(_currentNPC.textDelay); // waits a while
 
             if (_stoptyping)
             {
                 _stoptyping = false; // stopped typing
                 _typing = false; // stopped typing
-                _npcDialoguetxt.text = _currentDialogueVertex.Data.NPCText; // show the full text that was stopped
+                _npcDialoguetxt.text = NPCText; // show the full text that was stopped
 
                 break;
             }
         }
         yield return new WaitForSeconds(_currentNPC.textDelay); // waits a while
 
-        _dialogueBox.ShowDialogueBox(_currentDialogueVertex.Edges.Count());
-        _responseManager.ActivateButtons(_currentDialogueVertex.Data.Responses);
+        if (_branchedNarrative)
+        {
+            _dialogueBox.ShowDialogueBox(_currentDialogueVertex.Data.Responses.Count());
+            _responseManager.ActivateButtons(_currentDialogueVertex.Data.Responses);
+        }
+        else
+        {
+
+        }
+       
     }
     void EndDialogue()
     {
         _dialogueGraph.Clear();
+        _dialogueList.Clear();
+
         _currentDialogueVertex = null;
+        _activeDialogue = false;
 
         _dialogueBox.HideDialogueBox();
     }
 
-    /*              PUBLIC STATICS RECEIVERS             */
+    /*              PUBLIC STATICS RECEIVERS             */                                                 /*              PUBLIC STATICS RECEIVERS             */                                             /*              PUBLIC STATICS RECEIVERS             */
 
-    void AddToGraph(GraphDialogueNode node)
+    
+    void LoadGraph(TextAsset asset)     //graph
+    {
+        GraphDialogue JsonNodes = new GraphDialogue();
+
+        JsonNodes = JsonUtility.FromJson<GraphDialogue>(asset.text); // put it into a generic list
+
+        foreach (GraphDialogueNode node in JsonNodes.Dialogue)
+        {
+            instance.AddToGraph(node);
+        }
+        instance.ActivateDialogue(); // send the NPC name 
+    }
+
+    void AddToGraph(GraphDialogueNode node)     //graph
     {
         _dialogueGraph.AddNode(node);
     }
 
-    void AddToList(ListDialogueNode node)
+    void Response(int responseID)       //graph
     {
-        _dialogueList.AddNode(node);
+        if (!_currentDialogueVertex.Edges.Any())
+            EndDialogue();
+        else
+        {
+            if (_currentDialogueVertex.Edges.Count() <= responseID)
+                EndDialogue();
+            else
+            {
+                _currentDialogueVertex = _currentDialogueVertex.Edges.ElementAt(responseID);
+                StartCoroutine(RunDialogue(_currentDialogueVertex.Data.NPCText));
+            }
+        }
     }
 
+    public void ChangeDialogueOptionText(string message)            //All
+    {
+        if (message == string.Empty)
+        {
+            _dialogueOptiontxt.gameObject.SetActive(false); // turn off the text if the string is empty 
+        }
+        else // activate the text and display the message
+        {
+            _dialogueOptiontxt.gameObject.SetActive(true);
+            _dialogueOptiontxt.text = message;
 
-    void SetNPC(Character NPC)
+        }
+    }
+    void SetNPC(Character NPC)       //All
     {
         _currentNPC = NPC;
 
@@ -139,45 +187,25 @@ public class DialogueManager : MonoBehaviour
             Debug.Log("No NPC icon"); // this is why it's not working
         }
     }
-    void ActivateDialogue()
+    void ActivateDialogue()         //All                                
     {
-        _currentDialogueVertex = _dialogueGraph.Start();
+        _activeDialogue = true;
         _dialogueBox.ShowDialogueBox(0);
 
-        StartCoroutine(RunDialogue());
-
-    }
-
-    void Response(int responseID)
-    {
-        if (!_currentDialogueVertex.Edges.Any())
-            EndDialogue();
+        if (_branchedNarrative)
+        {
+            _currentDialogueVertex = _dialogueGraph.Start();
+            StartCoroutine(RunDialogue(_currentDialogueVertex.Data.NPCText));
+        }
         else
         {
-            if (_currentDialogueVertex.Edges.Count() <= responseID)
-                EndDialogue();
-            else
-            {
-                _currentDialogueVertex = _currentDialogueVertex.Edges.ElementAt(responseID);
-                StartCoroutine(RunDialogue());
-            }
+            _currentDialogueNode = _dialogueList.Start();
+            StartCoroutine(RunDialogue(_currentDialogueNode.NPCText));
         }
-    }
 
-    public void ChangeDialogueOptionText(string message)
-    {
-        if (message == string.Empty)
-        {
-            _dialogueOptiontxt.gameObject.SetActive(false); // turn off the text if the string is empty 
-        }
-        else // activate the text and display the message
-        {
-            _dialogueOptiontxt.gameObject.SetActive(true);
-            _dialogueOptiontxt.text = message;
 
-        }
     }
-    void LoadList(TextAsset asset)
+    void LoadList(TextAsset asset)      //list
     {
         ListDialogueNodes JsonNodes = new ListDialogueNodes();
 
@@ -185,27 +213,18 @@ public class DialogueManager : MonoBehaviour
 
 
         foreach (ListDialogueNode node in JsonNodes.Dialogue)
-        {
             instance.AddToList(node); // puts it into linked list
-        }
 
         instance.ActivateDialogue(); // send the NPC name 
     }
-
-    void LoadGraph(TextAsset asset)
+    void AddToList(ListDialogueNode node)       //list
     {
-        GraphDialogue JsonNodes = new GraphDialogue();
-
-        JsonNodes = JsonUtility.FromJson<GraphDialogue>(asset.text); // put it into a generic list
-
-        foreach (GraphDialogueNode node in JsonNodes.Dialogue)
-        {
-            instance.AddToGraph(node);
-        }
-        instance.ActivateDialogue(); // send the NPC name 
+        _dialogueList.AddNode(node);
     }
 
-    /*              PUBLIC STATICS              */
+    
+    /*              PUBLIC STATICS             */                                                 /*              PUBLIC STATICS             */                                             /*              PUBLIC STATICS             */
+
 
     public static void LoadFile(Character NPC) //anyone can call this = anyone can speak
     {
