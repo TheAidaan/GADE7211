@@ -65,7 +65,7 @@ public class DialogueManager : MonoBehaviour
         }
     }
 
-    void NextExchange()
+    void NextExchange()           //List
     {
         _currentDialogueNode = _dialogueList.Next();
         if (_currentDialogueNode != null)
@@ -78,7 +78,7 @@ public class DialogueManager : MonoBehaviour
     }
 
 
-    IEnumerator RunDialogue(string NPCText)            
+    IEnumerator RunDialogue(string NPCText)             //ALL        
     {
         _typing = true; // lets everybody know its typing
 
@@ -109,7 +109,7 @@ public class DialogueManager : MonoBehaviour
         }
        
     }
-    void EndDialogue()
+    void EndDialogue()          //All
     {
         _dialogueGraph.Clear();
         _dialogueList.Clear();
@@ -250,7 +250,7 @@ public class DialogueManager : MonoBehaviour
             
         
     }
-    public static void Static_Response(int responseID)
+    public static void Static_Response(int responseID)          //Graph
     {
         instance.Response(responseID);
     }
