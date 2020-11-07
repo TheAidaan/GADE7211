@@ -58,7 +58,7 @@ public class DialogueManager : MonoBehaviour
                     _stoptyping = true;
 
             _dialogueOptiontxt.gameObject.SetActive(false); //player should see that they are able to choose to talk to the npc they are currently talking to
-            
+
             //if (Input.GetKeyDown(KeyCode.E)) // move the conversation forward
             //{
             //    if (!_typing)
@@ -72,10 +72,10 @@ public class DialogueManager : MonoBehaviour
             LoadFile(Test);
 
         if (Input.GetKeyDown(KeyCode.A)) { }
-            //LoadFile("Test 1");
+        //LoadFile("Test 1");
     }
-    
-    
+
+
     IEnumerator RunDialogue()
     {
         _typing = true; // lets everybody know its typing
