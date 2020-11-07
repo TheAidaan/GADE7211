@@ -1,240 +1,157 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System.Linq;
 
-[Serializable]
-public class Dialogue //json 
+public class DialogueManager : MonoBehaviour
 {
-    public string NPCText;
-    public string Response;
-    public bool Interupt;
-}
-[Serializable]
-public class DialogueNodes//json
-{
-    public int itemKeyRequired;
-    public List<Dialogue> dialogue = new List<Dialogue>();
-   public int missionID;
-}
+    Character Test = new Character("Trapezium", 2, 0.05f, 1);
 
-/*-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-*/
-
-public class DialogueManager : MonoBehaviour        // the monobehaviour 
-{
-   
     public static DialogueManager instance; //single...
-    DoublyLinkedList _currentDialogue = new DoublyLinkedList();
 
+    Graph _dialogueGraph = new Graph();
+    Vertex _currentDialogue;
+    //DoublyLinkedList _dialogueList = new DoublyLinkedList();
 
-    TextMeshProUGUI _npcNametxt, _npcDialoguetxt, _playerNametxt, _playerDialoguetxt;
-    Image _npcDisplayImg, _playerDisplayImg;
+    TextMeshProUGUI _npcNametxt, _npcDialoguetxt;
+    Image _npcIcon;
+
+    ResponseManager _responseManager;
 
     TextMeshProUGUI _dialogueOptiontxt;
-
-    static bool _activeDialogue;
-    public static bool activeDialogue { get { return _activeDialogue; } }
-
-    bool _typing, _stoptyping;
-    const float PLAYER_TEXT_DELAY = 0.05f;
+    DialogueBox _dialogueBox;
 
     Character _currentNPC;
 
-    DialogueBox _dialogueBox;
+    bool _typing, _stoptyping,_branchedNarrative;
+    static bool _activeDialogue;
+    public static bool activeDialogue { get { return _activeDialogue; } }
 
     private void Awake()
     {
-        instance = this;//..ton
+        instance = this;
     }
 
     void Start()
     {
-        GameObject dialogueBox = GetComponentInChildren<Image>().gameObject;
+        _activeDialogue = false;
+           GameObject dialogueBox = GetComponentInChildren<Image>().gameObject; 
 
         _npcNametxt = dialogueBox.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
-        _npcDisplayImg = _npcNametxt.GetComponentInChildren<Image>();
+        _npcIcon = _npcNametxt.GetComponentInChildren<Image>();
         _npcDialoguetxt = dialogueBox.transform.GetChild(1).GetComponent<TextMeshProUGUI>();
 
-        //_playerNametxt = dialogueBox.transform.GetChild(2).GetComponent<TextMeshProUGUI>();
-        //_playerDisplayImg = _playerNametxt.GetComponentInChildren<Image>();
-        //_playerDialoguetxt = dialogueBox.transform.GetChild(3).GetComponent<TextMeshProUGUI>();
+        _responseManager = GetComponentInChildren<ResponseManager>();
 
         _dialogueOptiontxt = GetComponentInChildren<TextMeshProUGUI>();
         _dialogueBox = GetComponentInChildren<DialogueBox>();
-
-        
-        
-        ClearDialogue();    
     }
 
-    private void Update()
+    // Update is called once per frame
+    void Update()
     {
-        if (_activeDialogue)         
+        if (_activeDialogue)
         {
             if (Input.GetKeyDown(KeyCode.Q))    // player can't move player character anymore so A only moves the dialogue backwards
-            {
                 if (_typing)
-                {
                     _stoptyping = true;
-                }
-            }
 
-                _dialogueOptiontxt.gameObject.SetActive(false); //player should see that they are able to choose to talk to the npc they are currently talking to
-
-            if (Input.GetKeyDown(KeyCode.D)) // player can't move player character anymore so D only moves the dialogue foward
-            {
-                if (!_typing)
-                {
-                     NextExchange();
-                }       
-            }
-
-            if (Input.GetKeyDown(KeyCode.A))    // player can't move player character anymore so A only moves the dialogue backwards
-            {
-                if (!_typing)
-                {
-                    PreviousExchange();
-                }
-            }                
+            _dialogueOptiontxt.gameObject.SetActive(false); //player should see that they are able to choose to talk to the npc they are currently talking to
+            
+            //if (Input.GetKeyDown(KeyCode.E)) // move the conversation forward
+            //{
+            //    if (!_typing)
+            //    {
+            //        NextExchange();
+            //    }
+            //}
         }
 
-       
+        if (Input.GetKeyDown(KeyCode.Space))
+            LoadFile(Test);
+
+        if (Input.GetKeyDown(KeyCode.A)) { }
+            //LoadFile("Test 1");
     }
-    IEnumerator RunDialogue(Dialogue current) /*               MAKE SIMPLIER               */
+    
+    
+    IEnumerator RunDialogue()
     {
         _typing = true; // lets everybody know its typing
 
-        if(current != null)
+        for (int i = 0;i < _currentDialogue.Data.NPCText.Length + 1; i++)
         {
-            for (int i = 0; i < current.NPCText.Length + 1; i++) // loops throygh each character of the string
+            _npcDialoguetxt.text = _currentDialogue.Data.NPCText.Substring(0,i); //add a character to the end of the text
+            yield return new WaitForSeconds(_currentNPC.textDelay); // waits a while
+
+            if (_stoptyping)
             {
-                _npcDialoguetxt.text = current.NPCText.Substring(0, i); // adds a character to the end of the display text
-                yield return new WaitForSeconds(_currentNPC.textDelay); // waits a while
+                _stoptyping = false; // stopped typing
+                _typing = false; // stopped typing
+                _npcDialoguetxt.text = _currentDialogue.Data.NPCText; // show the full text that was stopped
 
-                if (_stoptyping) // can be broken, if player is getting annoyed
-                {
-                    _stoptyping = false; // stopped typing
-                    _typing = false; // stopped typing
-                    _npcDialoguetxt.text = current.NPCText; // show the full text that was stopped
-
-                    break;
-                }
-            }
-
-            _typing = true; // if the typing was broken earlier then it will restart
-
-            for (int i = 0; i < current.Response.Length + 1; i++) // adds a character to the end of the display text
-            {
-                _playerDialoguetxt.text = current.Response.Substring(0, i); // waits a while
-                yield return new WaitForSeconds(PLAYER_TEXT_DELAY); // can be broken, if player is getting annoyed
-
-                if (_stoptyping) // can be broken, if player is getting annoyed
-                {
-                    _stoptyping = false; // stopped typing
-                    _typing = false; // stopped typing
-                    _playerDialoguetxt.text = current.Response; // show the full text that was stopped
-
-                    break;
-                }
-            }
-
-            _typing = false; // not typing
-            if (current.Interupt)
-            {
-                NextExchange();
+                break;
             }
         }
-       
+        yield return new WaitForSeconds(_currentNPC.textDelay); // waits a while
+
+        _dialogueBox.ShowDialogueBox(_currentDialogue.Edges.Count());
+        _responseManager.ActivateButtons(_currentDialogue.Data.Responses);
     }
-
-    void PreviousExchange()
+    void EndDialogue()
     {
-        Dialogue current; // an empty dialogue variable that stores the NPC - player sentence exchanges
+        _dialogueGraph.Clear();
+        _currentDialogue = null;
 
-        current = _currentDialogue.Previous();
-        if (current != null)
-        {
-            _playerDialoguetxt.text = String.Empty;
-            StartCoroutine(RunDialogue(current)); // say the previous sentence, if it's at the begnning, it will always and only say the head
-        }
-    }
-    void NextExchange()
-    {
-        Dialogue current; // an empty dialogue variable that stores the NPC - player sentence exchanges
-
-        _playerDialoguetxt.text = String.Empty;
-        current = _currentDialogue.Next(); // store the next exchange in a varaible 
-
-        if (current != null) // is it at the end of the list?)
-        {
-            StartCoroutine(RunDialogue(current)); //say this, if not at the end
-        }
-        else
-        {
-            ClearDialogue();
-            _dialogueBox.HideDialogueBox(); // turn off the dialogueBox for now
-        }
-    }
-
-    void ClearDialogue()
-    {
-        //_npcNametxt.text = _npcDialoguetxt.text = _playerNametxt.text =_playerDialoguetxt.text = string.Empty; // clear all text UIs
-
-        if (_currentNPC != null)
-        {
-            _currentNPC.dialogueID++;
-        }
-
-        _currentNPC = null; //clear the current NPC, because you're not speaking with anybody anymore
-        _currentDialogue.Clear(); // is at the end, clear the list
-        _activeDialogue = false; //no more dialogue available atm
-        GameManager.EnablePlayerMovement();
+        _dialogueBox.HideDialogueBox();
     }
 
     /*              PUBLIC STATICS RECEIVERS             */
 
-    public void AddToCurrentDialogue(Dialogue node)
+    void AddToCurrentDialogue(GraphDialogueNode node)
     {
-        _currentDialogue.AddNode(node);
+        _dialogueGraph.AddNode(node);
     }
 
-    public void ActivateDialogue(Character NPC)
+    void ActivateDialogue(Character NPC)
     {
         _currentNPC = NPC;
 
-        _dialogueBox.ShowDialogueBox();
         _npcNametxt.text = _currentNPC.name;
 
         Sprite npcIcon = GameManager.sprites[NPC.iconID];
 
         if (npcIcon != null) // is there even an asset
         {
-            _npcDisplayImg.sprite = npcIcon; // if yes the show it
+            _npcIcon.sprite = npcIcon; // if yes the show it
         }
         else
         {
             Debug.Log("No NPC icon"); // this is why it's not working
         }
 
-        Sprite playerIcon = GameManager.sprites[0];
+        _currentDialogue = _dialogueGraph.Start();
+        _dialogueBox.ShowDialogueBox(0);
 
-        if (npcIcon != null)
-        {
-            _playerDisplayImg.sprite = playerIcon;
-        }
+        StartCoroutine(RunDialogue());
+
+    }
+
+    void Response(int responseID)
+    {
+        if (!_currentDialogue.Edges.Any())
+            EndDialogue();
         else
         {
-            Debug.Log("No Player icon");
+            if (_currentDialogue.Edges.Count() <= responseID)
+                EndDialogue();
+            else
+            {
+                _currentDialogue = _currentDialogue.Edges.ElementAt(responseID);
+                StartCoroutine(RunDialogue());
+            }
         }
-        _playerNametxt.text = "Circle";
-
-        _activeDialogue = true;
-        GameManager.DisablePlayerMovement();
-
-        StartCoroutine(RunDialogue ( _currentDialogue.Start() ) );//sets current dialogue text to the first node
-
     }
 
     public void ChangeDialogueOptionText(string message)
@@ -250,46 +167,43 @@ public class DialogueManager : MonoBehaviour        // the monobehaviour
 
         }
     }
-
-    /*              PUBLIC STATICS              */
-
-    public static void LoadFile(Character NPC) //anyone can call this = anyone can speak
+    void LoadList(Character NPC)
     {
-        DialogueNodes JsonNodes = new DialogueNodes();
-
-        TextAsset asset = Resources.Load<TextAsset>("DialogueFiles/"+ NPC.file); // get the text asset with the NPC file name 
+        _branchedNarrative = false;
+    }
+    void LoadGraph(Character NPC)
+    {
+        GraphDialogue JsonNodes = new GraphDialogue();
+        Debug.Log(NPC.file);
+        TextAsset asset = Resources.Load<TextAsset>("DialogueFiles/" + NPC.file); // get the text asset with the NPC file name 
         if (asset != null) //was there a text asset?
         {
-            JsonNodes = JsonUtility.FromJson<DialogueNodes>(asset.text); // put it into a generic list
+            JsonNodes = JsonUtility.FromJson<GraphDialogue>(asset.text); // put it into a generic list
 
-            if (JsonNodes.itemKeyRequired != -1) 
+            foreach (GraphDialogueNode node in JsonNodes.Dialogue)
             {
-                HashData<InventoryItem> item = PlayerInventory.inventory.Search(JsonNodes.itemKeyRequired);
-
-                if (item == null)
-                {
-                    NPC.dialogueID--;
-                    LoadFile(NPC);
-                    return;
-                }else
-                {
-                    GameManager.MissionCompleted(JsonNodes.missionID);
-                    PlayerInventory.Delete(item.data);
-                }
+                instance.AddToCurrentDialogue(node);
             }
-           
-
-            foreach (Dialogue node in JsonNodes.dialogue)
-            {
-                instance.AddToCurrentDialogue(node); // puts it into linked list
-            }
-
             instance.ActivateDialogue(NPC); // send the NPC name 
         }
         else
         {
             Debug.Log("No json file.");
         }
+
+        _branchedNarrative = true;
+    }
+
+    /*              PUBLIC STATICS              */
+
+    public static void LoadFile(Character NPC) //anyone can call this = anyone can speak
+    {
+        instance.LoadGraph(NPC);
+        
+    }
+    public static void Static_Response(int responseID)
+    {
+        instance.Response(responseID);
     }
 
     public static void GiveDialogueOption(string name) // get the NPC name that the player might talk to 
@@ -297,10 +211,10 @@ public class DialogueManager : MonoBehaviour        // the monobehaviour
         if (name != string.Empty)
         {
             instance.ChangeDialogueOptionText("Press [SPACE] to talk to " + name); // format the message if the string has a name
-        }else
+        }
+        else
         {
             instance.ChangeDialogueOptionText(string.Empty); // dont format the name and send an empty string if there's no npc name given
         }
     }
-       
 }

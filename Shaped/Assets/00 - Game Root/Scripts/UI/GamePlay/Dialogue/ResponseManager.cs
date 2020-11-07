@@ -18,11 +18,7 @@ public class ResponseManager : MonoBehaviour
     {
         int numberOfResponses = responses.Count;
         for (int i = 0; i < numberOfResponses; i++)
-        {
-            _responseTexts[i].text = responses.ElementAt(i).Text;
-            Debug.Log(responses.ElementAt(i).Text);
-
-        }
+            _responseTexts[i].text = responses.ElementAt(i).Text;      
            
         if (!numberOfResponses.Equals(_responseTexts.Length))
             for (int i = numberOfResponses; i < _responseTexts.Length; i++)
@@ -31,14 +27,14 @@ public class ResponseManager : MonoBehaviour
 
     public void ResponceOne()
     {
-        DialogueManagerI.Static_Response(0);
+        DialogueManager.Static_Response(0);
     }
     public void ResponceTwo()
     {
-        DialogueManagerI.Static_Response(1);
+        DialogueManager.Static_Response(1);
     }
     public void ResponceThree()
     {
-        DialogueManagerI.Static_Response(2);
+        DialogueManager.Static_Response(2);
     }
 }

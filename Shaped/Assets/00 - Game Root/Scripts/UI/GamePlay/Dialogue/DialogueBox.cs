@@ -2,9 +2,11 @@
 
 public class DialogueBox : MonoBehaviour
 {
-    public void ShowDialogueBox()
+    public void ShowDialogueBox(int numberOFChoices)
     {
-        LeanTween.moveY(gameObject, 15f, .2f).setEaseInOutBounce();
+        Debug.Log(numberOFChoices);
+        float height = 5 + 65 * numberOFChoices;
+        LeanTween.moveY(gameObject, height, .2f).setEaseInOutBounce();
        
     }
     public void HideDialogueBox()

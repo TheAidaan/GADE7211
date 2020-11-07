@@ -1,15 +1,15 @@
 {
-  "dialogue": [
+  "Dialogue": [
     {
       "ID": "A",
       "Connections": "BC",
       "NPCText": "Hello!",
       "Responses": [
         {
-          "Response": "hey"
+          "Text": "hey"
         },
         {
-          "Response": ".."
+          "Text": ".."
         }
       ]
     },
@@ -19,10 +19,10 @@
       "NPCText": "I like talking to you",
       "Responses": [
         {
-          "Response": "thanks, i feel the same way"
+          "Text": "thanks, i feel the same way"
         },
         {
-          "Response": "i don't feel the same way, goodbye"
+          "Text": "i don't feel the same way, goodbye"
         }
       ]
     },
@@ -32,10 +32,10 @@
       "NPCText": "Did you hear me?",
       "Responses": [
         {
-          "Response": "no"
+          "Text": "no"
         },
         {
-          "Response": "i don't want to talk to you"
+          "Text": "i don't want to talk to you"
         }
       ]
     },
@@ -45,13 +45,13 @@
       "NPCText": "maybe we should...",
       "Responses": [
         {
-          "Response": "..kiss?"
+          "Text": "..kiss?"
         },
         {
-          "Response": "...kill?"
+          "Text": "...kill?"
         },
         {
-          "Response": "...leave each other alone?"
+          "Text": "...leave each other alone?"
         }
 
       ]
@@ -62,7 +62,7 @@
       "NPCText": "No!, ew",
       "Responses": [
         {
-          "Response": "sigh"
+          "Text": "sigh"
         }
       ]
     },
@@ -72,7 +72,7 @@
       "NPCText": "I said hello",
       "Responses": [
         {
-          "Response": "and i said i didn't hear you."
+          "Text": "and i said i didn't hear you."
         }
       ]
     }

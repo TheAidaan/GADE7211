@@ -7,7 +7,7 @@ public class GameManager : MonoBehaviour
     static Sprite[] _spriteSheet;
     public static Sprite[] sprites { get { return _spriteSheet; } } //indexes 1-5: NPC icons. idexes 5+: item icons
     
-    static bool _playerCanMove;
+    static bool _playerCanMove = true;
     public static bool CanMove { get { return _playerCanMove; } }
 
     [SerializeField] GameObject _box;
@@ -22,6 +22,8 @@ public class GameManager : MonoBehaviour
     {
         Destroy(_box);
     }
+
+    /*              PUBLIC STATICS              */
 
     public static void EnablePlayerMovement()
     {
