@@ -1,0 +1,80 @@
+{
+  "dialogue": [
+    {
+      "ID": "A",
+      "Connections": "BC",
+      "NPCText": "Hello!",
+      "Responses": [
+        {
+          "Response": "hey"
+        },
+        {
+          "Response": ".."
+        }
+      ]
+    },
+    {
+      "ID": "B",
+      "Connections": "DZ",
+      "NPCText": "I like talking to you",
+      "Responses": [
+        {
+          "Response": "thanks, i feel the same way"
+        },
+        {
+          "Response": "i don't feel the same way, goodbye"
+        }
+      ]
+    },
+    {
+      "ID": "C",
+      "Connections": "FZ",
+      "NPCText": "Did you hear me?",
+      "Responses": [
+        {
+          "Response": "no"
+        },
+        {
+          "Response": "i don't want to talk to you"
+        }
+      ]
+    },
+    {
+      "ID": "D",
+      "Connections": "EEZ",
+      "NPCText": "maybe we should...",
+      "Responses": [
+        {
+          "Response": "..kiss?"
+        },
+        {
+          "Response": "...kill?"
+        },
+        {
+          "Response": "...leave each other alone?"
+        }
+
+      ]
+    },
+    {
+      "ID": "E",
+      "Connections": "Z",
+      "NPCText": "No!, ew",
+      "Responses": [
+        {
+          "Response": "sigh"
+        }
+      ]
+    },
+    {
+      "ID": "F",
+      "Connections": "Z",
+      "NPCText": "I said hello",
+      "Responses": [
+        {
+          "Response": "and i said i didn't hear you."
+        }
+      ]
+    }
+  ]
+}

@@ -57,9 +57,9 @@ public class DialogueManager : MonoBehaviour        // the monobehaviour
         _npcDisplayImg = _npcNametxt.GetComponentInChildren<Image>();
         _npcDialoguetxt = dialogueBox.transform.GetChild(1).GetComponent<TextMeshProUGUI>();
 
-        _playerNametxt = dialogueBox.transform.GetChild(2).GetComponent<TextMeshProUGUI>();
-        _playerDisplayImg = _playerNametxt.GetComponentInChildren<Image>();
-        _playerDialoguetxt = dialogueBox.transform.GetChild(3).GetComponent<TextMeshProUGUI>();
+        //_playerNametxt = dialogueBox.transform.GetChild(2).GetComponent<TextMeshProUGUI>();
+        //_playerDisplayImg = _playerNametxt.GetComponentInChildren<Image>();
+        //_playerDialoguetxt = dialogueBox.transform.GetChild(3).GetComponent<TextMeshProUGUI>();
 
         _dialogueOptiontxt = GetComponentInChildren<TextMeshProUGUI>();
         _dialogueBox = GetComponentInChildren<DialogueBox>();
@@ -180,7 +180,7 @@ public class DialogueManager : MonoBehaviour        // the monobehaviour
 
     void ClearDialogue()
     {
-        _npcNametxt.text = _npcDialoguetxt.text = _playerNametxt.text =_playerDialoguetxt.text = string.Empty; // clear all text UIs
+        //_npcNametxt.text = _npcDialoguetxt.text = _playerNametxt.text =_playerDialoguetxt.text = string.Empty; // clear all text UIs
 
         if (_currentNPC != null)
         {

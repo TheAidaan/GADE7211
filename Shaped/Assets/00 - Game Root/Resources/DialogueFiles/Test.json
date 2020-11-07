@@ -1,0 +1,44 @@
+{
+  "Dialogue": [
+    {
+      "ID": "A",
+      "Connections": "BC",
+      "NPCText": "Hello!",
+      "Responses": [
+        {
+          "Text": "hey"
+        },
+        {
+          "Text": ".."
+        }
+      ]
+    },
+    {
+      "ID": "B",
+      "Connections": "Z",
+      "NPCText": "I like talking to you",
+      "Responses": [
+        {
+          "Text": "ok"
+        }
+      ]
+    },
+    {
+      "ID": "C",
+      "Connections": "Z",
+      "NPCText": "Did you hear me?",
+      "Responses": [
+        {
+          "Text": "no"
+        },
+        {
+          "Text": "yes"
+        },
+        {
+          "Text": "i want to leave"
+        }
+
+      ]
+    }
+  ]
+}
