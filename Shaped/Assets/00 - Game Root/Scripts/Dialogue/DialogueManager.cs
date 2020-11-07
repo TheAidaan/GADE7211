@@ -11,8 +11,10 @@ public class DialogueManager : MonoBehaviour
     public static DialogueManager instance; //single...
 
     Graph _dialogueGraph = new Graph();
-    Vertex _currentDialogue;
-    //DoublyLinkedList _dialogueList = new DoublyLinkedList();
+    Vertex _currentDialogueVertex;
+   
+    DoublyLinkedList _dialogueList = new DoublyLinkedList();
+    ListDialogueNode _currentDialogueNode;
 
     TextMeshProUGUI _npcNametxt, _npcDialoguetxt;
     Image _npcIcon;
@@ -36,7 +38,7 @@ public class DialogueManager : MonoBehaviour
     void Start()
     {
         _activeDialogue = false;
-           GameObject dialogueBox = GetComponentInChildren<Image>().gameObject; 
+        GameObject dialogueBox = GetComponentInChildren<Image>().gameObject; 
 
         _npcNametxt = dialogueBox.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
         _npcIcon = _npcNametxt.GetComponentInChildren<Image>();
@@ -80,41 +82,47 @@ public class DialogueManager : MonoBehaviour
     {
         _typing = true; // lets everybody know its typing
 
-        for (int i = 0;i < _currentDialogue.Data.NPCText.Length + 1; i++)
+        for (int i = 0;i < _currentDialogueVertex.Data.NPCText.Length + 1; i++)
         {
-            _npcDialoguetxt.text = _currentDialogue.Data.NPCText.Substring(0,i); //add a character to the end of the text
+            _npcDialoguetxt.text = _currentDialogueVertex.Data.NPCText.Substring(0,i); //add a character to the end of the text
             yield return new WaitForSeconds(_currentNPC.textDelay); // waits a while
 
             if (_stoptyping)
             {
                 _stoptyping = false; // stopped typing
                 _typing = false; // stopped typing
-                _npcDialoguetxt.text = _currentDialogue.Data.NPCText; // show the full text that was stopped
+                _npcDialoguetxt.text = _currentDialogueVertex.Data.NPCText; // show the full text that was stopped
 
                 break;
             }
         }
         yield return new WaitForSeconds(_currentNPC.textDelay); // waits a while
 
-        _dialogueBox.ShowDialogueBox(_currentDialogue.Edges.Count());
-        _responseManager.ActivateButtons(_currentDialogue.Data.Responses);
+        _dialogueBox.ShowDialogueBox(_currentDialogueVertex.Edges.Count());
+        _responseManager.ActivateButtons(_currentDialogueVertex.Data.Responses);
     }
     void EndDialogue()
     {
         _dialogueGraph.Clear();
-        _currentDialogue = null;
+        _currentDialogueVertex = null;
 
         _dialogueBox.HideDialogueBox();
     }
 
     /*              PUBLIC STATICS RECEIVERS             */
 
-    void AddToCurrentDialogue(GraphDialogueNode node)
+    void AddToGraph(GraphDialogueNode node)
     {
         _dialogueGraph.AddNode(node);
     }
 
-    void ActivateDialogue(Character NPC)
+    void AddToList(ListDialogueNode node)
+    {
+        _dialogueList.AddNode(node);
+    }
+
+
+    void SetNPC(Character NPC)
     {
         _currentNPC = NPC;
 
@@ -130,8 +138,10 @@ public class DialogueManager : MonoBehaviour
         {
             Debug.Log("No NPC icon"); // this is why it's not working
         }
-
-        _currentDialogue = _dialogueGraph.Start();
+    }
+    void ActivateDialogue()
+    {
+        _currentDialogueVertex = _dialogueGraph.Start();
         _dialogueBox.ShowDialogueBox(0);
 
         StartCoroutine(RunDialogue());
@@ -140,15 +150,15 @@ public class DialogueManager : MonoBehaviour
 
     void Response(int responseID)
     {
-        if (!_currentDialogue.Edges.Any())
+        if (!_currentDialogueVertex.Edges.Any())
             EndDialogue();
         else
         {
-            if (_currentDialogue.Edges.Count() <= responseID)
+            if (_currentDialogueVertex.Edges.Count() <= responseID)
                 EndDialogue();
             else
             {
-                _currentDialogue = _currentDialogue.Edges.ElementAt(responseID);
+                _currentDialogueVertex = _currentDialogueVertex.Edges.ElementAt(responseID);
                 StartCoroutine(RunDialogue());
             }
         }
@@ -167,38 +177,58 @@ public class DialogueManager : MonoBehaviour
 
         }
     }
-    void LoadList(Character NPC)
+    void LoadList(TextAsset asset)
     {
-        _branchedNarrative = false;
+        ListDialogueNodes JsonNodes = new ListDialogueNodes();
+
+        JsonNodes = JsonUtility.FromJson<ListDialogueNodes>(asset.text); // put it into a generic list
+
+
+        foreach (ListDialogueNode node in JsonNodes.Dialogue)
+        {
+            instance.AddToList(node); // puts it into linked list
+        }
+
+        instance.ActivateDialogue(); // send the NPC name 
     }
-    void LoadGraph(Character NPC)
+
+    void LoadGraph(TextAsset asset)
     {
         GraphDialogue JsonNodes = new GraphDialogue();
-        Debug.Log(NPC.file);
-        TextAsset asset = Resources.Load<TextAsset>("DialogueFiles/" + NPC.file); // get the text asset with the NPC file name 
-        if (asset != null) //was there a text asset?
-        {
-            JsonNodes = JsonUtility.FromJson<GraphDialogue>(asset.text); // put it into a generic list
 
-            foreach (GraphDialogueNode node in JsonNodes.Dialogue)
-            {
-                instance.AddToCurrentDialogue(node);
-            }
-            instance.ActivateDialogue(NPC); // send the NPC name 
-        }
-        else
-        {
-            Debug.Log("No json file.");
-        }
+        JsonNodes = JsonUtility.FromJson<GraphDialogue>(asset.text); // put it into a generic list
 
-        _branchedNarrative = true;
+        foreach (GraphDialogueNode node in JsonNodes.Dialogue)
+        {
+            instance.AddToGraph(node);
+        }
+        instance.ActivateDialogue(); // send the NPC name 
     }
 
     /*              PUBLIC STATICS              */
 
     public static void LoadFile(Character NPC) //anyone can call this = anyone can speak
     {
-        instance.LoadGraph(NPC);
+        TextAsset asset = Resources.Load<TextAsset>("DialogueFiles/" + NPC.file); // get the text asset with the NPC file name 
+        if (asset != null) //was there a text asset?
+        {
+            NarrativeTypeCheck  check = JsonUtility.FromJson<NarrativeTypeCheck>(asset.text); // checking if the file should be loaded into a graph or a linked list
+
+            instance.SetNPC(NPC);
+            instance._branchedNarrative = check.BranchedNarrative;
+
+            if (check.BranchedNarrative)
+                instance.LoadGraph(asset);
+            else
+                instance.LoadList(asset);
+
+            
+            
+        }else
+        {
+            Debug.Log("No json file");
+        }
+            
         
     }
     public static void Static_Response(int responseID)

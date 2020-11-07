@@ -1,4 +1,6 @@
-{ "itemKeyRequired" :  -1,
+{
+  "BranchedNarrative": false,
+  "itemKeyRequired": -1,
   "dialogue": [
     {
       "NPCText": "Did you find a neon for me?",

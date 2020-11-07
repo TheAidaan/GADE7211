@@ -2,6 +2,15 @@
 using System.Collections.Generic;
 
 [Serializable]
+public class NarrativeTypeCheck //json 
+{
+    public bool BranchedNarrative;
+}
+
+
+/*              FOR THE GRAPH            */
+
+[Serializable]
 public class Response //json 
 {
     public string Text;
@@ -9,8 +18,7 @@ public class Response //json
 
 [Serializable]
 public class GraphDialogueNode //json 
-{
-    public string ID;
+{    public string ID;
     public string Connections;
     public string NPCText;
     public List<Response> Responses = new List<Response>();
@@ -22,10 +30,10 @@ public class GraphDialogue//json
     public List<GraphDialogueNode> Dialogue = new List<GraphDialogueNode>();
 }
 
-/*-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-/-*/
+/*              FOR THE LIST            */
 
 [Serializable]
-public class ListDialogue //json 
+public class ListDialogueNode //json 
 {
     public string NPCText;
     public string Response;
@@ -35,6 +43,6 @@ public class ListDialogue //json
 public class ListDialogueNodes//json
 {
     public int itemKeyRequired;
-    public List<ListDialogue> dialogue = new List<ListDialogue>();
+    public List<ListDialogueNode> Dialogue = new List<ListDialogueNode>();
     public int missionID;
 }

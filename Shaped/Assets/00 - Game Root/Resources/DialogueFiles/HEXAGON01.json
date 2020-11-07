@@ -1,4 +1,5 @@
 {
+  "BranchedNarrative": false,
   "itemKeyRequired": -1,
   "dialogue": [
     {
@@ -19,5 +20,5 @@
 
     }
   ],
-  "missionID" : -1
+  "missionID": -1
 }
