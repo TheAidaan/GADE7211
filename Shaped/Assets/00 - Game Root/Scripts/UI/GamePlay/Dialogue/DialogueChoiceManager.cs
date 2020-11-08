@@ -1,11 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using System.Linq;
 
-public class ResponseManager : MonoBehaviour
+public class DialogueChoiceManager : MonoBehaviour
 {
+    const int NUMBER_OF_BUTTONS = 3;
     TextMeshProUGUI[] _responseTexts = new TextMeshProUGUI[3];
     // Start is called before the first frame update
     void Start()
@@ -18,23 +18,32 @@ public class ResponseManager : MonoBehaviour
     {
         int numberOfResponses = responses.Count;
         for (int i = 0; i < numberOfResponses; i++)
-            _responseTexts[i].text = responses.ElementAt(i).Text;      
-           
-        if (!numberOfResponses.Equals(_responseTexts.Length))
-            for (int i = numberOfResponses; i < _responseTexts.Length; i++)
-                _responseTexts[i].text = "~";
+        {
+            LeanTween.moveLocalX(_responseTexts[i].transform.parent.gameObject, -80, 0.2f);
+            _responseTexts[i].text = responses.ElementAt(i).Text;
+        }
+                      
+    }
+
+    public void HideAllButtons()
+    {
+        for (int i = 0; i < NUMBER_OF_BUTTONS; i++)
+            LeanTween.moveLocalX(_responseTexts[i].transform.parent.gameObject, 160, 0.2f);
     }
 
     public void ResponceOne()
     {
+        HideAllButtons();
         DialogueManager.Static_Response(0);
     }
     public void ResponceTwo()
     {
+        HideAllButtons();
         DialogueManager.Static_Response(1);
     }
     public void ResponceThree()
     {
+        HideAllButtons();
         DialogueManager.Static_Response(2);
     }
 }

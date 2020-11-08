@@ -10,7 +10,7 @@ public class PlayerDialogueController : MonoBehaviour
     {
         if (FacingChattyNPC() && (!DialogueManager.activeDialogue))
         {
-            DialogueManager.GiveDialogueOption(_npc.name);
+            DialogueManager.GiveDialogueOption(_npc.Name);
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 DialogueManager.LoadFile(_npc); // start the conversion by giving the NPC into to the dialogue manager
@@ -42,7 +42,7 @@ public class PlayerDialogueController : MonoBehaviour
             _npcScript = hit.collider.gameObject.GetComponentInParent<NPC>();
             _npc = _npcScript.GetCharacterAttributes(); //take the specific NPC.cs from the raycast hit
 
-            if (_npc.name != null)//is there an NPC.cs attached?
+            if (_npc.Name != null)//is there an NPC.cs attached?
             {
                 return true;// offer the player a way the ability to talk to the NPC
             }

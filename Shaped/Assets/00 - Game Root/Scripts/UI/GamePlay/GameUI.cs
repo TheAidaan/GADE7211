@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameUI : MonoBehaviour
 {
@@ -75,7 +76,7 @@ public class GameUI : MonoBehaviour
     }
     public void Quit()
     {
-        Application.Quit();
+        SceneManager.LoadScene(0);
 
     }
     public void Continue()

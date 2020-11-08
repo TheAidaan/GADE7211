@@ -2,37 +2,38 @@
 
 public class Character // all characters need a name and a path directing to their current dialogue json
 {
-    public int numberOfDialogueFiles { get; }
-    public string name { get; }
+    public bool IsTalking;
+    public int NumberOfDialogueFiles { get; }
+    public string Name { get; }
 
-    public int dialogueID = 1;
-    public string file { 
+    int DialogueID = 1;
+    public string File { 
         get 
         {
-            if (dialogueID > numberOfDialogueFiles)
+            if (DialogueID > NumberOfDialogueFiles)
             {
-                dialogueID--;
+                DialogueID--;
             }
 
-            if (dialogueID<10)
+            if (DialogueID<10)
             {
-                return name + "0" + dialogueID;
+                return Name + "0" + DialogueID;
             }
             else
             {
-                return name + dialogueID;
+                return Name + DialogueID;
             }
         } 
     }
-    public int iconID { get; }
-    public float textDelay { get; }
+    public int IconID { get; }
+    public float TextDelay { get; }
 
-    public Character(string Name, int NumberOfDialogueFiles, float TextDelay,int IconID)
+    public Character(string name, int numberOfDialogueFiles, float textDelay,int iconID)
     {
-        numberOfDialogueFiles = NumberOfDialogueFiles;
-        name = Name;
-        textDelay = TextDelay;
-        iconID = IconID;
+        NumberOfDialogueFiles = numberOfDialogueFiles;
+        Name = name;
+        TextDelay = TextDelay;
+        IconID =iconID;
 
     }
 }
@@ -48,6 +49,7 @@ public abstract class NPC : MonoBehaviour
     public void AssignAttributes(string Name, int NumberOfDialogueFiles, float TextDelay, int IconID)
     {
         _me = new Character(Name, NumberOfDialogueFiles, TextDelay, IconID); //initialising a new character with the inputed values
+        GetComponentInParent<NPCcontroller>().AssignSelf(_me);
     }
 
     public Character GetCharacterAttributes() // name and specified dialoguePath is made public 

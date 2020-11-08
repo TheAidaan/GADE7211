@@ -19,9 +19,9 @@ public class DialogueManager : MonoBehaviour
     TextMeshProUGUI _npcNametxt, _npcDialoguetxt;
     Image _npcIcon;
 
-    ResponseManager _responseManager;
+    DialogueChoiceManager _choices;
 
-    TextMeshProUGUI _dialogueOptiontxt;
+    DialogueAlert _alert;
     DialogueBox _dialogueBox;
 
     Character _currentNPC;
@@ -37,16 +37,18 @@ public class DialogueManager : MonoBehaviour
 
     void Start()
     {
-        GameObject dialogueBox = GetComponentInChildren<Image>().gameObject; 
+       //GameObject dialogueBox = GetComponentInChildren<Image>().gameObject;
 
-        _npcNametxt = dialogueBox.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
-        _npcIcon = _npcNametxt.GetComponentInChildren<Image>();
-        _npcDialoguetxt = dialogueBox.transform.GetChild(1).GetComponent<TextMeshProUGUI>();
-
-        _responseManager = GetComponentInChildren<ResponseManager>();
-
-        _dialogueOptiontxt = GetComponentInChildren<TextMeshProUGUI>();
         _dialogueBox = GetComponentInChildren<DialogueBox>();
+
+        _npcNametxt = _dialogueBox.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
+        _npcIcon = _npcNametxt.GetComponentInChildren<Image>();
+        _npcDialoguetxt = _dialogueBox.transform.GetChild(1).GetComponent<TextMeshProUGUI>();
+
+        _choices = GetComponentInChildren<DialogueChoiceManager>();
+
+        _alert = GetComponentInChildren<DialogueAlert>();
+        
     }
 
     // Update is called once per frame
@@ -58,7 +60,7 @@ public class DialogueManager : MonoBehaviour
                 if (_typing)
                     _stoptyping = true;
 
-            _dialogueOptiontxt.gameObject.SetActive(false); //player should see that they are able to choose to talk to the npc they are currently talking to
+            _alert.Hide();//player should see that they are able to choose to talk to the npc they are currently talking to
 
             if (Input.GetKeyDown(KeyCode.E) && !_branchedNarrative) // move the conversation forward
                     NextExchange(); 
@@ -85,7 +87,7 @@ public class DialogueManager : MonoBehaviour
         for (int i = 0;i < NPCText.Length + 1; i++)
         {
             _npcDialoguetxt.text = NPCText.Substring(0,i); //add a character to the end of the text
-            yield return new WaitForSeconds(_currentNPC.textDelay); // waits a while
+            yield return new WaitForSeconds(_currentNPC.TextDelay); // waits a while
 
             if (_stoptyping)
             {
@@ -96,12 +98,12 @@ public class DialogueManager : MonoBehaviour
                 break;
             }
         }
-        yield return new WaitForSeconds(_currentNPC.textDelay); // waits a while
+        yield return new WaitForSeconds(_currentNPC.TextDelay); // waits a while
 
         if (_branchedNarrative)
         {
-            _dialogueBox.ShowDialogueBox(_currentDialogueVertex.Data.Responses.Count());
-            _responseManager.ActivateButtons(_currentDialogueVertex.Data.Responses);
+            _dialogueBox.ShowDialogueBox();
+            _choices.ActivateButtons(_currentDialogueVertex.Data.Responses);
         }
         else
         {
@@ -109,8 +111,10 @@ public class DialogueManager : MonoBehaviour
         }
        
     }
-    void EndDialogue()          //All
+    void EndDialogue()          //All       
     {
+        _currentNPC.IsTalking = false;
+
         _dialogueGraph.Clear();
         _dialogueList.Clear();
 
@@ -161,22 +165,21 @@ public class DialogueManager : MonoBehaviour
     {
         if (message == string.Empty)
         {
-            _dialogueOptiontxt.gameObject.SetActive(false); // turn off the text if the string is empty 
+            _alert.Hide(); // Hide the alert
         }
         else // activate the text and display the message
         {
-            _dialogueOptiontxt.gameObject.SetActive(true);
-            _dialogueOptiontxt.text = message;
-
+            _alert.Show(message);
         }
     }
     void SetNPC(Character NPC)       //All
     {
         _currentNPC = NPC;
+        _currentNPC.IsTalking = true;
 
-        _npcNametxt.text = _currentNPC.name;
+        _npcNametxt.text = _currentNPC.Name;
 
-        Sprite npcIcon = GameManager.sprites[NPC.iconID];
+        Sprite npcIcon = GameManager.sprites[NPC.IconID];
 
         if (npcIcon != null) // is there even an asset
         {
@@ -190,7 +193,7 @@ public class DialogueManager : MonoBehaviour
     void ActivateDialogue()         //All                                
     {
         _activeDialogue = true;
-        _dialogueBox.ShowDialogueBox(0);
+        _dialogueBox.ShowDialogueBox();
 
         if (_branchedNarrative)
         {
@@ -228,7 +231,7 @@ public class DialogueManager : MonoBehaviour
 
     public static void LoadFile(Character NPC) //anyone can call this = anyone can speak
     {
-        TextAsset asset = Resources.Load<TextAsset>("DialogueFiles/" + NPC.file); // get the text asset with the NPC file name 
+        TextAsset asset = Resources.Load<TextAsset>("DialogueFiles/" + NPC.File); // get the text asset with the NPC file name 
         if (asset != null) //was there a text asset?
         {
             NarrativeTypeCheck  check = JsonUtility.FromJson<NarrativeTypeCheck>(asset.text); // checking if the file should be loaded into a graph or a linked list

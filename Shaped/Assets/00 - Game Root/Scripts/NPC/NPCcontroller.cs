@@ -4,18 +4,20 @@ using UnityEngine.AI;
 public class NPCcontroller : MonoBehaviour
 {
     readonly CharacterIdleState IdleState = new CharacterIdleState();
-    readonly CharacterIdleState WalkingState = new CharacterIdleState();
+    readonly CharacterWalkingState WalkingState = new CharacterWalkingState();
     readonly CharacterTalkingState TalkingState = new CharacterTalkingState();
 
     public GameObject _target; // the current target for the navemesh to go to
 
     NavMeshAgent _agent; // the navmesh
-    float _offset;
     
     Transform _sprite;// the 2D sprit
     NPCAnimator _anim; //used for the animator
 
     bool goToTarget;
+
+    Character _me;
+
 
     void Awake()
     {
@@ -33,16 +35,24 @@ public class NPCcontroller : MonoBehaviour
     void FixedUpdate()
     {
         #region Setting the 3D mesh TARGET
-        if (_target != null && goToTarget) //got anywhere to be?
+
+        if (_me.IsTalking) // am i talking?
+        {
+            _agent.isStopped = true;
+            //_anim.TransitionToState(TalkingState); //Talking
+        }
+        else if (_target != null && goToTarget) //am i walking?
         {
             _anim.TransitionToState(WalkingState); //walk
             _agent.SetDestination(_target.transform.position); //go!
-            
+
         }
-        else
+        else // i should stay still
         {
             _anim.TransitionToState(IdleState); //idle
         }
+
+        
 
         #endregion
 
@@ -62,17 +72,18 @@ public class NPCcontroller : MonoBehaviour
         Vector3 newPos = new Vector3(
             _agent.gameObject.transform.localPosition.x, 
             _sprite.localPosition.y, 
-            _agent.gameObject.transform.localPosition.z + _offset); // set a new position for the 2D sprite to move to 
+            _agent.gameObject.transform.localPosition.z); // set a new position for the 2D sprite to move to 
 
         if (newPos != _sprite.localPosition)
         {
             _sprite.localPosition = newPos;
             
         }
-        #endregion 
+        #endregion
+
     }
 
-    private void Update()
+    private void Update()                       /////////////
     {
         if (Input.GetKeyDown(KeyCode.Z))
             goToTarget = true;
@@ -81,5 +92,10 @@ public class NPCcontroller : MonoBehaviour
     public void AssignSpeed(float speed)
     {
         _agent.speed = speed;
+    }
+
+    public void AssignSelf(Character me)
+    {
+        _me = me;
     }
 }

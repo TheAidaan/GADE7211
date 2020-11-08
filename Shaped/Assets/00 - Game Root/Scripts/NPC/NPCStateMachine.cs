@@ -1,4 +1,6 @@
-﻿public abstract class NPCBaseState
+﻿using UnityEngine;
+
+public abstract class NPCBaseState
 {
     public abstract void EnterState(NPCAnimator character);
     public abstract void Update(NPCAnimator character);

@@ -369,7 +369,7 @@ GameObject:
   - component: {fileID: 3833754825665657744}
   - component: {fileID: 3833754825665657747}
   - component: {fileID: 3833754825665657746}
-  - component: {fileID: 3833754825665657745}
+  - component: {fileID: 1245302467557930806}
   m_Layer: 0
   m_Name: 3DMesh
   m_TagString: Untagged
@@ -440,7 +440,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!195 &3833754825665657745
+--- !u!195 &1245302467557930806
 NavMeshAgent:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -449,7 +449,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 3833754825665657751}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 2
+  m_Radius: 0.5000001
   m_Speed: 3.5
   m_Acceleration: 8
   avoidancePriority: 50
