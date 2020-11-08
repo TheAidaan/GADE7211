@@ -11,6 +11,9 @@ public class PlayerMovement : MonoBehaviour
     PlayerAnimations _animator;
 
     Vector3 _movementDir;
+    readonly PlayerWalkingState WalkingState = new PlayerWalkingState();
+    readonly PlayerIdleState IdleState = new PlayerIdleState();
+
     void Start()
     {
         _rb = GetComponent<Rigidbody>();
@@ -21,11 +24,12 @@ public class PlayerMovement : MonoBehaviour
     {   
         if (_movementDir != Vector3.zero) // don't face one way as a standard
         {
-            _animator.ActivateWalkingAnimation(true); //Activate the walking animation
+            _animator.TransitionToState(WalkingState); //Activate the walking animation
 
         }else
         {
-            _animator.ActivateWalkingAnimation(false); //end the walking animaation
+            _animator.TransitionToState(IdleState); //Deactivate the walking animation
+
         }
 
         _rb.velocity = _movementDir.normalized * MOVE_SPEED; // move in the direction the player wants at a set speed

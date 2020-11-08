@@ -1,32 +1,21 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PlayerAnimations : MonoBehaviour
 {
-    enum AnimationStates { idle, walking}
-    AnimationStates currentState = AnimationStates.idle;
-    Animator _anim;
-    private void Start()
+    readonly PlayerTalkingState TalkingState = new PlayerTalkingState();
+
+    public Animator anim;
+
+    PlayerBaseSate _currentState;
+
+    private void Awake()
     {
-        _anim = GetComponentInChildren<Animator>();
+        anim = GetComponentInChildren<Animator>();
     }
-
-    public void ActivateWalkingAnimation(bool isWalking)
+    
+    public void TransitionToState(PlayerBaseSate state)
     {
-        StartCoroutine(WalkingAnimation(isWalking));
-    }
-    IEnumerator WalkingAnimation(bool isWalking)
-    {
-        _anim.SetBool("isWalking", isWalking);
-
-        if (isWalking)
-        {
-            currentState = AnimationStates.walking;
-        }else
-        {
-            currentState = AnimationStates.idle;
-        }
-
-        yield return null;
+        _currentState = state;
+        _currentState.EnterState(this);
     }
 }

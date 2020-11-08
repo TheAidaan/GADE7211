@@ -41,23 +41,10 @@ public class Character // all characters need a name and a path directing to the
 
 public abstract class NPC : MonoBehaviour
 {
-    public Vector3 movementDir;
+   // public Vector3 movementDir;
 
-    Animator _anim;
     Character _me; // declare a new character
 
-    void Awake()
-    {
-        if (GetComponentInChildren<Animator>() != null) // if there's not animator on the npc
-        {
-            _anim = GetComponentInChildren<Animator>();
-        }
-        else
-        {
-            Debug.Log(gameObject.name + " does not have an Animator");// this why it ain't working
-        }
-
-    }
     public void AssignAttributes(string Name, int NumberOfDialogueFiles, float TextDelay, int IconID)
     {
         _me = new Character(Name, NumberOfDialogueFiles, TextDelay, IconID); //initialising a new character with the inputed values
@@ -66,10 +53,5 @@ public abstract class NPC : MonoBehaviour
     public Character GetCharacterAttributes() // name and specified dialoguePath is made public 
     {
         return _me;
-    }
-
-    public void AnimateWalking(bool isWalking)
-    {
-        _anim.SetBool("isWalking", isWalking);
     }
 }
