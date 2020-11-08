@@ -44,16 +44,16 @@ public abstract class NPC : MonoBehaviour
 {
    // public Vector3 movementDir;
 
-    Character _me; // declare a new character
+    Character _character; // declare a new character
 
     public void AssignAttributes(string Name, int NumberOfDialogueFiles, float TextDelay, int IconID)
     {
-        _me = new Character(Name, NumberOfDialogueFiles, TextDelay, IconID); //initialising a new character with the inputed values
-        GetComponentInParent<NPCcontroller>().AssignSelf(_me);
+        _character = new Character(Name, NumberOfDialogueFiles, TextDelay, IconID); //initialising a new character with the inputed values
+        GetComponentInParent<NPCcontroller>().AssignCharacter(_character);
     }
 
     public Character GetCharacterAttributes() // name and specified dialoguePath is made public 
     {
-        return _me;
+        return _character;
     }
 }

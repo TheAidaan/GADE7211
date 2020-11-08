@@ -147,18 +147,19 @@ public class DialogueManager : MonoBehaviour
 
     void Response(int responseID)       //graph
     {
-        if (!_currentDialogueVertex.Edges.Any())
-            EndDialogue();
-        else
-        {
-            if (_currentDialogueVertex.Edges.Count() <= responseID)
+        if (!_dialogueGraph.Empty)
+            if (!_currentDialogueVertex.Edges.Any())
                 EndDialogue();
             else
             {
-                _currentDialogueVertex = _currentDialogueVertex.Edges.ElementAt(responseID);
-                StartCoroutine(RunDialogue(_currentDialogueVertex.Data.NPCText));
+                if (_currentDialogueVertex.Edges.Count() <= responseID)
+                    EndDialogue();
+                else
+                {
+                    _currentDialogueVertex = _currentDialogueVertex.Edges.ElementAt(responseID);
+                    StartCoroutine(RunDialogue(_currentDialogueVertex.Data.NPCText));
+                }
             }
-        }
     }
 
     public void ChangeDialogueOptionText(string message)            //All
@@ -242,10 +243,7 @@ public class DialogueManager : MonoBehaviour
             if (check.BranchedNarrative)
                 instance.LoadGraph(asset);
             else
-                instance.LoadList(asset);
-
-            
-            
+                instance.LoadList(asset);        
         }else
         {
             Debug.Log("No json file");

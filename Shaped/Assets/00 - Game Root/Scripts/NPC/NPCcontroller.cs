@@ -16,7 +16,7 @@ public class NPCcontroller : MonoBehaviour
 
     bool goToTarget;
 
-    Character _me;
+    Character _character;
 
 
     void Awake()
@@ -36,13 +36,14 @@ public class NPCcontroller : MonoBehaviour
     {
         #region Setting the 3D mesh TARGET
 
-        if (_me.IsTalking) // am i talking?
+        if (_character.IsTalking) // am i talking?
         {
             _agent.isStopped = true;
-            //_anim.TransitionToState(TalkingState); //Talking
+            _anim.TransitionToState(TalkingState); //Talking
         }
         else if (_target != null && goToTarget) //am i walking?
         {
+            _agent.isStopped = false;
             _anim.TransitionToState(WalkingState); //walk
             _agent.SetDestination(_target.transform.position); //go!
 
@@ -94,8 +95,8 @@ public class NPCcontroller : MonoBehaviour
         _agent.speed = speed;
     }
 
-    public void AssignSelf(Character me)
+    public void AssignCharacter(Character character)
     {
-        _me = me;
+        _character = character;
     }
 }

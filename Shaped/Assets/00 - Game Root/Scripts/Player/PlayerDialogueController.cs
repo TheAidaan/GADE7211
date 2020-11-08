@@ -3,7 +3,8 @@
 
 public class PlayerDialogueController : MonoBehaviour
 {
-    Character _npc; // the npc that the character is currently face. Player can choose whether or not to speak to them
+    Character _lastNPC;
+    Character _npc; // the npc that the character is currently facing. Player can choose whether or not to speak to them
     NPC _npcScript;
    
     void Update()
@@ -13,6 +14,7 @@ public class PlayerDialogueController : MonoBehaviour
             DialogueManager.GiveDialogueOption(_npc.Name);
             if (Input.GetKeyDown(KeyCode.Space))
             {
+                _lastNPC = _npc;
                 DialogueManager.LoadFile(_npc); // start the conversion by giving the NPC into to the dialogue manager
             }
         }
@@ -41,19 +43,26 @@ public class PlayerDialogueController : MonoBehaviour
         {
             _npcScript = hit.collider.gameObject.GetComponentInParent<NPC>();
             _npc = _npcScript.GetCharacterAttributes(); //take the specific NPC.cs from the raycast hit
-
-            if (_npc.Name != null)//is there an NPC.cs attached?
+            if (!_npc.Equals(_lastNPC))
             {
-                return true;// offer the player a way the ability to talk to the NPC
-            }
-            else
-            {
-                Debug.Log("no NPC script attached to chatty NPC"); // this is why it's not working 
+                if (_npc.Name != null)//is there an NPC.cs attached?
+                {
+                    return true;// offer the player a way the ability to talk to the NPC
+                }
+                else
+                {
+                    Debug.Log("no NPC script attached to chatty NPC"); // this is why it's not working 
+                    return false;
+                }
+            }else
+            { 
                 return false;
             }
+            
         }
         else 
-        { 
+        {
+            _lastNPC = null;
             return false; 
         }// Do not offer the player a way the ability to talk to the NPC
         

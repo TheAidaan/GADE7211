@@ -17,12 +17,14 @@ class Vertex
 
 class Graph
 {
+    public bool Empty;
     List<Vertex> _vertices = new List<Vertex>();
    
     public void AddNode(GraphDialogueNode Data)
     {
         Vertex node = new Vertex(Data);
         _vertices.Add(node);
+        Empty = false;
     }
 
     void Sort(Vertex node)
@@ -44,6 +46,7 @@ class Graph
     public void Clear()
     {
         _vertices.Clear();
+        Empty = true;
     }
 
     public Vertex Start()
