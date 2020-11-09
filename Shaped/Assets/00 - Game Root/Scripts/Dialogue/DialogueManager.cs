@@ -6,7 +6,7 @@ using System.Linq;
 
 public class DialogueManager : MonoBehaviour
 {
-    Character Test = new Character("Trapezium", 2, 0.05f, 1);
+    const float PLAYER_TEXT_DELAY = 0.05f;
 
     public static DialogueManager instance; //single...
 
@@ -16,7 +16,9 @@ public class DialogueManager : MonoBehaviour
     DoublyLinkedList _dialogueList = new DoublyLinkedList();
     ListDialogueNode _currentDialogueNode;
 
-    TextMeshProUGUI _npcNametxt, _npcDialoguetxt;
+
+    RectTransform _npcArea, _playerArea;
+    TextMeshProUGUI _npcNameTxt, _DialogueTxt,_playerTxt;
     Image _npcIcon;
 
     DialogueChoiceManager _choices;
@@ -26,7 +28,7 @@ public class DialogueManager : MonoBehaviour
 
     Character _currentNPC;
 
-    bool _typing, _stoptyping,_branchedNarrative;
+    bool _typing, _stoptyping,_branchedNarrative, _npcSpeaking;
     static bool _activeDialogue;
     public static bool activeDialogue { get { return _activeDialogue; } }
 
@@ -41,9 +43,14 @@ public class DialogueManager : MonoBehaviour
 
         _dialogueBox = GetComponentInChildren<DialogueBox>();
 
-        _npcNametxt = _dialogueBox.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
-        _npcIcon = _npcNametxt.GetComponentInChildren<Image>();
-        _npcDialoguetxt = _dialogueBox.transform.GetChild(1).GetComponent<TextMeshProUGUI>();
+        _npcArea = (RectTransform)_dialogueBox.transform.GetChild(0);
+        _npcNameTxt = _npcArea.GetComponent<TextMeshProUGUI>();
+        _npcIcon = _npcNameTxt.GetComponentInChildren<Image>();
+
+        _playerArea = (RectTransform)_dialogueBox.transform.GetChild(1);
+        _playerTxt = _playerArea.GetComponent<TextMeshProUGUI>();
+
+        _DialogueTxt = _dialogueBox.transform.GetChild(2).GetComponent<TextMeshProUGUI>();
 
         _choices = GetComponentInChildren<DialogueChoiceManager>();
 
@@ -69,31 +76,38 @@ public class DialogueManager : MonoBehaviour
 
     void NextExchange()           //List
     {
-        _currentDialogueNode = _dialogueList.Next();
-        if (_currentDialogueNode != null)
+        if (_npcSpeaking)
         {
-            StartCoroutine(RunDialogue(_currentDialogueNode.NPCText));
-            return;
+            PlayerResponse(); // every npc response has a player response 
         }
+        else
+        {
+            _currentDialogueNode = _dialogueList.Next(); //npc response is always first 
+            if (_currentDialogueNode != null)
+                NPCResponse();
+            else
+                EndDialogue(); 
 
-        EndDialogue();
+        }
+        
+        
     }
 
 
-    IEnumerator RunDialogue(string NPCText)             //ALL        
+    IEnumerator RunDialogue(string NPCText, float delay)             //ALL        
     {
         _typing = true; // lets everybody know its typing
 
         for (int i = 0;i < NPCText.Length + 1; i++)
         {
-            _npcDialoguetxt.text = NPCText.Substring(0,i); //add a character to the end of the text
+            _DialogueTxt.text = NPCText.Substring(0,i); //add a character to the end of the text
             yield return new WaitForSeconds(_currentNPC.TextDelay); // waits a while
 
             if (_stoptyping)
             {
                 _stoptyping = false; // stopped typing
                 _typing = false; // stopped typing
-                _npcDialoguetxt.text = NPCText; // show the full text that was stopped
+                _DialogueTxt.text = NPCText; // show the full text that was stopped
 
                 break;
             }
@@ -105,11 +119,29 @@ public class DialogueManager : MonoBehaviour
             _dialogueBox.ShowDialogueBox();
             _choices.ActivateButtons(_currentDialogueVertex.Data.Responses);
         }
-        else
-        {
+        else if (_currentDialogueNode.Interupt && !_npcSpeaking)
+            NextExchange();
+    }
+    void PlayerResponse()
+    {
+        _npcSpeaking = false;
 
-        }
-       
+        _npcArea.gameObject.SetActive(false);
+        _playerArea.gameObject.SetActive(true);
+        _DialogueTxt.alignment = TextAlignmentOptions.TopRight;
+
+        StartCoroutine(RunDialogue(_currentDialogueNode.Response, PLAYER_TEXT_DELAY));       ///List
+    }
+
+    void NPCResponse()
+    {
+        _npcSpeaking = true;
+
+        _playerArea.gameObject.SetActive(false);
+        _npcArea.gameObject.SetActive(true);
+        _DialogueTxt.alignment = TextAlignmentOptions.TopLeft;
+
+        StartCoroutine(RunDialogue(_currentDialogueNode.NPCText, _currentNPC.TextDelay));       ///List
     }
     void EndDialogue()          //All       
     {
@@ -120,6 +152,10 @@ public class DialogueManager : MonoBehaviour
 
         _currentDialogueVertex = null;
         _activeDialogue = false;
+
+        _playerArea.gameObject.SetActive(false);  //preparing fot the next NPC text
+        _npcArea.gameObject.SetActive(true);
+        _DialogueTxt.alignment = TextAlignmentOptions.TopLeft;
 
         _dialogueBox.HideDialogueBox();
     }
@@ -157,7 +193,7 @@ public class DialogueManager : MonoBehaviour
                 else
                 {
                     _currentDialogueVertex = _currentDialogueVertex.Edges.ElementAt(responseID);
-                    StartCoroutine(RunDialogue(_currentDialogueVertex.Data.NPCText));
+                    StartCoroutine(RunDialogue(_currentDialogueVertex.Data.NPCText, _currentNPC.TextDelay));
                 }
             }
     }
@@ -178,7 +214,7 @@ public class DialogueManager : MonoBehaviour
         _currentNPC = NPC;
         _currentNPC.IsTalking = true;
 
-        _npcNametxt.text = _currentNPC.Name;
+        _npcNameTxt.text = _currentNPC.Name;
 
         Sprite npcIcon = GameManager.sprites[NPC.IconID];
 
@@ -199,13 +235,15 @@ public class DialogueManager : MonoBehaviour
         if (_branchedNarrative)
         {
             _currentDialogueVertex = _dialogueGraph.Start();
-            StartCoroutine(RunDialogue(_currentDialogueVertex.Data.NPCText));
+            StartCoroutine(RunDialogue(_currentDialogueVertex.Data.NPCText, _currentNPC.TextDelay));
         }
         else
         {
             _currentDialogueNode = _dialogueList.Start();
-            StartCoroutine(RunDialogue(_currentDialogueNode.NPCText));
+            NPCResponse();
         }
+
+        _npcSpeaking = true;
 
 
     }

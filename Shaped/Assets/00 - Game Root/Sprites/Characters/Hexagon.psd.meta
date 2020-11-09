@@ -122,10 +122,10 @@ TextureImporter:
       name: Hexagon_Body_Shadow
       rect:
         serializedVersion: 2
-        x: 237
+        x: 244
         y: 571
         width: 727
-        height: 423
+        height: 416
       alignment: 9
       pivot: {x: 0.5, y: 0.0028832257}
       border: {x: 0, y: 0, z: 0, w: 0}
