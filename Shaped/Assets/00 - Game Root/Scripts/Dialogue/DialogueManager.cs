@@ -119,8 +119,9 @@ public class DialogueManager : MonoBehaviour
             _dialogueBox.ShowDialogueBox();
             _choices.ActivateButtons(_currentDialogueVertex.Data.Responses);
         }
-        else if (_currentDialogueNode.Interupt && !_npcSpeaking)
-            NextExchange();
+        else if (_currentDialogueNode != null)
+            if (_currentDialogueNode.Interupt && !_npcSpeaking)
+                NextExchange();
     }
     void PlayerResponse()
     {
@@ -152,6 +153,8 @@ public class DialogueManager : MonoBehaviour
 
         _currentDialogueVertex = null;
         _activeDialogue = false;
+
+        _currentDialogueNode = null;
 
         _playerArea.gameObject.SetActive(false);  //preparing fot the next NPC text
         _npcArea.gameObject.SetActive(true);

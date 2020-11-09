@@ -77,6 +77,7 @@ public class GameUI : MonoBehaviour
     public void Quit()
     {
         SceneManager.LoadScene(0);
+        Continue();
 
     }
     public void Continue()

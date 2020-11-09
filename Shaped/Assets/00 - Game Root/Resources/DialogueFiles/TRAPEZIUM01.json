@@ -10,7 +10,7 @@
           "Text": "Hey"
         },
         {
-          "Text": "hey Trap. How are you?"
+          "Text": "Hey Trap. How are you?"
         }
       ]
     },
@@ -20,7 +20,7 @@
       "NPCText": "How are you today?",
       "Responses": [
         {
-          "Text": "Everyshape wont stop asking about my shape. what about you"
+          "Text": "Everyshape wont stop asking about my shape. What about you?"
         },
         {
           "Text": "I'm okay,you?"
@@ -33,7 +33,7 @@
       "NPCText": "I'm okay",
       "Responses": [
         {
-          "Text": "that's nice"
+          "Text": "That's nice"
         }
       ]
     },
@@ -43,10 +43,10 @@
       "NPCText": "Oh my dots. That's really dumb, why can't they mind their own business?",
       "Responses": [
         {
-          "Text": "It's really annoying"
+          "Text": "It's really annoying."
         },
         {
-          "Text": "I've tried to talk about something else, but it's all anyshape brings up"
+          "Text": "I've tried to talk about something else, but it's all anyshape brings up."
         },
         {
           "Text": "I wish everyshape thought like you."
@@ -57,7 +57,7 @@
     {
       "ID": "E",
       "Connections": "Z",
-      "NPCText": "Most shapes on this plane are really ignorant",
+      "NPCText": "Most shapes on this plane are really ignorant.",
       "Responses": [
         {
           "Text": "I hate this plane"
@@ -67,7 +67,7 @@
     {
       "ID": "F",
       "Connections": "Z",
-      "NPCText": "If you ever need someshape to talk to, I'm here",
+      "NPCText": "If you ever need someshape to talk to, I'm here.",
       "Responses": [
         {
           "Text": "Thanks."
