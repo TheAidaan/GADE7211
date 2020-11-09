@@ -8,6 +8,6 @@ public class Triangle : NPC
 
 
         int speed  = Random.Range(10, 13);
-        GetComponentInParent<NPCcontroller>().AssignSpeed(speed);
+       AssignSpeed(speed);
     }
 }

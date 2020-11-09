@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.AI;
 
-public class NPCcontroller : MonoBehaviour
+public class NPCController : MonoBehaviour
 {
     readonly CharacterIdleState IdleState = new CharacterIdleState();
     readonly CharacterWalkingState WalkingState = new CharacterWalkingState();

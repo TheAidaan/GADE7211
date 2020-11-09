@@ -3,17 +3,18 @@
   "ItemKeyRequired": -1,
   "Dialogue": [
     {
-      "NPCText": "I'm a Triangle!",
-      "Response": "ew"
+      "NPCText": "Oh my dots, a circle",
+      "Response": "yeah how are...",
+      "Interupt": true
 
     },
     {
-      "NPCText": "acca",
-      "Response": "..."
+      "NPCText": "How do you live without any points?",
+      "Response": "err... happily?"
 
     },
     {
-      "NPCText": "...",
+      "NPCText": "but like you can't go into corners right?",
       "Response": "..."
 
     }

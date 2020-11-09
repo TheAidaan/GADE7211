@@ -8,6 +8,6 @@ public class Trapezuim : NPC
 
 
         int speed  = Random.Range(13, 18);
-        GetComponentInParent<NPCcontroller>().AssignSpeed(speed);
+        AssignSpeed(speed);
     }
 }

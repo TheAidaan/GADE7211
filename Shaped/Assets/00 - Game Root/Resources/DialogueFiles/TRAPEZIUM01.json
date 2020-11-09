@@ -7,52 +7,49 @@
       "NPCText": "Hello!",
       "Responses": [
         {
-          "Text": "hey"
+          "Text": "Hey"
         },
         {
-          "Text": ".."
+          "Text": "hey Trap. How are you?"
         }
       ]
     },
     {
       "ID": "B",
-      "Connections": "DZ",
-      "NPCText": "I like talking to you",
+      "Connections": "DC",
+      "NPCText": "How are you today?",
       "Responses": [
         {
-          "Text": "thanks, i feel the same way"
+          "Text": "Everyshape wont stop asking about my shape. what about you"
         },
         {
-          "Text": "i don't feel the same way, goodbye"
+          "Text": "I'm okay,you?"
         }
       ]
     },
     {
       "ID": "C",
-      "Connections": "FZ",
-      "NPCText": "Did you hear me?",
+      "Connections": "Z",
+      "NPCText": "I'm okay",
       "Responses": [
         {
-          "Text": "no"
-        },
-        {
-          "Text": "i don't want to talk to you"
+          "Text": "that's nice"
         }
       ]
     },
     {
       "ID": "D",
-      "Connections": "EEZ",
-      "NPCText": "maybe we should...",
+      "Connections": "EEF",
+      "NPCText": "Oh my dots. That's really dumb, why can't they mind their own business?",
       "Responses": [
         {
-          "Text": "..kiss?"
+          "Text": "It's really annoying"
         },
         {
-          "Text": "...kill?"
+          "Text": "I've tried to talk about something else, but it's all anyshape brings up"
         },
         {
-          "Text": "...leave each other alone?"
+          "Text": "I wish everyshape thought like you."
         }
 
       ]
@@ -60,20 +57,20 @@
     {
       "ID": "E",
       "Connections": "Z",
-      "NPCText": "No!, ew",
+      "NPCText": "Most shapes on this plane are really ignorant",
       "Responses": [
         {
-          "Text": "sigh"
+          "Text": "I hate this plane"
         }
       ]
     },
     {
       "ID": "F",
       "Connections": "Z",
-      "NPCText": "I said hello",
+      "NPCText": "If you ever need someshape to talk to, I'm here",
       "Responses": [
         {
-          "Text": "and i said i didn't hear you."
+          "Text": "Thanks."
         }
       ]
     }

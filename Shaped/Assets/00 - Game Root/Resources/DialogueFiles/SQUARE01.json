@@ -3,43 +3,29 @@
   "ItemKeyRequired": -1,
   "Dialogue": [
     {
-      "NPCText": "We're stuck in my box",
-      "Response": "Stuck?"
+      "NPCText": "  Hey Circle",
+      "Response": "hey"
 
     },
     {
-      "NPCText": "Yeah, I do that sometimes",
-      "Response": "...",
-      "Interupt": true
+      "NPCText": "Is everything okay?",
+      "Response": "I guess, I'm just kinda annoyed, you?"
 
     },
     {
-      "NPCText": "...",
-      "Response": "I don't want to be stuck in your box"
+      "NPCText": "well, I'm okay, I've made an appointment to get my points...",
+      "Response": "to get your points what?"
 
     },
     {
-      "NPCText": "Then make a plan.",
-      "Response": "Can you get us out?"
-
-    },
-    {
-      "NPCText": "...",
+      "NPCText": "oh nevermind, did you see the neons in the corner of the park.",
       "Response": "..."
 
     },
     {
-      "NPCText": "Yes",
-      "Response": "okay grea...",
-      "Interupt": true
-    },
-    {
-      "NPCText": "For a neon",
-      "Response": "..."
-    },
-    {
-      "NPCText": "Get me a neon and you will be freed",
-      "Response": "sure"
+      "NPCText": "...",
+      "Response": "no, i didnt, I'll go check it out now"
+
     }
   ]
 }

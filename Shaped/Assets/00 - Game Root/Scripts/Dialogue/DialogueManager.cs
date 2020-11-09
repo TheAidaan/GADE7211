@@ -6,7 +6,7 @@ using System.Linq;
 
 public class DialogueManager : MonoBehaviour
 {
-    const float PLAYER_TEXT_DELAY = 0.05f;
+    const float PLAYER_TEXT_DELAY = 0.04f;
 
     public static DialogueManager instance; //single...
 
@@ -101,7 +101,7 @@ public class DialogueManager : MonoBehaviour
         for (int i = 0;i < NPCText.Length + 1; i++)
         {
             _DialogueTxt.text = NPCText.Substring(0,i); //add a character to the end of the text
-            yield return new WaitForSeconds(_currentNPC.TextDelay); // waits a while
+            yield return new WaitForSeconds(delay); // waits a while
 
             if (_stoptyping)
             {
@@ -284,7 +284,7 @@ public class DialogueManager : MonoBehaviour
                 instance.LoadList(asset);        
         }else
         {
-            Debug.Log("No json file");
+            Debug.Log("No json file for " + NPC.Name + " file name" + NPC.File);
         }
             
         

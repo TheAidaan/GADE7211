@@ -42,14 +42,23 @@ public class Character // all characters need a name and a path directing to the
 
 public abstract class NPC : MonoBehaviour
 {
-   // public Vector3 movementDir;
+    // public Vector3 movementDir;
 
+    NPCController _controller;
     Character _character; // declare a new character
 
+    public void Awake()
+    {
+        _controller = GetComponentInParent<NPCController>();
+    }
     public void AssignAttributes(string Name, int NumberOfDialogueFiles, float TextDelay, int IconID)
     {
         _character = new Character(Name, NumberOfDialogueFiles, TextDelay, IconID); //initialising a new character with the inputed values
-        GetComponentInParent<NPCcontroller>().AssignCharacter(_character);
+        _controller.AssignCharacter(_character);
+    }
+    public void AssignSpeed(float speed)
+    {
+        _controller.AssignSpeed(speed);
     }
 
     public Character GetCharacterAttributes() // name and specified dialoguePath is made public 

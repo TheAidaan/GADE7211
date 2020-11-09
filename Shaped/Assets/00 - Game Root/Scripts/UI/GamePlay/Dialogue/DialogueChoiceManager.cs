@@ -40,11 +40,18 @@ public class DialogueChoiceManager : MonoBehaviour
     {
         for (int i = 0; i < NUMBER_OF_BUTTONS; i++)
         {
+            LeanTween.moveLocalX(_responseTexts[i].transform.parent.gameObject, 160, 0.2f);
+            _responseTexts[i].text = "";
             Vector2 backgroundSize = new Vector2(TEXT_PADDING_WIDTH, TEXT_PADDING_HEIGHT); //make a size for the backround with enough space to make text look comfortable
             _buttonRecTransforms[i].GetComponentInParent<RectTransform>().sizeDelta = backgroundSize;
-            LeanTween.moveLocalX(_responseTexts[i].transform.parent.gameObject, 160, 0.2f);
+            
         }
            
+    }
+
+    void ResetSize()
+    {
+
     }
 
     public void ResponceOne()

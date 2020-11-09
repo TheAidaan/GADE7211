@@ -8,6 +8,6 @@ public class Square : NPC
 
 
         int speed  = Random.Range(12, 15);
-        GetComponentInParent<NPCcontroller>().AssignSpeed(speed);
+        AssignSpeed(speed);
     }
 }
