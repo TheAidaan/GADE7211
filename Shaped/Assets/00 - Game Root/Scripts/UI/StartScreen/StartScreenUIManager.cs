@@ -1,4 +1,4 @@
-﻿using System.Collections;
+﻿using System.Collections;//4,567752
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -19,7 +19,7 @@ public class StartScreenUIManager : MonoBehaviour
     }
     private void Start()
     {
-        StartCoroutine(MovePanel());
+        //StartCoroutine(MovePanel());
     }
     public void Play()
     {
