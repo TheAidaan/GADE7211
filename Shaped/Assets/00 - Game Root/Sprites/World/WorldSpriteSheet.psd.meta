@@ -1,0 +1,412 @@
+fileFormatVersion: 2
+guid: 3a03f31cd2fe7f8418256cb988340a0c
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 5546671543968653177
+    second: SpriteSheet_Gate
+  - first:
+      213: 8755591262435691780
+    second: SpriteSheet_Bush
+  - first:
+      213: -3459558614108198297
+    second: SpriteSheet_Bush(Length)
+  - first:
+      213: 659797372610145418
+    second: SpriteSheet_BushMultiple
+  - first:
+      213: 5546671543968653177
+    second: WorldSpriteSheet_SingleBush
+  - first:
+      213: 8755591262435691780
+    second: SpriteSheet_PlayerHouse
+  - first:
+      213: -3459558614108198297
+    second: WorldSpriteSheet_MultipleBush
+  - first:
+      213: 659797372610145418
+    second: SpriteSheet_House
+  - first:
+      213: -603824882404089822
+    second: SpriteSheet_PlayerHouse
+  - first:
+      213: 8061725960902345770
+    second: WorldSpriteSheet_MultipleBush
+  - first:
+      213: -1351203535965087439
+    second: WorldSpriteSheet_SingleBush
+  - first:
+      213: -689520407193891599
+    second: SpriteSheet_LengthBush
+  - first:
+      213: -603824882404089822
+    second: SpriteSheet_NoEntryHouse
+  - first:
+      213: 8061725960902345770
+    second: SpriteSheet_PlayerHouse
+  - first:
+      213: -1351203535965087439
+    second: WorldSpriteSheet_MultipleBush
+  - first:
+      213: 160890277334083914
+    second: WorldSpriteSheet_SingleBush
+  - first:
+      213: 1026407549584056185
+    second: SpriteSheet_LengthBush
+  - first:
+      213: 5546671543968653177
+    second: SpriteSheet_NoEntryHouse
+  - first:
+      213: 8061725960902345770
+    second: SpriteSheet_PlayerHouse
+  - first:
+      213: 8061725960902345770
+    second: SpriteSheet_1
+  - first:
+      213: -1351203535965087439
+    second: SpriteSheet_2
+  - first:
+      213: -5968281362190890602
+    second: SpriteSheet_Gate
+  - first:
+      213: 659797372610145418
+    second: SpriteSheet_3
+  - first:
+      213: 3506709270439646706
+    second: WorldSpriteSheet_Statue
+  - first:
+      213: 160890277334083914
+    second: WorldSpriteSheet_MultipleBush
+  - first:
+      213: 1026407549584056185
+    second: WorldSpriteSheet_SingleBush
+  - first:
+      213: -3086720242725003937
+    second: WorldSpriteSheet_LongBush
+  - first:
+      213: -4556197565260342421
+    second: SpriteSheet_LengthBush
+  - first:
+      213: -2764029711273647405
+    second: SpriteSheet_PlayerHouse
+  - first:
+      213: -5540648042656198855
+    second: WorldSpriteSheet_StatueStand
+  - first:
+      213: 3929453942698372637
+    second: SpriteSheet_11
+  - first:
+      213: 8058879627694289943
+    second: SpriteSheet_12
+  - first:
+      213: 6833624519701456044
+    second: SpriteSheet_13
+  - first:
+      213: 4050273695720440628
+    second: SpriteSheet_PropHouse
+  - first:
+      213: -603824882404089822
+    second: SpriteSheet_Fence
+  - first:
+      213: 3428448205997769161
+    second: SpriteSheet_MarketStall
+  - first:
+      213: 8733413795567129459
+    second: SpriteSheet_0
+  - first:
+      213: 160890277334083914
+    second: WorldSpriteSheet_MultipleBush
+  - first:
+      213: 1026407549584056185
+    second: WorldSpriteSheet_SingleBush
+  - first:
+      213: 6263278932194072001
+    second: WorldSpriteSheet_LongBush
+  - first:
+      213: -4556197565260342421
+    second: WorldSpriteSheet_Statue
+  - first:
+      213: -2764029711273647405
+    second: SpriteSheet_9
+  - first:
+      213: -4677655331176358481
+    second: SpriteSheet_11
+  - first:
+      213: 6010490484748013973
+    second: SpriteSheet_12
+  - first:
+      213: -4583226217631730359
+    second: SpriteSheet_13
+  - first:
+      213: 4968915383345300452
+    second: SpriteSheet_14
+  - first:
+      213: -8516189750247450741
+    second: SpriteSheet_15
+  - first:
+      213: 5546671543968653177
+    second: SpriteSheet_0
+  - first:
+      213: 8755591262435691780
+    second: SpriteSheet_1
+  - first:
+      213: -3459558614108198297
+    second: SpriteSheet_2
+  - first:
+      213: 8743377824813451583
+    second: SpriteSheet_3
+  - first:
+      213: -689520407193891599
+    second: WorldSpriteSheet_Statue
+  - first:
+      213: 4744770819239620996
+    second: WorldSpriteSheet_MultipleBush
+  - first:
+      213: 2312634442934337617
+    second: WorldSpriteSheet_SingleBush
+  - first:
+      213: -7785687903858768374
+    second: WorldSpriteSheet_Statue
+  - first:
+      213: -4066468379357745367
+    second: SpriteSheet_9
+  - first:
+      213: -4573745880038047565
+    second: WorldSpriteSheet_StatueStand
+  - first:
+      213: 4050273695720440628
+    second: SpriteSheet_14
+  - first:
+      213: 7049410801791314468
+    second: SpriteSheet_15
+  - first:
+      213: 160890277334083914
+    second: WorldSpriteSheet_StatueStand
+  - first:
+      213: 1026407549584056185
+    second: WorldSpriteSheet_MultipleBush
+  - first:
+      213: 6263278932194072001
+    second: WorldSpriteSheet_LongBush
+  - first:
+      213: -4556197565260342421
+    second: WorldSpriteSheet_SingleBush
+  - first:
+      213: 4744770819239620996
+    second: WorldSpriteSheet_StatueStand
+  - first:
+      213: 2312634442934337617
+    second: WorldSpriteSheet_MultipleBush
+  - first:
+      213: -3086720242725003937
+    second: WorldSpriteSheet_LongBush
+  - first:
+      213: -7785687903858768374
+    second: WorldSpriteSheet_SingleBush
+  externalObjects: {}
+  serializedVersion: 11
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: -1
+    aniso: -1
+    mipBias: -100
+    wrapU: 1
+    wrapV: 1
+    wrapW: -1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: WorldSpriteSheet_Statue
+      rect:
+        serializedVersion: 2
+        x: 291
+        y: 4165
+        width: 4963
+        height: 4711
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1fc43d7c7d45e66f0800000000000000
+      internalID: -689520407193891599
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WorldSpriteSheet_StatueStand
+      rect:
+        serializedVersion: 2
+        x: 667
+        y: 2339
+        width: 4216
+        height: 1428
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 481ba65dbefc8d140800000000000000
+      internalID: 4744770819239620996
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WorldSpriteSheet_MultipleBush
+      rect:
+        serializedVersion: 2
+        x: 313
+        y: 266
+        width: 1499
+        height: 1181
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1504f62e5c0281020800000000000000
+      internalID: 2312634442934337617
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WorldSpriteSheet_LongBush
+      rect:
+        serializedVersion: 2
+        x: 2437
+        y: 275
+        width: 2501
+        height: 1006
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f5d5e5b1b44c925d0800000000000000
+      internalID: -3086720242725003937
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WorldSpriteSheet_SingleBush
+      rect:
+        serializedVersion: 2
+        x: 5736
+        y: 348
+        width: 852
+        height: 850
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a06417e0a1ea3f390800000000000000
+      internalID: -7785687903858768374
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 3507c17e0ad653243865a86ac0de14bb
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
