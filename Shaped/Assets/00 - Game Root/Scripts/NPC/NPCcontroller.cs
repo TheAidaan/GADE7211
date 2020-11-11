@@ -7,12 +7,12 @@ public class NPCController : MonoBehaviour
     readonly CharacterWalkingState WalkingState = new CharacterWalkingState();
     readonly CharacterTalkingState TalkingState = new CharacterTalkingState();
 
-    public GameObject _target; // the current target for the navemesh to go to
+    public Transform _target; // the current target for the navemesh to go to
 
     NavMeshAgent _agent; // the navmesh
     
     Transform _sprite;// the 2D sprit
-    NPCAnimator _anim; //used for the animator
+    CharacterAnimator _anim; //used for the animator
 
     bool goToTarget;
 
@@ -22,7 +22,7 @@ public class NPCController : MonoBehaviour
     void Awake()
     {
         _sprite = GetComponentInChildren<Animator>().transform;
-        _anim = _sprite.GetComponent<NPCAnimator>();
+        _anim = _sprite.GetComponent<CharacterAnimator>();
 
         _agent = GetComponentInChildren<NavMeshAgent>(); 
     }
@@ -41,7 +41,7 @@ public class NPCController : MonoBehaviour
             _agent.isStopped = true;
             _anim.TransitionToState(TalkingState); //Talking
         }
-        else if (_target != null && goToTarget) //am i walking?
+        else if (_target != null /*&& goToTarget*/) //am i walking?
         {
             _agent.isStopped = false;
             _anim.TransitionToState(WalkingState); //walk
@@ -86,13 +86,17 @@ public class NPCController : MonoBehaviour
 
     private void Update()                       /////////////
     {
-        if (Input.GetKeyDown(KeyCode.Z))
-            goToTarget = true;
+        //if (Input.GetKeyDown(KeyCode.Z))
+        //    goToTarget = true;
     }
 
     public void AssignSpeed(float speed)
     {
         _agent.speed = speed;
+    }
+    public void AssignTarget(Transform target)
+    {
+       _target = target;
     }
 
     public void AssignCharacter(Character character)

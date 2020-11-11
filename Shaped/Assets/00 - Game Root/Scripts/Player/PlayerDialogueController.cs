@@ -3,10 +3,17 @@
 
 public class PlayerDialogueController : MonoBehaviour
 {
+    readonly CharacterTalkingState TalkingState = new CharacterTalkingState();
+
+    CharacterAnimator _anim; //used for the animator
     Character _lastNPC;
     Character _npc; // the npc that the character is currently facing. Player can choose whether or not to speak to them
     NPC _npcScript;
-   
+
+    private void Start()
+    {
+        _anim = GetComponentInChildren<CharacterAnimator>();
+    }
     void Update()
     {
         if (FacingChattyNPC() && (!DialogueManager.activeDialogue))
@@ -16,6 +23,7 @@ public class PlayerDialogueController : MonoBehaviour
             {
                 _lastNPC = _npc;
                 DialogueManager.LoadFile(_npc); // start the conversion by giving the NPC into to the dialogue manager
+                _anim.TransitionToState(TalkingState);
             }
         }
         else

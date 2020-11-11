@@ -65,4 +65,9 @@ public abstract class NPC : MonoBehaviour
     {
         return _character;
     }
+
+    void OnTriggerExit(Collider other)
+    {
+        GetComponent<Collider>().isTrigger = false;
+    }
 }

@@ -8,16 +8,17 @@ public class PlayerMovement : MonoBehaviour
     public static bool FacingLeft { get { return _facingLeft; } }
     
     Rigidbody _rb;
-    PlayerAnimations _animator;
+    CharacterAnimator _animator;
 
     Vector3 _movementDir;
-    readonly PlayerWalkingState WalkingState = new PlayerWalkingState();
-    readonly PlayerIdleState IdleState = new PlayerIdleState();
+    readonly CharacterWalkingState WalkingState = new CharacterWalkingState();
+    readonly CharacterIdleState IdleState = new CharacterIdleState();
 
     void Start()
     {
         _rb = GetComponent<Rigidbody>();
-        _animator = GetComponent<PlayerAnimations>();
+        _animator = GetComponentInChildren<CharacterAnimator>();
+        _animator.TransitionToState(IdleState); //Deactivate the walking animation
     }
 
     private void FixedUpdate()
