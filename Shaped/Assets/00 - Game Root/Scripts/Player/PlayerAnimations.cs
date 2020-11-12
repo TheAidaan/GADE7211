@@ -1,21 +1,28 @@
 ﻿using UnityEngine;
 
-public class PlayerAnimations : MonoBehaviour
+public class PlayerAnimations : CharacterAnimator
 {
-    readonly PlayerTalkingState TalkingState = new PlayerTalkingState();
+    readonly CharacterWalkingState WalkingState = new CharacterWalkingState();
+    readonly CharacterIdleState IdleState = new CharacterIdleState();
+    readonly CharacterTalkingState TalkingState = new CharacterTalkingState();
 
-    public Animator anim;
-
-    PlayerBaseSate _currentState;
-
-    private void Awake()
+    private void Start()
     {
-        anim = GetComponentInChildren<Animator>();
+        TransitionToState(IdleState);
     }
-    
-    public void TransitionToState(PlayerBaseSate state)
+
+    private void Update()
     {
-        _currentState = state;
-        _currentState.EnterState(this);
+        if (PlayerMovement.Moving || PlayerNavAgentController.NavMeshActive)
+            TransitionToState(WalkingState);
+        else if (DialogueManager.activeDialogue)
+            TransitionToState(TalkingState);
+        else
+            TransitionToState(IdleState);
     }
+
+
+
+
 }
+    

@@ -14,11 +14,12 @@ public class NarrativeTypeCheck //json
 public class Response //json 
 {
     public string Text;
+    public int ItemRequired;
 }
 
 [Serializable]
 public class GraphDialogueNode //json 
-{    public string ID;
+{   public string ID;
     public string Connections;
     public string NPCText;
     public List<Response> Responses = new List<Response>();

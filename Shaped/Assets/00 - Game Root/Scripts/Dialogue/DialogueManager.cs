@@ -161,6 +161,8 @@ public class DialogueManager : MonoBehaviour
         _DialogueTxt.alignment = TextAlignmentOptions.TopLeft;
 
         _dialogueBox.HideDialogueBox();
+
+        PlayerInventory.Static_DisplayItems();
     }
 
     /*              PUBLIC STATICS RECEIVERS             */                                                 /*              PUBLIC STATICS RECEIVERS             */                                             /*              PUBLIC STATICS RECEIVERS             */
@@ -247,7 +249,7 @@ public class DialogueManager : MonoBehaviour
         }
 
         _npcSpeaking = true;
-
+        PlayerInventory.Static_HideAllSlots();
 
     }
     void LoadList(TextAsset asset)      //list

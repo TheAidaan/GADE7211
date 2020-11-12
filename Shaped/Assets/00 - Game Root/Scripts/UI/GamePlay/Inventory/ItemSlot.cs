@@ -22,6 +22,7 @@ public class ItemSlot : MonoBehaviour
     public void DestroyItem()
     {
         _name = string.Empty;
+        _icon.sprite = empty;
         SlideOut();
 
     }
@@ -51,6 +52,8 @@ public class ItemSlot : MonoBehaviour
             Debug.Log("No sprite found"); // this is why it's not working
         }
     }
+
+
     #region Mouse Reactions
     public void MouseHoverEnter()
     {
@@ -76,7 +79,6 @@ public class ItemSlot : MonoBehaviour
     public void SlideOut()
     {
         LeanTween.moveLocalX(gameObject, 500, .2f).setEaseInOutBounce();
-        _icon.sprite = empty;
 
     }
     #endregion

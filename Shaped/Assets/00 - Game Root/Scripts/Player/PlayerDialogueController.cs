@@ -3,6 +3,7 @@
 
 public class PlayerDialogueController : MonoBehaviour
 {
+    readonly CharacterIdleState IdleState = new CharacterIdleState();
     readonly CharacterTalkingState TalkingState = new CharacterTalkingState();
 
     CharacterAnimator _anim; //used for the animator
@@ -23,13 +24,15 @@ public class PlayerDialogueController : MonoBehaviour
             {
                 _lastNPC = _npc;
                 DialogueManager.LoadFile(_npc); // start the conversion by giving the NPC into to the dialogue manager
-                _anim.TransitionToState(TalkingState);
             }
         }
         else
         {
             DialogueManager.GiveDialogueOption(string.Empty); // if not infront of NPC or there is currently dialogue running, then send an empty string
         }
+
+        if (DialogueManager.activeDialogue)
+            _anim.TransitionToState(TalkingState);
 
     }
 

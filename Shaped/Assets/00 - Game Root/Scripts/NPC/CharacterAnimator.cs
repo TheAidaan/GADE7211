@@ -3,17 +3,19 @@
 [RequireComponent(typeof(Animator))]
 public class CharacterAnimator : MonoBehaviour
 {
+
     public Animator anim;
 
-    BaseState _currentState;
+   public  BaseState currentState;
 
     void Awake()
     {
         anim = GetComponent<Animator>();
     }
+
     public void TransitionToState(BaseState state)
     {
-        _currentState = state;
-        _currentState.EnterState(this);
+        currentState = state;
+        currentState.EnterState(this);
     }
 }

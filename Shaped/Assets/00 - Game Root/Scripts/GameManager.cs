@@ -11,7 +11,7 @@ public class GameManager : MonoBehaviour
     { 
         get 
         {
-            if (DialogueManager.activeDialogue || GameUI.GamePaused || GameUI.ExpectingText)
+            if (DialogueManager.activeDialogue || GameUI.GamePaused || GameUI.ExpectingText || PlayerNavAgentController.NavMeshActive)
                 return false;
             return true;    
         } 

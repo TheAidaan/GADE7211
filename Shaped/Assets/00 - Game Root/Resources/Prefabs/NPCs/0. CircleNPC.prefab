@@ -79,7 +79,7 @@ GameObject:
   - component: {fileID: 4539584740660971863}
   - component: {fileID: 4428830451218936514}
   - component: {fileID: 4460912498507708578}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Circle_Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -369,7 +369,7 @@ GameObject:
   - component: {fileID: 5826867595904837349}
   - component: {fileID: 5826867595904837348}
   m_Layer: 0
-  m_Name: CircleNPC
+  m_Name: 0. CircleNPC
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

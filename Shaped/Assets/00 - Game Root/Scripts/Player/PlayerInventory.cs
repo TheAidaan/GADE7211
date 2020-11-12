@@ -6,7 +6,7 @@ public class PlayerInventory : MonoBehaviour
     const int NUMBER_OF_ITEM_SLOTS = 4;
     public static HashTable<InventoryItem> inventory = new HashTable<InventoryItem>(); //the player inventory
 
-    GameObject[] _itemSlotsUI = new GameObject[NUMBER_OF_ITEM_SLOTS];//to hold all itemSlots
+    ItemSlot[] _itemSlots = new ItemSlot[NUMBER_OF_ITEM_SLOTS];//to hold all itemSlots
 
     static PlayerInventory instance;//single...
     private void Awake()
@@ -17,7 +17,7 @@ public class PlayerInventory : MonoBehaviour
     { 
         for (int i = 0; i < NUMBER_OF_ITEM_SLOTS; i++)
         {
-            _itemSlotsUI[i] = transform.GetChild(i).gameObject; // gather all item slots
+            _itemSlots[i] = transform.GetChild(i).gameObject.GetComponent<ItemSlot>(); // gather all item slots
         }
 
         DisplayItems();
@@ -31,22 +31,10 @@ public class PlayerInventory : MonoBehaviour
 
         for(int i=0;i< displayItems.Length; i++)
         {
-            ItemSlot itemSlot = _itemSlotsUI[x].GetComponent<ItemSlot>(); 
-
-            if (itemSlot != null)
+            if (displayItems[i] != null) // only show the stored items in the array, fuck the nulls
             {
-                if (displayItems[i] != null) // only show the stored items in the array, fuck the nulls
-                {
-                    
-                    itemSlot.SetItem(displayItems[i].data); // show the item on screen
-                    _itemSlotsUI[x].SetActive(true); // make sure it's active
-                    x++; //only if item is added, can the next itemslot be used
-                }
-                
-            }
-            else
-            {
-                Debug.Log("Item Slot " + i + " doesn't have an ItemSlot.sc attached"); // just in case
+                _itemSlots[x].SetItem(displayItems[i].data); // show the item on screen
+                x++; //only if item is added, can the next itemslot be used
             }
         }
 
@@ -55,17 +43,22 @@ public class PlayerInventory : MonoBehaviour
 
     void HideUnusedSlots(int index) // class will hide all the unused Slots
     {
-        if (index < _itemSlotsUI.Length)// if all slots are filled then there are not unused slots to hide
+        if (index < _itemSlots.Length)// if all slots are filled then there are not unused slots to hide
         {
-            while (index < _itemSlotsUI.Length)
+            while (index < _itemSlots.Length)
             {
-                ItemSlot itemSlot = _itemSlotsUI[index].GetComponent<ItemSlot>();
-                itemSlot.DestroyItem();
+                _itemSlots[index].DestroyItem();
                 index++;
             }
         }
-
-
+    }
+    void HideAllSlots()
+    {
+        for (int i = 0; i < NUMBER_OF_ITEM_SLOTS; i++)
+        {
+            _itemSlots[i].SlideOut();
+            Debug.Log("hidden");
+        }
     }
 
     /*              PUBLIC STATICS              */
@@ -89,13 +82,20 @@ public class PlayerInventory : MonoBehaviour
         bool deleted = inventory.Delete(item.key); // the add, might be successful, might not 
 
         if (deleted)
-        {
-            instance.DisplayItems();
-        }
+            if (!DialogueManager.activeDialogue)
+                instance.DisplayItems();
         else
-        {
-            Debug.Log("Item not added");
-        }
+            Debug.Log("Item not deleted");
+        
+    }
+
+    public static void Static_HideAllSlots()
+    {
+        instance.HideAllSlots();
+    }
+    public static void Static_DisplayItems()
+    {
+        instance.DisplayItems();
     }
 
 }

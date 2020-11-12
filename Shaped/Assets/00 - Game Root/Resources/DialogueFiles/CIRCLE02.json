@@ -1,0 +1,72 @@
+{
+  "BranchedNarrative": true,
+  "Dialogue": [
+    {
+      "ID": "A",
+      "Connections": "BD",
+      "NPCText": "Hi!",
+      "Responses": [
+        {
+          "Text": "Hey"
+        },
+        {
+          //"ItemRequired": 1,
+          "Text": "Hey do you want this flower"
+        }
+      ]
+    },
+    {
+      "ID": "B",
+      "Connections": "CZ",
+      "NPCText": "How are you today?",
+      "Responses": [
+        {
+          "Text": "I'm okay, you"
+        },
+        {
+          "Text": "I'm okay."
+        }
+      ]
+    },
+    {
+      "ID": "C",
+      "Connections": "Z",
+      "NPCText": "I'm okay",
+      "Responses": [
+        {
+          "Text": "That's nice"
+        }
+      ]
+    },
+    {
+      "ID": "D",
+      "Connections": "EEF",
+      "NPCText": "Oh my dots. I love this flower, thank you so much, where did you get it?",
+      "Responses": [
+        {
+          "Text": "I got it here, in the park."
+        }
+      ]
+    },
+    {
+      "ID": "E",
+      "Connections": "Z",
+      "NPCText": "Thank you so much",
+      "Responses": [
+        {
+          "Text": "No problem"
+        }
+      ]
+    },
+    {
+      "ID": "F",
+      "Connections": "Z",
+      "NPCText": "If you ever need someshape to talk to, I'm here.",
+      "Responses": [
+        {
+          "Text": "Thanks."
+        }
+      ]
+    }
+  ]
+}

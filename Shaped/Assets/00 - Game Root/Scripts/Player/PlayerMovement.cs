@@ -3,7 +3,8 @@
 public class PlayerMovement : MonoBehaviour
 {
     const float MOVE_SPEED = 12;
-
+    static bool _moving;
+        public static bool Moving { get { return _moving; } }
     static bool _facingLeft;
     public static bool FacingLeft { get { return _facingLeft; } }
     
@@ -11,27 +12,20 @@ public class PlayerMovement : MonoBehaviour
     CharacterAnimator _animator;
 
     Vector3 _movementDir;
-    readonly CharacterWalkingState WalkingState = new CharacterWalkingState();
-    readonly CharacterIdleState IdleState = new CharacterIdleState();
+   
 
     void Start()
     {
         _rb = GetComponent<Rigidbody>();
         _animator = GetComponentInChildren<CharacterAnimator>();
-        _animator.TransitionToState(IdleState); //Deactivate the walking animation
     }
 
     private void FixedUpdate()
-    {   
+    {
         if (_movementDir != Vector3.zero) // don't face one way as a standard
-        {
-            _animator.TransitionToState(WalkingState); //Activate the walking animation
-
-        }else
-        {
-            _animator.TransitionToState(IdleState); //Deactivate the walking animation
-
-        }
+            _moving = true;
+        else
+            _moving = false;
 
         _rb.velocity = _movementDir.normalized * MOVE_SPEED; // move in the direction the player wants at a set speed
     }
@@ -67,5 +61,10 @@ public class PlayerMovement : MonoBehaviour
                 _movementDir.x += 1f;
             }
         }
+    }
+
+    public void ChangeFaceingDirection(bool facingLeft)
+    {
+        _facingLeft = facingLeft;
     }
 }
