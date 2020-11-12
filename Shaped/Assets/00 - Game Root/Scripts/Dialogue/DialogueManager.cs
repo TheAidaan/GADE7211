@@ -55,7 +55,9 @@ public class DialogueManager : MonoBehaviour
         _choices = GetComponentInChildren<DialogueChoiceManager>();
 
         _alert = GetComponentInChildren<DialogueAlert>();
-        
+        _activeDialogue = false;
+
+
     }
 
     // Update is called once per frame

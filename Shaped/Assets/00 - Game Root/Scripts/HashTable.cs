@@ -83,6 +83,12 @@ public class HashTable<T>
         return key % ARRAY_SIZE;
     }
 
+    public void Clear()
+    {
+        for (int i = 0; i < ARRAY_SIZE; i++)
+            _hashtable[i] = null;
+    }
+
 }
 
 

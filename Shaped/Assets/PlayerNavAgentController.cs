@@ -28,6 +28,7 @@ public class PlayerNavAgentController : MonoBehaviour
     private void Start()
     {
         _navAgent.speed = MOVE_SPEED;
+        _navMeshActive = false;
     }
     // Update is called once per frame
     void FixedUpdate()

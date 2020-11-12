@@ -12,12 +12,18 @@ public class PlayerMovement : MonoBehaviour
     CharacterAnimator _animator;
 
     Vector3 _movementDir;
-   
 
-    void Start()
+    Transform _sprite;// the 2D sprit
+
+    void Awake()
     {
+        _sprite = GetComponentInChildren<Animator>().transform;
         _rb = GetComponent<Rigidbody>();
         _animator = GetComponentInChildren<CharacterAnimator>();
+    }
+    void Start()
+    {
+        _moving = false;
     }
 
     private void FixedUpdate()
@@ -42,11 +48,10 @@ public class PlayerMovement : MonoBehaviour
             }
             if (Input.GetKey(KeyCode.A))
             {
-                transform.localScale = new Vector3(1, 1, 1); // face to the left
+                _sprite.localScale = new Vector3(1, 1, 1); // face to the left
                 _facingLeft = true;
 
                 _movementDir.x -= 1f;
-                
 
             }
             if (Input.GetKey(KeyCode.S))
@@ -55,7 +60,7 @@ public class PlayerMovement : MonoBehaviour
             }
             if (Input.GetKey(KeyCode.D))
             {
-                transform.localScale = new Vector3(-1, 1, 1); // face to the right
+                _sprite.localScale = new Vector3(-1, 1, 1); // face to the right
                 _facingLeft = false;
 
                 _movementDir.x += 1f;

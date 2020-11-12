@@ -4,64 +4,67 @@
     {
       "ID": "A",
       "Connections": "BC",
-      "NPCText": "HELLO!",
+      "NPCText": "hi",
       "Responses": [
         {
           "Text": "Hey"
         },
         {
           "ItemRequired": 1,
-          "Text": "That was a bit aggressive"
+          "Text": "hey, do you want this neon?"
         }
       ]
     },
     {
       "ID": "B",
-      "Connections": "DE",
-      "NPCText": "So you're the shape eveyshape's been talking about. A circle, right?",
+      "Connections": "ZZ",
+      "NPCText": "How are you doing?",
       "Responses": [
         {
-          "Text": "Yeah I'm a circle"
+          "Text": "I'm okay."
         },
         {
-          "Text": "Everyshape's been talking about me?"
+          "Text": "I don't know."
         }
       ]
     },
     {
       "ID": "C",
-      "Connections": "EZ",
-      "NPCText": "sorry, you're the first circle I've seen, don't want the other shapes to think I'm like you",
+      "Connections": "DE",
+      "NPCText": "I love this so much where did you get it?.",
       "Responses": [
         {
-          "Text": "What?"
+          "Text": "I bought it."
         },
         {
-          "Text": "I don't think I want to talk to you"
+          "Text": "I found it over there."
         }
       ]
     },
     {
       "ID": "D",
-      "Connections": "EZ",
-      "NPCText": "what's it like being ,you know, a ROUND",
+      "Connections": "ZZ",
+      "NPCText": "Thank you so much, I really appreciate it.",
       "Responses": [
         {
-          "Text": "I don't understand"
+          "Text": "It's good to be around another circle."
         },
         {
-          "Text": "I really don't feel comfortable with this conversation"
+          "Text": "It's a pleasure."
         }
 
       ]
     },
     {
       "ID": "E",
-      "Connections": "Z",
-      "NPCText": "Yeah you know, you have no corners, no vertices. It's weird",
+      "Connections": "ZZ",
+      "NPCText": "There's neons in this park?! Please take me picking with you nect time, I love neons.",
       "Responses": [
         {
-          "Text": "I'm gonna go"
+          "Text": "sure, anytime."
+        },
+        {
+          "Text": "I like to pick alone, sorry."
         }
       ]
     }

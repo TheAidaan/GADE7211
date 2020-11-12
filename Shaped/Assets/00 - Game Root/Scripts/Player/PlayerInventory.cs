@@ -19,7 +19,7 @@ public class PlayerInventory : MonoBehaviour
         {
             _itemSlots[i] = transform.GetChild(i).gameObject.GetComponent<ItemSlot>(); // gather all item slots
         }
-
+        inventory.Clear();
         DisplayItems();
     }
 
@@ -57,7 +57,6 @@ public class PlayerInventory : MonoBehaviour
         for (int i = 0; i < NUMBER_OF_ITEM_SLOTS; i++)
         {
             _itemSlots[i].SlideOut();
-            Debug.Log("hidden");
         }
     }
 
@@ -84,9 +83,7 @@ public class PlayerInventory : MonoBehaviour
         if (deleted)
             if (!DialogueManager.activeDialogue)
                 instance.DisplayItems();
-        else
-            Debug.Log("Item not deleted");
-        
+                
     }
 
     public static void Static_HideAllSlots()

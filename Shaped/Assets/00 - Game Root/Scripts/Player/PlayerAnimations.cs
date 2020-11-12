@@ -20,9 +20,5 @@ public class PlayerAnimations : CharacterAnimator
         else
             TransitionToState(IdleState);
     }
-
-
-
-
 }
     
