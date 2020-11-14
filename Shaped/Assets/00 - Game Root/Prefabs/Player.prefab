@@ -377,6 +377,7 @@ GameObject:
   - component: {fileID: 7100520604678682419}
   - component: {fileID: 7100520604678682418}
   - component: {fileID: 9027144957958618051}
+  - component: {fileID: 5799826351680354091}
   m_Layer: 0
   m_Name: CircleSprite
   m_TagString: Untagged
@@ -432,6 +433,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   anim: {fileID: 0}
+--- !u!114 &5799826351680354091
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7100520604678682416}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cabfde8a3e992fc4cb0d1faae90d972a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8761327025352327840
 GameObject:
   m_ObjectHideFlags: 0
@@ -443,7 +456,6 @@ GameObject:
   - component: {fileID: 8761327025352327854}
   - component: {fileID: 8761327025352327855}
   - component: {fileID: 8761327025352327852}
-  - component: {fileID: 8761327025352327853}
   - component: {fileID: 8761327025352327850}
   - component: {fileID: 2226831861677793148}
   m_Layer: 0
@@ -495,18 +507,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: eb87d02a096b9874481f62509cb40698, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &8761327025352327853
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8761327025352327840}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cabfde8a3e992fc4cb0d1faae90d972a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &8761327025352327850

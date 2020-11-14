@@ -1,0 +1,32 @@
+{
+  "BranchedNarrative": false,
+  "Rude" :  true, 
+  "ItemKeyRequired": -1,
+  "Dialogue": [
+    {
+      "NPCText": "  Hey Circle",
+      "Response": "hey"
+
+    },
+    {
+      "NPCText": "Is everything okay?",
+      "Response": "I guess, I'm just kinda annoyed, you?"
+
+    },
+    {
+      "NPCText": "well, I'm okay, I've made an appointment to get my points...",
+      "Response": "to get your points what?"
+
+    },
+    {
+      "NPCText": "oh nevermind, did you see the neons in the corner of the park.",
+      "Response": "..."
+
+    },
+    {
+      "NPCText": "...",
+      "Response": "no, i didnt, I'll go check it out now"
+
+    }
+  ]
+}

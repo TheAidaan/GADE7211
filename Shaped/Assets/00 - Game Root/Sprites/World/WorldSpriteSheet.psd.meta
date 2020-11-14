@@ -203,6 +203,9 @@ TextureImporter:
   - first:
       213: -7785687903858768374
     second: WorldSpriteSheet_SingleBush
+  - first:
+      213: -8618762157132499616
+    second: WorldSpriteSheet_Neon
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -390,6 +393,27 @@ TextureImporter:
       bones: []
       spriteID: a06417e0a1ea3f390800000000000000
       internalID: -7785687903858768374
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WorldSpriteSheet_Neon
+      rect:
+        serializedVersion: 2
+        x: 308
+        y: 10270
+        width: 745
+        height: 712
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 065b9847b71046880800000000000000
+      internalID: -8618762157132499616
       vertices: []
       indices: 
       edges: []

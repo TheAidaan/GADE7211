@@ -1,0 +1,23 @@
+{
+  "BranchedNarrative": false,
+  "Rude" :  true, 
+  "ItemKeyRequired": -1,
+  "Dialogue": [
+    {
+      "NPCText": "Oh my dots, a circle",
+      "Response": "yeah how are...",
+      "Interupt": true
+
+    },
+    {
+      "NPCText": "How do you live without any points?",
+      "Response": "err... happily?"
+
+    },
+    {
+      "NPCText": "but like you can't go into corners right?",
+      "Response": "..."
+
+    }
+  ]
+}

@@ -29,7 +29,7 @@ public class ItemSlot : MonoBehaviour
     public void SetItem(InventoryItem item) //get the item from the parent
     {
         _name = item.name; // take the name from the item
-        SetImage(GameManager.sprites[item.iconID]); // set image to be the item icon
+        SetImage(GameManager.Sprites[item.iconID]); // set image to be the item icon
     }
 
     public void SetImage(Sprite sprite)

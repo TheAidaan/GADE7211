@@ -1,0 +1,72 @@
+{
+  "BranchedNarrative": true,
+  "Dialogue": [
+    {
+      "ID": "A",
+      "Connections": "BC",
+      "NPCText": "hi",
+      "Responses": [
+        {
+          "Text": "Hey"
+        },
+        {
+          "ItemRequired": 1,
+          "Text": "hey, do you want this neon?"
+        }
+      ]
+    },
+    {
+      "ID": "B",
+      "Connections": "ZZ",
+      "NPCText": "How are you doing?",
+      "Responses": [
+        {
+          "Text": "I'm okay."
+        },
+        {
+          "Text": "I don't know."
+        }
+      ]
+    },
+    {
+      "ID": "C",
+      "Connections": "DE",
+      "NPCText": "I love this so much where did you get it?.",
+      "Responses": [
+        {
+          "Text": "I bought it."
+        },
+        {
+          "Text": "I found it over there."
+        }
+      ]
+    },
+    {
+      "ID": "D",
+      "Connections": "ZZ",
+      "NPCText": "Thank you so much, I really appreciate it.",
+      "Responses": [
+        {
+          "Text": "It's good to be around another circle."
+        },
+        {
+          "Text": "It's a pleasure."
+        }
+
+      ]
+    },
+    {
+      "ID": "E",
+      "Connections": "ZZ",
+      "NPCText": "There's neons in this park?! Please take me picking with you nect time, I love neons.",
+      "Responses": [
+        {
+          "Text": "sure, anytime."
+        },
+        {
+          "Text": "I like to pick alone, sorry."
+        }
+      ]
+    }
+  ]
+}

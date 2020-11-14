@@ -1,0 +1,79 @@
+{
+  "BranchedNarrative": true,
+  "Dialogue": [
+    {
+      "ID": "A",
+      "Connections": "BC",
+      "NPCText": "Hello!",
+      "Responses": [
+        {
+          "Text": "Hey"
+        },
+        {
+          "Text": "Hey Trap. How are you?"
+        }
+      ]
+    },
+    {
+      "ID": "B",
+      "Connections": "CD",
+      "NPCText": "How are you today?",
+      "Responses": [
+        {
+          "Text": "I'm okay,you?"
+        },
+        {
+          "ObjectiveRequired": 1,
+          "Text": "Everyshape wont stop asking about my shape. What about you?"
+        }
+      ]
+    },
+    {
+      "ID": "C",
+      "Connections": "Z",
+      "NPCText": "I'm okay",
+      "Responses": [
+        {
+          "Text": "That's nice"
+        }
+      ]
+    },
+    {
+      "ID": "D",
+      "Connections": "EEF",
+      "NPCText": "Oh my dots. That's really dumb, why can't they mind their own business?",
+      "Responses": [
+        {
+          "Text": "It's really annoying."
+        },
+        {
+          "Text": "I've tried to talk about something else, but it's all anyshape brings up."
+        },
+        {
+          "Text": "I wish everyshape thought like you."
+        }
+
+      ]
+    },
+    {
+      "ID": "E",
+      "Connections": "Z",
+      "NPCText": "Most shapes on this plane are really ignorant, I'm here for you if you need it.",
+      "Responses": [
+        {
+          "Text": "I hate this plane"
+        }
+      ]
+    },
+    {
+      "ID": "F",
+      "Connections": "Z",
+      "NPCText": "If you ever need someshape to talk to, I'm here.",
+      "Responses": [
+        {
+          "Text": "Thanks."
+        }
+      ]
+    }
+  ]
+}

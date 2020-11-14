@@ -91,7 +91,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 4230967028942284402}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.5
+  m_Radius: 0.7
   m_Speed: 3.5
   m_Acceleration: 8
   avoidancePriority: 50
@@ -115,7 +115,7 @@ GameObject:
   - component: {fileID: 1794292389760232030}
   - component: {fileID: 2554534962785886266}
   m_Layer: 0
-  m_Name: TrapezuimNPC
+  m_Name: 3. TrapezuimNPC
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -220,7 +220,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 6
+  m_SortingOrder: 2
   m_Sprite: {fileID: 8830466625920042625, guid: 1781483d38e56854a9d27b0d8f4a0ff6, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -306,7 +306,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 5
+  m_SortingOrder: 1
   m_Sprite: {fileID: -8595858610724682414, guid: 1781483d38e56854a9d27b0d8f4a0ff6, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

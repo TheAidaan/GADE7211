@@ -1,0 +1,11 @@
+{
+  "BranchedNarrative": false,
+  "Rude": true, 
+
+  "Dialogue": [
+    {
+      "NPCText": "Go talk to that circle over there",
+      "Response": "..."
+    }
+  ]
+}

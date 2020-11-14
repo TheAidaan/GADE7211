@@ -2,6 +2,7 @@
 
 public class Character // all characters need a name and a path directing to their current dialogue json
 {
+    bool _random; //is the NPC a spefic npc that drives the game or not
     public bool IsTalking;
     public int NumberOfDialogueFiles { get; }
     public string Name { get; }
@@ -10,30 +11,39 @@ public class Character // all characters need a name and a path directing to the
     public string File { 
         get 
         {
+            string file;
             if (DialogueID > NumberOfDialogueFiles)
             {
                 DialogueID--;
             }
-
+            if (_random)
+                file = "RandomNPCs/Shape";
+            else
+                file = "ImportantNPCs/" + Name;
             if (DialogueID<10)
             {
-                return Name + "0" + DialogueID;
+                
+                file = file + "0" + DialogueID;
             }
             else
             {
-                return Name + DialogueID;
+                file = file + DialogueID;
             }
+
+            return file;
         } 
     }
     public int IconID { get; }
     public float TextDelay { get; }
 
-    public Character(string name, int numberOfDialogueFiles, float textDelay,int iconID)
+    public Character(string name, int numberOfDialogueFiles, float textDelay,int iconID, bool random)
     {
         NumberOfDialogueFiles = numberOfDialogueFiles;
         Name = name;
         TextDelay = TextDelay;
         IconID =iconID;
+
+        _random = random;
 
     }
 }
@@ -51,9 +61,9 @@ public abstract class NPC : MonoBehaviour
     {
         _controller = GetComponentInParent<NPCController>();
     }
-    public void AssignAttributes(string Name, int NumberOfDialogueFiles, float TextDelay, int IconID)
+    public void AssignAttributes(string Name, int NumberOfDialogueFiles, float TextDelay, int IconID, bool random)
     {
-        _character = new Character(Name, NumberOfDialogueFiles, TextDelay, IconID); //initialising a new character with the inputed values
+        _character = new Character(Name, NumberOfDialogueFiles, TextDelay, IconID, random); //initialising a new character with the inputed values
         _controller.AssignCharacter(_character);
     }
     public void AssignSpeed(float speed)

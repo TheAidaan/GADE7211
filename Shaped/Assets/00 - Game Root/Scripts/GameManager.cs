@@ -5,7 +5,7 @@ public class GameManager : MonoBehaviour
     static GameManager instance;
 
     static Sprite[] _spriteSheet;
-    public static Sprite[] sprites { get { return _spriteSheet; } } //indexes 1-5: NPC icons. idexes 5+: item icons
+    public static Sprite[] Sprites { get { return _spriteSheet; } } //indexes 1-5: NPC icons. idexes 5+: item icons
     
     public static bool CanMove 
     { 
@@ -17,7 +17,7 @@ public class GameManager : MonoBehaviour
         } 
     }
 
-    [SerializeField] GameObject _box;
+
 
     private void Awake()
     {
@@ -25,21 +25,27 @@ public class GameManager : MonoBehaviour
         _spriteSheet = Resources.LoadAll<Sprite>("IconSpriteSheet");
     }
 
-    void OutOfBox()
+
+    void IncreaseInternalDamage()
     {
-        Destroy(_box);
+
     }
 
     /*              PUBLIC STATICS              */
 
-    public static void MissionCompleted(int missionID)
+    public static void MissionControl(int missionID)
     {
         switch (missionID)
         {
-            default:
-            case 1: instance.OutOfBox();
+            case 0: // make a friend(made friends with Trap
+                
                 break;
+            default:
+                Debug.Log("invalid Mission ID");
+                break;
+           
         }
-
     }
+
+  
 }

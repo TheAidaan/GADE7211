@@ -28,7 +28,7 @@ public class DialogueManager : MonoBehaviour
 
     Character _currentNPC;
 
-    bool _typing, _stoptyping,_branchedNarrative, _npcSpeaking;
+    bool _typing, _stoptyping,_branchedNarrative, _npcSpeaking, _onlyOneChoice, _endDialogue;
     static bool _activeDialogue;
     public static bool activeDialogue { get { return _activeDialogue; } }
 
@@ -71,27 +71,36 @@ public class DialogueManager : MonoBehaviour
 
             _alert.Hide();//player should see that they are able to choose to talk to the npc they are currently talking to
 
-            if (Input.GetKeyDown(KeyCode.E) && !_branchedNarrative) // move the conversation forward
-                    NextExchange(); 
+            if (Input.GetKeyDown(KeyCode.E)) // move the conversation forward
+                if (!_branchedNarrative || _onlyOneChoice) // if there are no dialogue choices at all, the player must maually move the conversation forward 
+                        NextExchange(); 
         }
     }
 
     void NextExchange()           //List
     {
-        if (_npcSpeaking)
+        if (!_branchedNarrative)
         {
-            PlayerResponse(); // every npc response has a player response 
+            if (_npcSpeaking)
+            {
+                List_PlayerResponse(); // every npc response has a player response 
+            }
+            else
+            {
+                _currentDialogueNode = _dialogueList.Next(); //npc response is always first 
+                if (_currentDialogueNode != null)
+                    List_NPCResponse();
+                else
+                    EndDialogue();
+            }
         }
         else
         {
-            _currentDialogueNode = _dialogueList.Next(); //npc response is always first 
-            if (_currentDialogueNode != null)
-                NPCResponse();
+            if (_endDialogue)
+                EndDialogue();
             else
-                EndDialogue(); 
-
+                Graph_PlayerResponse();
         }
-        
         
     }
 
@@ -118,14 +127,31 @@ public class DialogueManager : MonoBehaviour
 
         if (_branchedNarrative)
         {
-            _dialogueBox.ShowDialogueBox();
-            _choices.ActivateButtons(_currentDialogueVertex.Data.Responses);
+            if (_currentDialogueVertex.Data.Responses.Count != 1) // if there are more than one choices 
+                _choices.ActivateButtons(_currentDialogueVertex.Data.Responses);
+
+            else if (_onlyOneChoice) // should only get here if player has used the only "choice"
+                _endDialogue = true;//the only time where there should be one reponse should be at the end of the conversation
+            else
+            _onlyOneChoice = true;
+            
         }
         else if (_currentDialogueNode != null)
             if (_currentDialogueNode.Interupt && !_npcSpeaking)
                 NextExchange();
     }
-    void PlayerResponse()
+
+    void Graph_PlayerResponse()
+    {
+        _npcArea.gameObject.SetActive(false);
+        _playerArea.gameObject.SetActive(true);
+
+        _DialogueTxt.alignment = TextAlignmentOptions.TopRight;
+
+        StartCoroutine(RunDialogue(_currentDialogueVertex.Data.Responses.ElementAt(0).Text, PLAYER_TEXT_DELAY));       ///List
+    }
+
+    void List_PlayerResponse()
     {
         _npcSpeaking = false;
 
@@ -136,7 +162,7 @@ public class DialogueManager : MonoBehaviour
         StartCoroutine(RunDialogue(_currentDialogueNode.Response, PLAYER_TEXT_DELAY));       ///List
     }
 
-    void NPCResponse()
+    void List_NPCResponse()
     {
         _npcSpeaking = true;
 
@@ -163,6 +189,9 @@ public class DialogueManager : MonoBehaviour
         _DialogueTxt.alignment = TextAlignmentOptions.TopLeft;
 
         _dialogueBox.HideDialogueBox();
+
+        _onlyOneChoice=false;
+        _endDialogue = false;
 
         PlayerInventory.Static_DisplayItems();
     }
@@ -223,7 +252,7 @@ public class DialogueManager : MonoBehaviour
 
         _npcNameTxt.text = _currentNPC.Name;
 
-        Sprite npcIcon = GameManager.sprites[NPC.IconID];
+        Sprite npcIcon = GameManager.Sprites[NPC.IconID];
 
         if (npcIcon != null) // is there even an asset
         {
@@ -236,6 +265,10 @@ public class DialogueManager : MonoBehaviour
     }
     void ActivateDialogue()         //All                                
     {
+        _playerArea.gameObject.SetActive(false);
+        _npcArea.gameObject.SetActive(true);
+        _DialogueTxt.alignment = TextAlignmentOptions.TopLeft;
+
         _activeDialogue = true;
         _dialogueBox.ShowDialogueBox();
 
@@ -247,7 +280,7 @@ public class DialogueManager : MonoBehaviour
         else
         {
             _currentDialogueNode = _dialogueList.Start();
-            NPCResponse();
+            List_NPCResponse();
         }
 
         _npcSpeaking = true;
@@ -280,7 +313,7 @@ public class DialogueManager : MonoBehaviour
         TextAsset asset = Resources.Load<TextAsset>("DialogueFiles/" + NPC.File); // get the text asset with the NPC file name 
         if (asset != null) //was there a text asset?
         {
-            NarrativeTypeCheck  check = JsonUtility.FromJson<NarrativeTypeCheck>(asset.text); // checking if the file should be loaded into a graph or a linked list
+            InitalChecks check = JsonUtility.FromJson<InitalChecks>(asset.text); // checking if the file should be loaded into a graph or a linked list
 
             instance.SetNPC(NPC);
             instance._branchedNarrative = check.BranchedNarrative;
@@ -288,8 +321,12 @@ public class DialogueManager : MonoBehaviour
             if (check.BranchedNarrative)
                 instance.LoadGraph(asset);
             else
-                instance.LoadList(asset);        
-        }else
+                instance.LoadList(asset);
+
+            if (check.Rude)
+                PlayerStats.Static_TakeDamage();
+        }
+        else
         {
             Debug.Log("No json file for " + NPC.Name + " file name" + NPC.File);
         }

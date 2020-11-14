@@ -1,0 +1,66 @@
+{
+  "BranchedNarrative": true,
+  "Rude": true, 
+  "Dialogue": [
+    {
+      "ID": "A",
+      "Connections": "BZ",
+      "NPCText": "Hey circle",
+      "Responses": [
+        {
+          "Text": "Hey"
+        },
+        {
+          "Text": "..."
+        }
+      ]
+    },
+    {
+      "ID": "B",
+      "Connections": "CD",
+      "NPCText": "I saw another circle over there do you now them?",
+      "Responses": [
+        {
+          "Text": "Not all circles know each other."
+        },
+        {
+          "Text": "No."
+        }
+      ]
+    },
+    {
+      "ID": "C",
+      "Connections": "Z",
+      "NPCText": "yeah, but like they're there",
+      "Responses": [
+        {
+          "Text": "..."
+        }
+      ]
+    },
+    {
+      "ID": "D",
+      "Connections": "EZ",
+      "NPCText": "You should go talk to them, I think you'd look great together",
+      "Responses": [
+        {
+          "Text": "Do you know them?"
+        },
+        {
+          "Text": "Okay"
+        }
+
+      ]
+    },
+    {
+      "ID": "E",
+      "Connections": "Z",
+      "NPCText": "No but, you're a circle, theuy're a circle. What more do you need?",
+      "Responses": [
+        {
+          "Text": "..."
+        }
+      ]
+    }
+  ]
+}

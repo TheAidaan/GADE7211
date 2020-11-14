@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 490290283517793430}
   - component: {fileID: 490290283517793429}
   m_Layer: 0
-  m_Name: TriangleNPC
+  m_Name: 4. TriangleNPC
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -137,7 +137,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 699599289360147810}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.5000002
+  m_Radius: 1.8
   m_Speed: 3.5
   m_Acceleration: 8
   avoidancePriority: 50

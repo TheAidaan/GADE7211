@@ -1,0 +1,32 @@
+{
+  "BranchedNarrative": false,
+  "Rude" : true, 
+  "ItemKeyRequired": -1,
+  "Dialogue": [
+    {
+      "NPCText": "Hey Circle",
+      "Response": "Hey"
+
+    },
+    {
+      "NPCText": "I saw ther's a new circle in town",
+      "Response": "Yeah, i saw"
+
+    },
+    {
+      "NPCText": "So spill it, roundy what do you think about they're circumference?",
+      "Response": "Their what"
+
+    },
+    {
+      "NPCText": "You know, how wide they are, I swear I'm rounder than you sometimes",
+      "Response": "..."
+
+    },
+    {
+      "NPCText": "What's the matter?",
+      "Response": "I'm going to leave"
+
+    }
+  ]
+}
