@@ -8,6 +8,8 @@ public class PlayerStats : MonoBehaviour
 
     int health;
     bool _hurt;
+
+    Queue<string> _completeObjectives = new Queue<string>();
     private void Awake()
     {
         instance = this;
@@ -16,7 +18,13 @@ public class PlayerStats : MonoBehaviour
     {
         health = 25;
     }
-    // Start is called before the first frame update
+
+    void Update()
+    {
+        if (GameManager.CanMove && _completeObjectives.Count !=0) // the conditions for moving are the same conditions whereby very little is happening in the game(no text input, no dialogue, no navmesh acitive)
+            StartCoroutine(Reward());
+    }
+
     void TakeDamage()
     {
         health--;
@@ -33,6 +41,27 @@ public class PlayerStats : MonoBehaviour
                 return false;
         }
     }
+
+    void ObjectiveCompleter(int ID)
+    {
+        switch (ID)
+        {
+            case 1:  health +=2;
+                _completeObjectives.Enqueue("You made a friend");
+
+                break;
+            default:
+                 Debug.Log("Invalid Objective ID");
+                break;
+        }
+    }
+
+    IEnumerator Reward()
+    {
+        AlertBox.Static_ObjectiveCompleteAlert(_completeObjectives.Dequeue());
+        yield return new WaitForSeconds(2.5f);
+        AlertBox.Static_Hide();
+    }
     /*              PUBLIC STATICS              */
 
     public static void Static_TakeDamage()
@@ -42,5 +71,10 @@ public class PlayerStats : MonoBehaviour
     public static bool Static_ObjectiveCheck(int ID)
     {
         return instance.ObjectiveControl(ID);
+    }
+
+    public static void Static_ObjectiveCompleter(int ID)
+    {
+        instance.ObjectiveCompleter(ID);
     }
 }

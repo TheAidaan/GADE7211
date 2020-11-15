@@ -4,9 +4,9 @@ public class GameManager : MonoBehaviour
 {
     static GameManager instance;
 
-    static Sprite[] _spriteSheet;
-    public static Sprite[] Sprites { get { return _spriteSheet; } } //indexes 1-5: NPC icons. idexes 5+: item icons
-    
+    static Sprite[] _iconSpriteSheet;
+    public static Sprite[] GameIcons { get { return _iconSpriteSheet; } } //indexes 1-5: NPC icons. idexes 5+: item icons
+
     public static bool CanMove 
     { 
         get 
@@ -22,7 +22,7 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         instance = this;
-        _spriteSheet = Resources.LoadAll<Sprite>("IconSpriteSheet");
+        _iconSpriteSheet = Resources.LoadAll<Sprite>("IconSpriteSheet");
     }
 
 

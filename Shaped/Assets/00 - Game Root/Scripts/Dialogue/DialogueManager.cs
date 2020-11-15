@@ -23,7 +23,7 @@ public class DialogueManager : MonoBehaviour
 
     DialogueChoiceManager _choices;
 
-    DialogueAlert _alert;
+
     DialogueBox _dialogueBox;
 
     Character _currentNPC;
@@ -54,7 +54,6 @@ public class DialogueManager : MonoBehaviour
 
         _choices = GetComponentInChildren<DialogueChoiceManager>();
 
-        _alert = GetComponentInChildren<DialogueAlert>();
         _activeDialogue = false;
 
 
@@ -65,14 +64,14 @@ public class DialogueManager : MonoBehaviour
     {
         if (_activeDialogue)
         {
-            if (Input.GetKeyDown(KeyCode.Q))    // player can't move player character anymore so A only moves the dialogue backwards
-                if (_typing)
-                    _stoptyping = true;
 
-            _alert.Hide();//player should see that they are able to choose to talk to the npc they are currently talking to
+            AlertBox.Static_Hide();//player should see that they are able to choose to talk to the npc they are currently talking to
 
             if (Input.GetKeyDown(KeyCode.E)) // move the conversation forward
                 if (!_branchedNarrative || _onlyOneChoice) // if there are no dialogue choices at all, the player must maually move the conversation forward 
+                    //if (_typing) // next frame will be the full text or the next exchange
+                    //    _stoptyping = true; 
+                    //else
                         NextExchange(); 
         }
     }
@@ -149,6 +148,9 @@ public class DialogueManager : MonoBehaviour
         _DialogueTxt.alignment = TextAlignmentOptions.TopRight;
 
         StartCoroutine(RunDialogue(_currentDialogueVertex.Data.Responses.ElementAt(0).Text, PLAYER_TEXT_DELAY));       ///List
+
+        if (_currentDialogueVertex.Data.Responses.ElementAt(0).Effect != 0)
+            PlayerStats.Static_ObjectiveCompleter(_currentDialogueVertex.Data.Responses.ElementAt(0).Effect);
     }
 
     void List_PlayerResponse()
@@ -238,11 +240,11 @@ public class DialogueManager : MonoBehaviour
     {
         if (message == string.Empty)
         {
-            _alert.Hide(); // Hide the alert
+            AlertBox.Static_Hide(); // Hide the alert
         }
         else // activate the text and display the message
         {
-            _alert.Show(message);
+            AlertBox.Static_ShowDialogueAlert(message);
         }
     }
     void SetNPC(Character NPC)       //All
@@ -252,7 +254,7 @@ public class DialogueManager : MonoBehaviour
 
         _npcNameTxt.text = _currentNPC.Name;
 
-        Sprite npcIcon = GameManager.Sprites[NPC.IconID];
+        Sprite npcIcon = GameManager.GameIcons[NPC.IconID];
 
         if (npcIcon != null) // is there even an asset
         {

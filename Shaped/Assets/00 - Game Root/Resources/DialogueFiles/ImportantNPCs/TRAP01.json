@@ -61,6 +61,7 @@
       "NPCText": "Most shapes on this plane are really ignorant, I'm here for you if you need it.",
       "Responses": [
         {
+          "Effect": 1,
           "Text": "I hate this plane"
         }
       ]
@@ -71,6 +72,7 @@
       "NPCText": "If you ever need someshape to talk to, I'm here.",
       "Responses": [
         {
+          "Effect": 1,
           "Text": "Thanks."
         }
       ]

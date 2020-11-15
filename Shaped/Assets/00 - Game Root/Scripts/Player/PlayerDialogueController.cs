@@ -1,15 +1,16 @@
 ﻿using UnityEngine;
+using System.Collections;
 
 
 public class PlayerDialogueController : MonoBehaviour
 {
-    readonly CharacterIdleState IdleState = new CharacterIdleState();
-    readonly CharacterTalkingState TalkingState = new CharacterTalkingState();
 
     CharacterAnimator _anim; //used for the animator
     Character _lastNPC;
     Character _npc; // the npc that the character is currently facing. Player can choose whether or not to speak to them
     NPC _npcScript;
+
+    bool _usingAlert = false;
 
     private void Start()
     {
@@ -17,22 +18,23 @@ public class PlayerDialogueController : MonoBehaviour
     }
     void Update()
     {
-        if (FacingChattyNPC() && (!DialogueManager.activeDialogue))
+        if (FacingChattyNPC() && !DialogueManager.activeDialogue)
         {
             DialogueManager.GiveDialogueOption(_npc.Name);
+            _usingAlert = true;
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 _lastNPC = _npc;
                 DialogueManager.LoadFile(_npc); // start the conversion by giving the NPC into to the dialogue manager
             }
         }
-        else
+        else if (_usingAlert)
         {
             DialogueManager.GiveDialogueOption(string.Empty); // if not infront of NPC or there is currently dialogue running, then send an empty string
+            _usingAlert = false;
         }
+            
 
-        if (DialogueManager.activeDialogue)
-            _anim.TransitionToState(TalkingState);
 
     }
 

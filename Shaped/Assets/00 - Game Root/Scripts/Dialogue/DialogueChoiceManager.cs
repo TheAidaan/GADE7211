@@ -45,7 +45,7 @@ public class DialogueChoiceManager : MonoBehaviour
 
                 if (item != null)// found it
                 {
-                    _images[i].sprite = GameManager.Sprites[item.data.iconID]; // show player what item let them say this 
+                    _images[i].sprite = GameManager.GameIcons[item.data.iconID]; // show player what item let them say this 
 
                     ShowButton(_buttonRecTransforms[i], _responseTexts[i], _currentResponses.ElementAt(i).Text); // say this
                     _buttonRecTransforms[i].GetComponent<Button>().onClick.AddListener(() => PlayerInventory.Delete(item.data)); //clicking button will remove the item
@@ -56,13 +56,12 @@ public class DialogueChoiceManager : MonoBehaviour
                 bool pass = PlayerStats.Static_ObjectiveCheck(_currentResponses.ElementAt(i).ObjectiveRequired);
 
                 if (pass)
-                    ShowButton(_buttonRecTransforms[i], _responseTexts[i], _currentResponses.ElementAt(i).Text);
-                else
-                    continue;
-                   
+                    ShowButton(_buttonRecTransforms[i], _responseTexts[i], _currentResponses.ElementAt(i).Text);                   
                 
-            }else
-                ShowButton(_buttonRecTransforms[i], _responseTexts[i], _currentResponses.ElementAt(i).Text);
+            }else if ( responses.ElementAt(i).Effect != 0)
+                _buttonRecTransforms[i].GetComponent<Button>().onClick.AddListener(() => PlayerStats.Static_ObjectiveCompleter(responses.ElementAt(i).Effect));
+            else // if button has no item required, objective required and no effect
+            ShowButton(_buttonRecTransforms[i], _responseTexts[i], _currentResponses.ElementAt(i).Text);
                          
             
         }
