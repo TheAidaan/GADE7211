@@ -25,9 +25,9 @@ public class AlertBox : MonoBehaviour
         _text = GetComponentInChildren<TextMeshProUGUI>();
         _uiSpriteSheet = Resources.LoadAll<Sprite>("UISpriteSheet");
     }
+
     void Show(string message)
     {
-
         _text.text = message;
         LeanTween.moveY(gameObject, 15, .1f).setEaseOutBounce();
     }

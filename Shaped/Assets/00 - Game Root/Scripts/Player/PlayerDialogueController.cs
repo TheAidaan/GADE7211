@@ -20,8 +20,12 @@ public class PlayerDialogueController : MonoBehaviour
     {
         if (FacingChattyNPC() && !DialogueManager.activeDialogue)
         {
-            DialogueManager.GiveDialogueOption(_npc.Name);
-            _usingAlert = true;
+            if (!_usingAlert)
+            {
+                DialogueManager.GiveDialogueOption(_npc.Name);
+                _usingAlert = true;
+            }
+          
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 _lastNPC = _npc;
@@ -33,9 +37,6 @@ public class PlayerDialogueController : MonoBehaviour
             DialogueManager.GiveDialogueOption(string.Empty); // if not infront of NPC or there is currently dialogue running, then send an empty string
             _usingAlert = false;
         }
-            
-
-
     }
 
     public bool FacingChattyNPC()

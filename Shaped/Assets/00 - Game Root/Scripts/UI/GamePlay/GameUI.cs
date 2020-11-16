@@ -58,8 +58,9 @@ public class GameUI : MonoBehaviour
           1:  Pause Overlay
           2:  Player Inventory
           3:  Input Text Overlay
-
         */
+
+
         _uiParts[1].SetActive(_showPauseOverlay);
         _uiParts[3].SetActive(_showInputTextOverlay);
 
@@ -100,6 +101,15 @@ public class GameUI : MonoBehaviour
         _showInputTextOverlay = true;
         SetUI(); 
         
+    }
+
+    public void SetSoundVolume(float volume)
+    {
+        SoundManager.Static_SetSoundVolume(volume);
+    }
+    public void SetMusicVolume(float volume)
+    {
+        SoundManager.Static_SetMusicVolume(volume);
     }
 
 }
