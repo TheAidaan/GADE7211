@@ -1,0 +1,11 @@
+{
+  "BranchedNarrative": false,
+  "ItemKeyRequired": -1,
+  "Dialogue": [
+    {
+      "NPCText": "Hey, welcome to the Quad, I hope you enjoy it here!",
+      "Response": "Thank you so much"
+
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "BranchedNarrative": false,
+  "Rude" :  true, 
+  "ItemKeyRequired": -1,
+  "Dialogue": [
+    {
+      "NPCText": "Don't even try roundy",
+      "Response": ".....",
+      "Interupt": true
+
+    },
+    {
+      "NPCText": "You make me sick",
+      "Response": "..."
+
+    }
+  ]
+}

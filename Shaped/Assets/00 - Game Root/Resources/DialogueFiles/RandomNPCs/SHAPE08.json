@@ -1,0 +1,20 @@
+{
+  "BranchedNarrative": false,
+  "Rude" :  true, 
+  "ItemKeyRequired": -1,
+  "Dialogue": [
+    {
+      "NPCText": "Hey roundy",
+      "Response": "Pleas don't call me that"
+
+    },
+    {
+      "NPCText": "Why? It's what you are, round",
+      "Response": "'Roundy' has been used as an insult to me my whole life, it really triggers me when I hear it."
+    },
+    {
+      "NPCText": "Oh my Dots, get over it, it's just a word",
+      "Response": "To you."
+    }
+  ]
+}

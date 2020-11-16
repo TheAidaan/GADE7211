@@ -11,18 +11,21 @@ public class Character // all characters need a name and a path directing to the
     public string File { 
         get 
         {
+            
             string file;
             if (DialogueID > NumberOfDialogueFiles)
             {
                 DialogueID--;
             }
             if (_random)
+            {
                 file = "RandomNPCs/Shape";
+                DialogueID = Random.Range(1, 11);
+            }   
             else
                 file = "ImportantNPCs/" + Name;
             if (DialogueID<10)
             {
-                
                 file = file + "0" + DialogueID;
             }
             else
@@ -79,5 +82,6 @@ public abstract class NPC : MonoBehaviour
     void OnTriggerExit(Collider other)
     {
         GetComponent<Collider>().isTrigger = false;
+        gameObject.tag = "Destroy";
     }
 }

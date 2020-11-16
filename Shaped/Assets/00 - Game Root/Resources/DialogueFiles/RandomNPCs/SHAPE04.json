@@ -1,0 +1,18 @@
+{
+  "BranchedNarrative": false,
+  "Rude" :  true, 
+  "ItemKeyRequired": -1,
+  "Dialogue": [
+    {
+      "NPCText": "Do you have to walk around looking like that.",
+      "Response": "Looking like what?"
+
+    },
+    {
+      "NPCText": "So round",
+      "Response": "I'm a circl...",
+      "Interupt": true
+
+    }
+  ]
+}

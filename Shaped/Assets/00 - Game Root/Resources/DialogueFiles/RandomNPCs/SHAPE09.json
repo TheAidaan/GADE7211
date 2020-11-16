@@ -1,0 +1,15 @@
+{
+  "BranchedNarrative": false,
+  "ItemKeyRequired": -1,
+  "Dialogue": [
+    {
+      "NPCText": "Hi there!",
+      "Response": "hey"
+
+    },
+    {
+      "NPCText": "Lovely day, we're having right?",
+      "Response": "Yeah it's wonderful"
+    }
+  ]
+}

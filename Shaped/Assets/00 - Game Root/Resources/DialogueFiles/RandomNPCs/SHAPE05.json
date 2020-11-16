@@ -1,0 +1,16 @@
+{
+  "BranchedNarrative": false,
+  "ItemKeyRequired": -1,
+  "Dialogue": [
+    {
+      "NPCText": "Hey do you have the correct time on you by any chance?",
+      "Response": "No i don't sorry."
+
+    },
+    {
+      "NPCText": "Okay, thanks.",
+      "Response": "No problem."
+
+    }
+  ]
+}

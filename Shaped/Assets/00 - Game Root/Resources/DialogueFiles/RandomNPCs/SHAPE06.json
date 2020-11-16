@@ -1,0 +1,20 @@
+{
+  "BranchedNarrative": false,
+  "Rude" :  true, 
+  "ItemKeyRequired": -1,
+  "Dialogue": [
+    {
+      "NPCText": "Oh hey, here",
+      "Response": "What is this?"
+
+    },
+    {
+      "NPCText": "It's the number of a great doctor who will fix you right up, I used to be just as round as you and look at me now",
+      "Response": "I don't want this"
+    },
+    {
+      "NPCText": "Oh my dots, I'm just trying to be help, you don't have to be so rude",
+      "Response": "..."
+    }
+  ]
+}

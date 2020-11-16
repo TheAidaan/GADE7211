@@ -1,45 +1,20 @@
 {
-  "BranchedNarrative": true,
+  "BranchedNarrative": false,
+  "ItemKeyRequired": -1,
   "Dialogue": [
     {
-      "ID": "A",
-      "Connections": "BC",
-      "NPCText": "Hello!",
-      "Responses": [
-        {
-          "Text": "hey"
-        },
-        {
-          "Text": ".."
-        }
-      ]
+      "NPCText": "Hey, you must be new to the plane.",
+      "Response": "Yes, I just moved here from Octave."
     },
     {
-      "ID": "B",
-      "Connections": "Z",
-      "NPCText": "I like talking to you",
-      "Responses": [
-        {
-          "Text": "ok"
-        }
-      ]
-    },
-    {
-      "ID": "C",
-      "Connections": "Z",
-      "NPCText": "Did you hear me?",
-      "Responses": [
-        {
-          "Text": "no"
-        },
-        {
-          "Text": "yes"
-        },
-        {
-          "Text": "i want to leave"
-        }
+      "NPCText": "No way, my cousin lives there, it's really nice wht made you decide to leave?",
+      "Response": "I didn't feel like i fit in."
 
-      ]
+    },
+    {
+      "NPCText": "Oh well, i hope things are better here.",
+      "Response": "Me too"
+
     }
   ]
 }

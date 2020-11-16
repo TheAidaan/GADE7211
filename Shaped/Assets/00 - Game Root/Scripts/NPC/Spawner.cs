@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class Spawner : MonoBehaviour
 {
-    public Transform Target;
+    
+    public static Spawner instance;
+
     GameObject[] NPCs= new GameObject[5];
     /*[0] = Circle
       [1] = Hexagon
@@ -18,8 +20,16 @@ public class Spawner : MonoBehaviour
       [1-4] = Random SpawnPoint
       [5] = NPC "folder"
     */
+
+    int _numberOfNPCs;
+    bool _spawning;
+    private void Awake()
+    {
+        instance = this;
+    }
     void Start()
     {
+        _numberOfNPCs = 0;
         _points = GetComponentsInChildren<Transform>();
 
         NPCs = Resources.LoadAll<GameObject>("Prefabs/NPCS");
@@ -28,13 +38,39 @@ public class Spawner : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Z))
+        if (_numberOfNPCs<50 && !_spawning)
         {
-            int randLocation = Random.Range(1, 3);
-            int randNPC = Random.Range(1, 5);
-            GameObject npc = Instantiate(NPCs[randNPC], _points[randLocation].position, Quaternion.identity, _points[5]);
-            npc.GetComponent<NPCController>().AssignTarget(Target);
+            StartCoroutine(Spawn());
         }
         
+    }
+
+    IEnumerator Spawn()
+    {
+        _spawning = true;
+        int randSpawnIndex = Random.Range(1, 5);
+        int randNPC = Random.Range(1, 5);
+        GameObject npc = Instantiate(NPCs[randNPC], _points[randSpawnIndex].position, Quaternion.identity, _points[5]);
+        int randTargetIndex = Random.Range(1, 5);
+
+        while (randSpawnIndex == randTargetIndex)
+        {
+            randTargetIndex = Random.Range(1, 5);
+        }
+
+        npc.GetComponent<NPCController>().AssignTarget(_points[randTargetIndex]);
+        _numberOfNPCs++;
+
+        yield return new WaitForSeconds(2);
+        _spawning = false;
+    }
+    void DecreaseNumeberOFNPCs()
+    {
+        _numberOfNPCs--;
+    }
+
+    public static void Static_DecreaseNumeberOFNPCs()
+    {
+        instance.DecreaseNumeberOFNPCs();
     }
 }

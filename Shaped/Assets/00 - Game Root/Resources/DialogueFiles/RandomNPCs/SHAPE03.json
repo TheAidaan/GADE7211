@@ -1,0 +1,10 @@
+{
+  "BranchedNarrative": false,
+  "ItemKeyRequired": -1,
+  "Dialogue": [
+    {
+      "NPCText": "...",
+      "Response": "..."
+    }
+  ]
+}

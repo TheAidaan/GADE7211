@@ -84,12 +84,6 @@ public class NPCController : MonoBehaviour
 
     }
 
-    private void Update()                       /////////////
-    {
-        //if (Input.GetKeyDown(KeyCode.Z))
-        //    goToTarget = true;
-    }
-
     public void AssignSpeed(float speed)
     {
         _agent.speed = speed;
