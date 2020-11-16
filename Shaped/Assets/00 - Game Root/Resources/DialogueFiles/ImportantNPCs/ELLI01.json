@@ -11,6 +11,7 @@
         },
         {
           "ItemRequired": 1,
+          "Effect": 2,
           "Text": "hey, do you want this neon?"
         }
       ]

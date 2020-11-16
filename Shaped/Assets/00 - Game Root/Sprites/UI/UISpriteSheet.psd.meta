@@ -17,6 +17,9 @@ TextureImporter:
   - first:
       213: 3100030469678844890
     second: UISpriteSheet_SliderHandle
+  - first:
+      213: -6952363029413323397
+    second: UISpriteSheet_Empty
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -204,6 +207,27 @@ TextureImporter:
       bones: []
       spriteID: adb481a9945850b20800000000000000
       internalID: 3100030469678844890
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UISpriteSheet_Empty
+      rect:
+        serializedVersion: 2
+        x: 254
+        y: 249
+        width: 32
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b7d9242f8ae348f90800000000000000
+      internalID: -6952363029413323397
       vertices: []
       indices: 
       edges: []

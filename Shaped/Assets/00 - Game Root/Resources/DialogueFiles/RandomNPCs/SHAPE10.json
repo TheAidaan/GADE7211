@@ -13,11 +13,11 @@
       "Response": "I'm okay too, where are you headed?"
     },
     {
-      "NPCText": "Just to the store, I'd invite you but I don't want people thinking I'm a roundy",
+      "NPCText": "Just to the store, I'd invite you but I don't want shapes thinking I'm a roundy",
       "Response": "What?"
     },
     {
-      "NPCText": "Don't get me wrong, I love circles, but I just don't like them being so roundy and I've I hang with you, it might rub off on me",
+      "NPCText": "Don't get me wrong, I love circles, but I just don't like them being so roundy and if I hang with you, it might rub off on me",
       "Response": "..."
     }
   ]

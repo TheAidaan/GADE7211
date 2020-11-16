@@ -68,11 +68,13 @@ public class DialogueManager : MonoBehaviour
             AlertBox.Static_Hide();//player should see that they are able to choose to talk to the npc they are currently talking to
 
             if (Input.GetKeyDown(KeyCode.E)) // move the conversation forward
-                if (!_branchedNarrative || _onlyOneChoice) // if there are no dialogue choices at all, the player must maually move the conversation forward 
-                    //if (_typing) // next frame will be the full text or the next exchange
-                    //    _stoptyping = true; 
-                    //else
-                        NextExchange(); 
+                if (!_branchedNarrative || _onlyOneChoice) // if there are no dialogue choices at all, the player must maually move the conversation forward
+                    if (_typing) // next frame will be the full text or the next exchange
+                        _stoptyping = true;
+                    else
+                        NextExchange();
+
+                    
         }
     }
 
@@ -104,25 +106,28 @@ public class DialogueManager : MonoBehaviour
     }
 
 
-    IEnumerator RunDialogue(string NPCText, float delay)             //ALL        
+    IEnumerator RunDialogue(string text, float delay)             //ALL        
     {
         _typing = true; // lets everybody know its typing
 
-        for (int i = 0;i < NPCText.Length + 1; i++)
+        for (int i = 0;i < text.Length + 1; i++)
         {
-            _DialogueTxt.text = NPCText.Substring(0,i); //add a character to the end of the text
+            _DialogueTxt.text = text.Substring(0,i); //add a character to the end of the text
             yield return new WaitForSeconds(delay); // waits a while
 
             if (_stoptyping)
             {
                 _stoptyping = false; // stopped typing
                 _typing = false; // stopped typing
-                _DialogueTxt.text = NPCText; // show the full text that was stopped
+                _DialogueTxt.text = text; // show the full text that was stopped
 
                 break;
             }
         }
-        yield return new WaitForSeconds(_currentNPC.TextDelay); // waits a while
+
+        
+       yield return new WaitForSeconds(delay); // waits a while
+        _typing = false;
 
         if (_branchedNarrative)
         {
@@ -244,7 +249,7 @@ public class DialogueManager : MonoBehaviour
         }
         else // activate the text and display the message
         {
-            AlertBox.Static_ShowDialogueAlert(message);
+            AlertBox.Static_DialogueAlert(message);
         }
     }
     void SetNPC(Character NPC)       //All

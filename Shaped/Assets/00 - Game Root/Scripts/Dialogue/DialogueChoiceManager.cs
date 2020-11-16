@@ -13,7 +13,7 @@ public class DialogueChoiceManager : MonoBehaviour
 
     Image[] _images = new Image[3];
     TextMeshProUGUI[] _responseTexts = new TextMeshProUGUI[3];
-    RectTransform[] _buttonRecTransforms = new RectTransform[3];
+    RectTransform[] _buttonRectTransforms = new RectTransform[3];
 
     Sprite empty;
 
@@ -23,9 +23,9 @@ public class DialogueChoiceManager : MonoBehaviour
     {
         for (int i = 0; i < 3; i++)
         {
-            _buttonRecTransforms[i] = transform.GetChild(i).GetComponent<RectTransform>();
-            _responseTexts[i] = _buttonRecTransforms[i].GetComponentInChildren<TextMeshProUGUI>();
-            _images[i] = _buttonRecTransforms[i].transform.GetChild(1).GetComponentInChildren<Image>();
+            _buttonRectTransforms[i] = transform.GetChild(i).GetComponent<RectTransform>();
+            _responseTexts[i] = _buttonRectTransforms[i].GetComponentInChildren<TextMeshProUGUI>();
+            _images[i] = _buttonRectTransforms[i].transform.GetChild(1).GetComponentInChildren<Image>();
         }
 
         empty = _images[1].sprite;
@@ -34,6 +34,8 @@ public class DialogueChoiceManager : MonoBehaviour
 
     public void ActivateButtons(List<Response> responses)
     {
+        bool passedItemCheck = true;
+        bool passedObjectiveCheck = true;
         _currentResponses = responses;
         int numberOfResponses = _currentResponses.Count;
 
@@ -41,32 +43,55 @@ public class DialogueChoiceManager : MonoBehaviour
         {           
             if (_currentResponses.ElementAt(i).ItemRequired != 0) // 0 is the default value, if it's 0 there's no item required for this dialogue path
             {
-                HashData<InventoryItem> item = PlayerInventory.inventory.Search(_currentResponses.ElementAt(i).ItemRequired);
-
-                if (item != null)// found it
-                {
-                    _images[i].sprite = GameManager.GameIcons[item.data.iconID]; // show player what item let them say this 
-
-                    ShowButton(_buttonRecTransforms[i], _responseTexts[i], _currentResponses.ElementAt(i).Text); // say this
-                    _buttonRecTransforms[i].GetComponent<Button>().onClick.AddListener(() => PlayerInventory.Delete(item.data)); //clicking button will remove the item
-                }
+                passedItemCheck = PassItemRequiredCheck(i, _currentResponses.ElementAt(i));
             }
-            else if (_currentResponses.ElementAt(i).ObjectiveRequired != 0) // 0 is the default value, if it's 0 there's no objective required for this dialogue path
+            if (_currentResponses.ElementAt(i).ObjectiveRequired != 0) // 0 is the default value, if it's 0 there's no objective required for this dialogue path
             {
-                bool pass = PlayerStats.Static_ObjectiveCheck(_currentResponses.ElementAt(i).ObjectiveRequired);
-
-                if (pass)
-                    ShowButton(_buttonRecTransforms[i], _responseTexts[i], _currentResponses.ElementAt(i).Text);                   
-                
-            }else if ( responses.ElementAt(i).Effect != 0)
-                _buttonRecTransforms[i].GetComponent<Button>().onClick.AddListener(() => PlayerStats.Static_ObjectiveCompleter(responses.ElementAt(i).Effect));
-            else // if button has no item required, objective required and no effect
-            ShowButton(_buttonRecTransforms[i], _responseTexts[i], _currentResponses.ElementAt(i).Text);
+                passedObjectiveCheck = PassObjectiveRequiredCheck(_currentResponses.ElementAt(i));
+            }
+            if ( responses.ElementAt(i).Effect != 0)
+            {
+                int effectID = responses.ElementAt(i).Effect;
+               _buttonRectTransforms[i].GetComponent<Button>().onClick.AddListener(() => PlayerStats.Static_ObjectiveCompleter(effectID));
+            }
+               
+            if (passedObjectiveCheck && passedItemCheck)
+                ShowButton(_buttonRectTransforms[i], _responseTexts[i], _currentResponses.ElementAt(i).Text);
                          
             
         }
                       
     }
+
+    bool PassItemRequiredCheck(int Index,Response response)
+    {
+
+        HashData<InventoryItem> item = PlayerInventory.inventory.Search(response.ItemRequired);
+
+        if (item != null)// found it
+        {
+            _images[Index].sprite = GameManager.GameIcons[item.data.iconID]; // show player what item let them say this
+            Button button = _buttonRectTransforms[Index].GetComponent<Button>();
+
+            button.onClick.AddListener(() => PlayerInventory.Delete(item.data)); //clicking button will remove the item
+            return true;
+        }
+        else
+            return false;
+        
+    }
+
+    bool PassObjectiveRequiredCheck(Response response) 
+    {
+        bool pass = PlayerStats.Static_ObjectiveCheck(response.ObjectiveRequired);
+
+        if (pass)
+            return true;
+        else
+            return false;
+    
+    }
+
     void ShowButton(RectTransform button, TextMeshProUGUI text, string message)
     {
         text.text = message;
@@ -83,7 +108,7 @@ public class DialogueChoiceManager : MonoBehaviour
             LeanTween.moveLocalX(_responseTexts[i].transform.parent.gameObject, 160, 0.2f);
             _responseTexts[i].text = "";
             Vector2 backgroundSize = new Vector2(TEXT_PADDING_WIDTH, TEXT_PADDING_HEIGHT); //make a size for the backround with enough space to make text look comfortable
-            _buttonRecTransforms[i].GetComponentInParent<RectTransform>().sizeDelta = backgroundSize;
+            _buttonRectTransforms[i].GetComponentInParent<RectTransform>().sizeDelta = backgroundSize;
 
             _images[i] .sprite = empty;
             

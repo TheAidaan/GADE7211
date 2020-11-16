@@ -4,7 +4,7 @@
   "ItemKeyRequired": -1,
   "Dialogue": [
     {
-      "NPCText": "  Hey Circle",
+      "NPCText": "Hey Circle",
       "Response": "hey"
 
     },

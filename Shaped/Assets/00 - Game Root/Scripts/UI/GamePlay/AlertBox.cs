@@ -15,6 +15,7 @@ public class AlertBox : MonoBehaviour
           1:  AlertBox
           2:  NPCDialogueBox
           3:  RewardBox
+          4:  NotificationBox
 
         */
 
@@ -23,7 +24,7 @@ public class AlertBox : MonoBehaviour
         instance = this;
         _image = GetComponent<Image>();
         _text = GetComponentInChildren<TextMeshProUGUI>();
-        _uiSpriteSheet = Resources.LoadAll<Sprite>("UISpriteSheet");
+        _uiSpriteSheet = Resources.LoadAll<Sprite>("UIBoxesSpriteSheet");
     }
 
     void Show(string message)
@@ -43,10 +44,15 @@ public class AlertBox : MonoBehaviour
 
     /*              PUBLIC STATICS             */
 
-    public static void Static_ShowDialogueAlert(string message)
+    public static void Static_DialogueAlert(string message)
     {
         instance.ChangeImage(1);
         instance.Show(message);
+    }
+    public static void Static_NotificationAlert(string message)
+    {
+            instance.ChangeImage(4);
+            instance.Show(message);
     }
     public static void Static_ObjectiveCompleteAlert(string message)
     {
