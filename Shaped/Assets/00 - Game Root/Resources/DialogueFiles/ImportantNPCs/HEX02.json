@@ -1,0 +1,16 @@
+{
+  "BranchedNarrative": false,
+  "ItemKeyRequired": -1,
+  "Dialogue": [
+    {
+      "NPCText": "Hey Circle",
+      "Response": "Hey"
+
+    },
+    {
+      "NPCText": "Look I think I was a little inappropriate earlier, I'm really sorry",
+      "Response": "Yeah you were, thanks for the apology I really appreciate it"
+
+    }
+  ]
+}

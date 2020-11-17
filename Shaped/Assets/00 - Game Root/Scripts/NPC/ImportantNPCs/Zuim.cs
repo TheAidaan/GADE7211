@@ -6,7 +6,7 @@ public class Zuim : NPC
 {
     void Start()
     {
-        AssignAttributes("Zuim", 2, 0.05f, 1, false);
+        AssignAttributes("Zuim", 0.05f, 1, false);
 
 
         int speed = Random.Range(13, 18);

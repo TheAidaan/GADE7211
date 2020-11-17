@@ -1,0 +1,16 @@
+{
+  "BranchedNarrative": false,
+  "ItemKeyRequired": -1,
+  "Dialogue": [
+    {
+      "NPCText": "Hey Circle, I saw the other circle run passed earlier",
+      "Response": "Oh, we were supposed to go neon picking"
+
+    },
+    {
+      "NPCText": "Oh sorry to hear",
+      "Response": "..."
+
+    }
+  ]
+}

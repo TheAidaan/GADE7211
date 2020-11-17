@@ -1,9 +1,11 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    static GameManager instance;
+    public static GameManager instance;
 
+    public event Action PickNeons;
     static Sprite[] _iconSpriteSheet;
     public static Sprite[] GameIcons { get { return _iconSpriteSheet; } } //indexes 1-5: NPC icons. idexes 5+: item icons
 
@@ -17,35 +19,25 @@ public class GameManager : MonoBehaviour
         } 
     }
 
-
-
     private void Awake()
     {
         instance = this;
         _iconSpriteSheet = Resources.LoadAll<Sprite>("IconSpriteSheet");
     }
-
-
-    void IncreaseInternalDamage()
+    private void FixedUpdate()
     {
-
+        
     }
 
-    /*              PUBLIC STATICS              */
-
-    public static void MissionControl(int missionID)
+    void    IvokePickNeons()
     {
-        switch (missionID)
-        {
-            case 0: // make a friend(made friends with Trap
-                
-                break;
-            default:
-                Debug.Log("invalid Mission ID");
-                break;
-           
-        }
+        if (PickNeons != null)
+            PickNeons.Invoke();
     }
 
-  
+    public static void Static_IvokePickNeons()
+    {
+        instance.IvokePickNeons();
+    }
+
 }

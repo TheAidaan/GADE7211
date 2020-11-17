@@ -1,0 +1,14 @@
+{
+  "BranchedNarrative": false,
+  "Rude" :  true,
+  "Dialogue": [
+    {
+      "NPCText": "You and that circle over there are getting really close, I want to hear everything",
+      "Response": "What, no?"
+    },
+    {
+      "NPCText": "That's rude, I don't want to talk to you anymore",
+      "Response": ".."
+    }
+  ]
+}

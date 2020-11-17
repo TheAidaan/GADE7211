@@ -1,0 +1,12 @@
+{
+  "BranchedNarrative": false,
+  "Rude" :  true,
+  "ItemKeyRequired": -1,
+  "Dialogue": [
+    {
+      "NPCText": "You're shapemate left, too bad",
+      "Response": "..."
+
+    }
+  ]
+}

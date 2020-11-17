@@ -4,12 +4,15 @@ using UnityEngine;
 
 public class PlayerStats : MonoBehaviour
 {
+    readonly AlertBox_ObjectiveCompleteState _objectivecompleteState = new AlertBox_ObjectiveCompleteState();
     public static PlayerStats instance;
 
     int _health;
     bool _hurt;
-    static bool _gaveNeonToElli;
-    public static bool GaveNeonToElli{ get { return _gaveNeonToElli; } }
+
+    static bool _gaveNeonToElli, _spokenToElli;
+    public static bool GaveNeonToElli { get { return _gaveNeonToElli; } }
+    public static bool SpokenToElli { get { return _spokenToElli; } }
 
     public static
 
@@ -21,11 +24,13 @@ public class PlayerStats : MonoBehaviour
     private void Start()
     {
         _gaveNeonToElli = false;
+        _spokenToElli = false;
         _health = 25;
     }
 
     void Update()
     {
+        
         if (GameManager.CanMove && _completeObjectives.Count !=0) // the conditions for moving are the same conditions whereby very little is happening in the game(no text input, no dialogue, no navmesh acitive)
             StartCoroutine(Reward());
     }
@@ -59,6 +64,9 @@ public class PlayerStats : MonoBehaviour
                 _gaveNeonToElli = true;
                 _health += 3;
                 break;
+            case 3:
+                _spokenToElli = true;
+                break;
             default:
                  Debug.Log("Invalid Objective ID");
                 break;
@@ -67,9 +75,9 @@ public class PlayerStats : MonoBehaviour
 
     IEnumerator Reward()
     {
-        AlertBox.Static_ObjectiveCompleteAlert(_completeObjectives.Dequeue());
+        AlertBox.Static_TransitionToState(_objectivecompleteState,_completeObjectives.Dequeue());
         yield return new WaitForSeconds(2.5f);
-        AlertBox.Static_Hide();
+        AlertBox.Deactivate();
     }
     /*              PUBLIC STATICS              */
 

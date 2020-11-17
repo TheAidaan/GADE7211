@@ -6,7 +6,7 @@ public class Tria : NPC
 {
     void Start()
     {
-        AssignAttributes("Tria", 2, 0.05f, 1, false);
+        AssignAttributes("Tria", 0.05f, 1, false);
 
 
         int speed = Random.Range(10, 13);

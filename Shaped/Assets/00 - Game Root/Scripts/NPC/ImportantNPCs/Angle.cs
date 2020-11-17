@@ -6,7 +6,7 @@ public class Angle : NPC
 {
     void Start()
     {
-        AssignAttributes("Angle", 1, 0.07f, 3,false);
+        AssignAttributes("Angle", 0.07f, 3,false);
 
 
         int speed = Random.Range(10, 13);

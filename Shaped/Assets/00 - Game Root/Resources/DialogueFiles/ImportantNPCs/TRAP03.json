@@ -1,0 +1,51 @@
+{
+  "BranchedNarrative": true,
+  "Dialogue": [
+    {
+      "ID": "A",
+      "Connections": "BC",
+      "NPCText": "Hello!",
+      "Responses": [
+        {
+          "Text": "Hey"
+        },
+        {
+          "Text": "Hey Trap. How are you?"
+        }
+      ]
+    },
+    {
+      "ID": "B",
+      "Connections": "CD",
+      "NPCText": "How's everything been since I saw you?",
+      "Responses": [
+        {
+          "Text": "It's been okay, what about you?"
+        },
+        {
+          "Text": "I'm okay, I gave that circle the neon, what now?"
+        }
+      ]
+    },
+    {
+      "ID": "C",
+      "Connections": "Z",
+      "NPCText": "I'm okay",
+      "Responses": [
+        {
+          "Text": "That's nice"
+        }
+      ]
+    },
+    {
+      "ID": "D",
+      "Connections": "Z",
+      "NPCText": "Go over there and call them over to pick more, they love picking neons",
+      "Responses": [
+        {
+          "Text": "Okay good idea"
+        }
+      ]
+    }
+  ]
+}

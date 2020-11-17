@@ -1,0 +1,79 @@
+{
+  "BranchedNarrative": true,
+  "Dialogue": [
+    {
+      "ID": "A",
+      "Connections": "BC",
+      "NPCText": "Hello!",
+      "Responses": [
+        {
+          "Text": "Hey"
+        },
+        {
+          "Text": "Hey Trap. How are you?"
+        }
+      ]
+    },
+    {
+      "ID": "B",
+      "Connections": "CD",
+      "NPCText": "How's everything been since I saw you?",
+      "Responses": [
+        {
+          "Text": "It's been okay, what about you?"
+        },
+        {
+          "Text": "I'm okay, I spoke to that circle over there"
+        }
+      ]
+    },
+    {
+      "ID": "C",
+      "Connections": "Z",
+      "NPCText": "I'm okay",
+      "Responses": [
+        {
+          "Text": "That's nice"
+        }
+      ]
+    },
+    {
+      "ID": "D",
+      "Connections": "EEZ",
+      "NPCText": "Oh Elli, yeah they're pretty neat",
+      "Responses": [
+        {
+          "Text": "They seemed pretty off, I struggled to start a conversation"
+        },
+        {
+          "Text": "I want to talk them more, but I dont know what to talk about"
+        },
+        {
+          "Text": "Yeah"
+        }
+
+      ]
+    },
+    {
+      "ID": "E",
+      "Connections": "Z",
+      "NPCText": "Try giving them a flower, I saw one over there and be honest",
+      "Responses": [
+        {
+          "Text": "Good idea, thanks I'll try that"
+        }
+      ]
+    },
+    {
+      "ID": "F",
+      "Connections": "Z",
+      "NPCText": "If you ever need someshape to talk to, I'm here.",
+      "Responses": [
+        {
+          "Effect": 1,
+          "Text": "Thanks."
+        }
+      ]
+    }
+  ]
+}

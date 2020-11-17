@@ -1,0 +1,22 @@
+{
+  "BranchedNarrative": false,
+  "Rude" :  true, 
+  "ItemKeyRequired": -1,
+  "Dialogue": [
+    {
+      "NPCText": "Hey Circle",
+      "Response": "Hi"
+
+    },
+    {
+      "NPCText": "So you spoke to the circle",
+      "Response": "Why is everybody so interested in that"
+
+    },
+    {
+      "NPCText": "Look, I'm okay with it, but I really wish you didn't do it in the park, children come here",
+      "Response": "We just spoke."
+
+    }
+  ]
+}

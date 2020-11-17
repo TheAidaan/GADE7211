@@ -1,0 +1,15 @@
+{
+  "BranchedNarrative": false,
+  "Rude": true, 
+
+  "Dialogue": [
+    {
+      "NPCText": "So you spoke to that circle over there",
+      "Response": "yeah"
+    },
+    {
+      "NPCText": "What are you two going to get married now",
+      "Response": "We just met."
+    }
+  ]
+}

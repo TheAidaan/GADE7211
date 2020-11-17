@@ -1,0 +1,17 @@
+{
+  "BranchedNarrative": false,
+  "Dialogue": [
+    {
+      "NPCText": "Again, really sorry for Zuim",
+      "Response": "Why are you always defending them?"
+    },
+    {
+      "NPCText": "They're my shapemate",
+      "Response": "But you know what they're saying is wrong"
+    },
+    {
+      "NPCText": "...",
+      "Response": "..."
+    }
+  ]
+}

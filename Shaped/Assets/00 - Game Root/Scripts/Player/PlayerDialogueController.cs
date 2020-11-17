@@ -4,13 +4,12 @@ using System.Collections;
 
 public class PlayerDialogueController : MonoBehaviour
 {
+    readonly AlertBox_DialogueOptionState _DialogueOptionState = new AlertBox_DialogueOptionState();
 
     CharacterAnimator _anim; //used for the animator
     Character _lastNPC;
     Character _npc; // the npc that the character is currently facing. Player can choose whether or not to speak to them
     NPC _npcScript;
-
-    bool _usingAlert = false;
 
     private void Start()
     {
@@ -20,10 +19,9 @@ public class PlayerDialogueController : MonoBehaviour
     {
         if (FacingChattyNPC() && !DialogueManager.activeDialogue)
         {
-            if (!_usingAlert)
+            if (!AlertBox.CurrentState.Equals(_DialogueOptionState))
             {
-                DialogueManager.GiveDialogueOption(_npc.Name);
-                _usingAlert = true;
+                AlertBox.Static_TransitionToState(_DialogueOptionState, _npc.Name);
             }
           
             if (Input.GetKeyDown(KeyCode.Space))
@@ -32,10 +30,9 @@ public class PlayerDialogueController : MonoBehaviour
                 DialogueManager.LoadFile(_npc); // start the conversion by giving the NPC into to the dialogue manager
             }
         }
-        else if (_usingAlert)
+        else if (AlertBox.CurrentState.Equals(_DialogueOptionState))
         {
-            DialogueManager.GiveDialogueOption(string.Empty); // if not infront of NPC or there is currently dialogue running, then send an empty string
-            _usingAlert = false;
+            AlertBox.Deactivate();
         }
     }
 

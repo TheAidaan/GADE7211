@@ -4,33 +4,40 @@ public class Character // all characters need a name and a path directing to the
 {
     bool _random; //is the NPC a spefic npc that drives the game or not
     public bool IsTalking;
-    public int NumberOfDialogueFiles { get; }
     public string Name { get; }
 
-    int DialogueID = 1;
+    int _dialogueID = 1;
     public string File { 
         get 
         {
             
             string file;
-            if (DialogueID > NumberOfDialogueFiles)
-            {
-                DialogueID--;
-            }
+
             if (_random)
             {
                 file = "RandomNPCs/Shape";
-                DialogueID = Random.Range(1, 11);
-            }   
-            else
-                file = "ImportantNPCs/" + Name;
-            if (DialogueID<10)
-            {
-                file = file + "0" + DialogueID;
+                _dialogueID = Random.Range(1, 11);
             }
             else
             {
-                file = file + DialogueID;
+                if (PlayerStats.SpokenToElli)
+                    _dialogueID = 2;
+                if (PlayerStats.GaveNeonToElli)
+                    _dialogueID = 3;
+                if (PlayerReact.ElliRanAway)
+                    _dialogueID = 4;
+                if (Name.Equals("Elli"))
+                    _dialogueID = 1;
+                file = "ImportantNPCs/" + Name;
+            }
+                
+            if (_dialogueID < 10)
+            {
+                file = file + "0" + _dialogueID;
+            }
+            else
+            {
+                file = file + _dialogueID;
             }
 
             return file;
@@ -39,9 +46,8 @@ public class Character // all characters need a name and a path directing to the
     public int IconID { get; }
     public float TextDelay { get; }
 
-    public Character(string name, int numberOfDialogueFiles, float textDelay,int iconID, bool random)
+    public Character(string name, float textDelay,int iconID, bool random)
     {
-        NumberOfDialogueFiles = numberOfDialogueFiles;
         Name = name;
         TextDelay = TextDelay;
         IconID =iconID;
@@ -64,9 +70,9 @@ public abstract class NPC : MonoBehaviour
     {
         _controller = GetComponentInParent<NPCController>();
     }
-    public void AssignAttributes(string Name, int NumberOfDialogueFiles, float TextDelay, int IconID, bool random)
+    public void AssignAttributes(string Name, float TextDelay, int IconID, bool random)
     {
-        _character = new Character(Name, NumberOfDialogueFiles, TextDelay, IconID, random); //initialising a new character with the inputed values
+        _character = new Character(Name, TextDelay, IconID, random); //initialising a new character with the inputed values
         _controller.AssignCharacter(_character);
     }
     public void AssignSpeed(float speed)

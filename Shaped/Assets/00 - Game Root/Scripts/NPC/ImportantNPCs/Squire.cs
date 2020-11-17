@@ -6,7 +6,7 @@ public class Squire : NPC
 {
     void Start()
     {
-        AssignAttributes("Squire", 4, 0.04f, 2, false);
+        AssignAttributes("Squire", 0.04f, 2, false);
 
 
         int speed = Random.Range(12, 15);

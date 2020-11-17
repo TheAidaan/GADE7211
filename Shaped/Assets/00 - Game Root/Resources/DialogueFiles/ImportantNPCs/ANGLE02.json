@@ -1,0 +1,27 @@
+{
+  "BranchedNarrative": false,
+  "Rude" :  true,
+  "ItemKeyRequired": -1,
+  "Dialogue": [
+    {
+      "NPCText": "Oh my dots, circle! I saw you talk to the other circle over there",
+      "Response": "yeah"
+
+    },
+    {
+      "NPCText": "So, what's next?",
+      "Response": "What do you mean?"
+
+    },
+    {
+      "NPCText": "Like are you two going out or what?",
+      "Response": "we just met."
+
+    },
+    {
+      "NPCText": "Come on, no need to keep it so low key.",
+      "Response": "we just met."
+
+    }
+  ]
+}

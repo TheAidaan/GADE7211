@@ -6,6 +6,7 @@ using System.Linq;
 
 public class DialogueManager : MonoBehaviour
 {
+
     const float PLAYER_TEXT_DELAY = 0.04f;
 
     public static DialogueManager instance; //single...
@@ -64,17 +65,13 @@ public class DialogueManager : MonoBehaviour
     {
         if (_activeDialogue)
         {
-
-            AlertBox.Static_Hide();//player should see that they are able to choose to talk to the npc they are currently talking to
-
+          
             if (Input.GetKeyDown(KeyCode.E)) // move the conversation forward
                 if (!_branchedNarrative || _onlyOneChoice) // if there are no dialogue choices at all, the player must maually move the conversation forward
                     if (_typing) // next frame will be the full text or the next exchange
                         _stoptyping = true;
                     else
-                        NextExchange();
-
-                    
+                        NextExchange();            
         }
     }
 
@@ -241,17 +238,7 @@ public class DialogueManager : MonoBehaviour
             }
     }
 
-    public void ChangeDialogueOptionText(string message)            //All
-    {
-        if (message == string.Empty)
-        {
-            AlertBox.Static_Hide(); // Hide the alert
-        }
-        else // activate the text and display the message
-        {
-            AlertBox.Static_DialogueAlert(message);
-        }
-    }
+
     void SetNPC(Character NPC)       //All
     {
         _currentNPC = NPC;
@@ -343,17 +330,5 @@ public class DialogueManager : MonoBehaviour
     public static void Static_Response(int responseID)          //Graph
     {
         instance.Response(responseID);
-    }
-
-    public static void GiveDialogueOption(string name) // get the NPC name that the player might talk to 
-    {
-        if (name != string.Empty)
-        {
-            instance.ChangeDialogueOptionText("Press [SPACE] to talk to " + name); // format the message if the string has a name
-        }
-        else
-        {
-            instance.ChangeDialogueOptionText(string.Empty); // dont format the name and send an empty string if there's no npc name given
-        }
     }
 }

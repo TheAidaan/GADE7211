@@ -7,7 +7,7 @@ public class NPCController : MonoBehaviour
     readonly CharacterWalkingState WalkingState = new CharacterWalkingState();
     readonly CharacterTalkingState TalkingState = new CharacterTalkingState();
 
-    public Transform _target; // the current target for the navemesh to go to
+    public Vector3 _target; // the current target for the navemesh to go to
 
     NavMeshAgent _agent; // the navmesh
     
@@ -41,11 +41,11 @@ public class NPCController : MonoBehaviour
             _agent.isStopped = true;
             _anim.TransitionToState(TalkingState); //Talking
         }
-        else if (_target != null /*&& goToTarget*/) //am i walking?
+        else if (!_target.Equals(Vector3.zero) ) //am i walking?
         {
             _agent.isStopped = false;
             _anim.TransitionToState(WalkingState); //walk
-            _agent.SetDestination(_target.transform.position); //go!
+            _agent.SetDestination(_target); //go!
 
         }
         else // i should stay still
@@ -88,7 +88,7 @@ public class NPCController : MonoBehaviour
     {
         _agent.speed = speed;
     }
-    public void AssignTarget(Transform target)
+    public void AssignTarget(Vector3 target)
     {
        _target = target;
     }

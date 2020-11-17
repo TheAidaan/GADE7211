@@ -1,0 +1,12 @@
+{
+  "BranchedNarrative": false,
+  "Rude" :  true, 
+  "ItemKeyRequired": -1,
+  "Dialogue": [
+    {
+      "NPCText": "Hey Circle, I saw that other circle ran away, glad atleast one of you care for the kids",
+      "Response": "..."
+
+    }
+  ]
+}

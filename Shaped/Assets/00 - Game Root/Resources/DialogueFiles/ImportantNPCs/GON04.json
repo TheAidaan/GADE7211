@@ -1,0 +1,10 @@
+{
+  "BranchedNarrative": false,
+  "Rude" :  true,
+  "Dialogue": [
+    {
+      "NPCText": "I saw that roundy left, that's what you get",
+      "Response": "..."
+    }
+  ]
+}

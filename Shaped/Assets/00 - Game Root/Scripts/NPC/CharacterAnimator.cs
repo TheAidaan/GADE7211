@@ -6,7 +6,7 @@ public class CharacterAnimator : MonoBehaviour
 
     public Animator anim;
 
-   public  BaseState currentState;
+    public  BaseState currentState;
 
     void Awake()
     {

@@ -2,15 +2,24 @@
 
 public class PlayerReact : MonoBehaviour
 {
+    readonly AlertBox_NotificationState _notificationState = new AlertBox_NotificationState();
     bool _inNeonPickingArea, _pickedNeonsWithElli;
+    static bool _elliRanAway;
+    public static bool ElliRanAway { get { return _elliRanAway; } }
 
+    private void Start()
+    {
+        _elliRanAway = false;
+    }
     private void Update()
     {
         if (_inNeonPickingArea && Input.GetKeyDown(KeyCode.Space))
         {
-            _pickedNeonsWithElli = true;
-            Debug.Log("PICK IT");
+            _elliRanAway = true;
+            GameManager.Static_IvokePickNeons();
         }
+
+        GameManager.instance.PickNeons += ElliHasRanAway;
     }
     private void OnTriggerEnter(Collider other)
     {
@@ -24,16 +33,21 @@ public class PlayerReact : MonoBehaviour
 
         if (other.gameObject.name.Equals("NeonPicking") && PlayerStats.GaveNeonToElli && !_pickedNeonsWithElli)
         {
-            AlertBox.Static_NotificationAlert("Press [SPACE] to pick neons with ELLI");
+            AlertBox.Static_TransitionToState(_notificationState,"Press [SPACE] to pick neons with ELLI");
             _inNeonPickingArea = true;
-        }
+        }            
+    }
+
+    void ElliHasRanAway()
+    {
+        _elliRanAway = true;
     }
 
     private void OnTriggerExit(Collider other)
     {
         if (other.gameObject.name.Equals("NeonPicking"))
         {
-            AlertBox.Static_Hide();
+            AlertBox.Deactivate();
             _inNeonPickingArea = false;
         }
     }

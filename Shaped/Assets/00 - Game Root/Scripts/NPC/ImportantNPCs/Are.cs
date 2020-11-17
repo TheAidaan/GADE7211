@@ -6,7 +6,7 @@ public class Are : NPC
 {
     void Start()
     {
-        AssignAttributes("Are", 4, 0.04f, 2,false);
+        AssignAttributes("Are", 0.04f, 2,false);
 
 
         int speed = Random.Range(12, 15);

@@ -4,7 +4,7 @@ public class Trapezuim : NPC
 {
     void Start()
     {
-        AssignAttributes("Trapezuim", 2, 0.05f, 1,true);
+        AssignAttributes("Trapezuim", 0.05f, 1,true);
 
 
         int speed  = Random.Range(13, 18);

@@ -7,6 +7,7 @@
       "NPCText": "hi",
       "Responses": [
         {
+          "Effect": 3,
           "Text": "Hey"
         },
         {

@@ -1,0 +1,22 @@
+{
+  "BranchedNarrative": false,
+  "Rude" :  true, 
+  "ItemKeyRequired": -1,
+  "Dialogue": [
+    {
+      "NPCText": "Hey Circle",
+      "Response": "Hi"
+
+    },
+    {
+      "NPCText": "Heard you gave that circle over there a neon",
+      "Response": "Yeah, I'm hoping to go neon picking with them"
+
+    },
+    {
+      "NPCText": "Can't ypu do it when there's atleast no kids around, DOTS",
+      "Response": "..."
+
+    }
+  ]
+}

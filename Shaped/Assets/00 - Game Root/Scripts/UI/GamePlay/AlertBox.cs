@@ -5,6 +5,10 @@ using TMPro;
 
 public class AlertBox : MonoBehaviour
 {
+    readonly AlertBox_InActiveState _inactiveState = new AlertBox_InActiveState();
+
+    static AlertBox_BaseState _currentState;
+    public static AlertBox_BaseState CurrentState { get{ return _currentState; } }
     public static AlertBox instance;
     Image _image;
     TextMeshProUGUI _text;
@@ -21,48 +25,44 @@ public class AlertBox : MonoBehaviour
 
     private void Awake()
     {
+        _currentState = _inactiveState;
         instance = this;
         _image = GetComponent<Image>();
         _text = GetComponentInChildren<TextMeshProUGUI>();
         _uiSpriteSheet = Resources.LoadAll<Sprite>("UIBoxesSpriteSheet");
     }
 
-    void Show(string message)
+    public void Show(string message)
     {
         _text.text = message;
         LeanTween.moveY(gameObject, 15, .1f).setEaseOutBounce();
     }
 
-    void Hide()
+    public void Hide()
     {
         LeanTween.moveY(gameObject, -240, .15f).setEaseInBounce();
     }
-    void ChangeImage(int index)
+    public void ChangeImage(int index)
     {
         _image.sprite = _uiSpriteSheet[index];
     }
 
+    void TransitionToState(AlertBox_BaseState state, string message)
+    {
+        _currentState = state;
+        _currentState.EnterState(instance, message);
+    }
+
     /*              PUBLIC STATICS             */
 
-    public static void Static_DialogueAlert(string message)
+    public static void Deactivate()
     {
-        instance.ChangeImage(1);
-        instance.Show(message);
-    }
-    public static void Static_NotificationAlert(string message)
-    {
-            instance.ChangeImage(4);
-            instance.Show(message);
-    }
-    public static void Static_ObjectiveCompleteAlert(string message)
-    {
-        instance.ChangeImage(3);
-        instance.Show(message);
+        instance.TransitionToState(instance._inactiveState, "");
     }
 
-    public static void Static_Hide()
+    public static void Static_TransitionToState(AlertBox_BaseState state, string message)
     {
-        instance.Hide();
+        instance.TransitionToState(state, message);
     }
 
 }

@@ -1,0 +1,21 @@
+{
+  "BranchedNarrative": false,
+  "ItemKeyRequired": -1,
+  "Dialogue": [
+    {
+      "NPCText": "Hey Circle",
+      "Response": "Hi"
+
+    },
+    {
+      "NPCText": "What are you up to",
+      "Response": "Just chatting around"
+
+    },
+    {
+      "NPCText": "Nice, I hope you enjoy it",
+      "Response": "thanks"
+
+    }
+  ]
+}

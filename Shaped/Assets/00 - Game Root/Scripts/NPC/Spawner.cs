@@ -58,7 +58,7 @@ public class Spawner : MonoBehaviour
             randTargetIndex = Random.Range(1, 5);
         }
 
-        npc.GetComponent<NPCController>().AssignTarget(_points[randTargetIndex]);
+        npc.GetComponent<NPCController>().AssignTarget(_points[randTargetIndex].position);
         _numberOfNPCs++;
 
         yield return new WaitForSeconds(2);
